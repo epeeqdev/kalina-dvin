@@ -7,5 +7,5 @@ const categorySchema = new Schema({
 	slug: String,
 });
 
-export const Category = models.Category || model('Category', categorySchema);
+export const Category = models.Category || model('Category', categorySchema, 'Category');
 

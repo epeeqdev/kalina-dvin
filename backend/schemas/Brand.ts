@@ -7,5 +7,5 @@ const brandSchema = new Schema({
 	slug: String
 });
 
-export const Brand = models.Brand || model('Brand', brandSchema);
+export const Brand = models.Brand || model('Brand', brandSchema, 'Brand');
 
