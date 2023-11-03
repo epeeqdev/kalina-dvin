@@ -44,7 +44,7 @@ export default function ImageGallery({onChange, uploadedImages}: Props) {
                     })
                 }
                 <div className="text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%]">
-                    <label className="w-full h-full cursor-pointer flex justify-center items-center text-[40px] absolute top-0 left-0">
+                    <label className="w-full h-full cursor-pointer flex justify-center items-center text-[100px] absolute top-0 left-0">
                         <input className="hidden"
                                type="file"
                                multiple

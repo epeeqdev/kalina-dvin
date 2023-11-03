@@ -26,7 +26,6 @@ export default function Add() {
     const [value, setValue] = useState(0)
     const [inpVisible, setInpVisible] = useState<boolean>(false)
     const [attributes, setAttributes] = useState<ProductAttribute[]>([]);
-    console.log(categories, 'caaate')
     const {
         errors,
         control,
@@ -82,7 +81,7 @@ export default function Add() {
     return (
         <div className="w-full">
             {isLoading && <LoadingSpinner/>}
-            <h1 className="text-xl">Add Product</h1>
+            <h1 className="text-xl mb-5">Add Product</h1>
             <div className="mb-5">
                 <ImageGallery uploadedImages={images} onChange={setImages}/>
             </div>
@@ -132,7 +131,8 @@ export default function Add() {
                     <div className="my-5 text-dark-grey">Attributes</div>
                     <div>
                         {attributes.map(({id, name, value}) =>
-                            <div className="my-5 text-dark-grey flex justify-between w-[400px] bg-gray-200 rounded p-[5px]" key={id}>{`${name} : ${value}`}
+                            <div className="my-5 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-[400px] bg-white rounded pl-[10px]" key={id}>
+                                {`${name} : ${value}`}
                                 <DeleteButton remove={() => removeItem(id)}/>
                             </div>)}
                     </div>
