@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, context: Params) {
 	try {
 		// const brand = await DB.Brand.findById(context.params.id);
 		const folderPath = path.resolve('./public/uploads');
-		return NextResponse.json({folder: folderPath});
+		return NextResponse.json({folder: folderPath, dirname: __dirname});
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
