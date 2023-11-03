@@ -4,6 +4,7 @@ import {userContext} from './userContext'
 import {User} from "@/app/admin/types";
 import axios from "@/axios";
 import { useRouter } from 'next/navigation'
+import LoadingSpinner from "../../components/controls/loading-spinner";
 
 export default function AdminLayout({children}:PropsWithChildren) {
     const [userData, setUserData] = useState<User | null>(null);
@@ -36,7 +37,7 @@ export default function AdminLayout({children}:PropsWithChildren) {
     return <userContext.Provider value={context}>
         {isLoading && <div
             className='fixed w-full h-full bg-black bg-opacity-50 text-white flex justify-center items-center text-lg'>
-            Loading...
+            <LoadingSpinner />
         </div>}
         {isInitialized && children}
     </userContext.Provider>

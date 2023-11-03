@@ -3,6 +3,7 @@ import {PropsWithChildren} from "react";
 import Link from "next/link";
 import {useAuth} from "@/app/admin/hooks";
 import {RouteGuard} from "@/app/admin/RouteGuard";
+import LoadingSpinner from "../../../components/controls/loading-spinner";
 
 export default function Layout({children}:PropsWithChildren){
 	const {logout} = useAuth()
@@ -15,7 +16,7 @@ export default function Layout({children}:PropsWithChildren){
 			<Link className=" block  px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/about-us'>About</Link>
 			<button onClick={logout}>Logout</button>
 		</div>
-		<div className='px-4 py-5 flex-1'>
+		<div className='px-4 py-5 w-full'>
 			{children}
 		</div>
 

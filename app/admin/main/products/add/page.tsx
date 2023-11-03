@@ -2,125 +2,162 @@
 import {Input} from "@/components/controls/input";
 import {Button} from "@/components/controls/button";
 import {addProduct} from "@/app/admin/main/products/helpers/addProduct";
-import {ImageType, Product, ProductAttribute} from "@/app/admin/main/products/types";
+import {CategoriesItem, Product, ProductAttribute} from "@/app/admin/main/products/types";
 import {useEffect, useState} from "react";
 import AttrForm from "@/app/admin/main/products/add/components/attrForm";
-import MultiSelectInput from "@/app/admin/main/products/add/components/multiSelectInput";
-import {useAddProductForm} from "@/app/admin/main/products/add/form";
-import ImageUploader from "@/app/admin/main/products/add/components/ImageUploader";
+import MultiSelectInput from "@/components/controls/autocomplete-input";
+import {ProductFormFields, useAddProductForm} from "@/app/admin/main/products/add/form";
+import ImageGallery from "@/app/admin/main/products/add/components/ImageGallery";
 import {Image} from "@/app/admin/types";
-
-const categories = [
-    {value: 'clean', label: 'Clean'},
-    {value: 'baby', label: 'Baby'},
-    {value: 'care', label: 'Care'},
-    {value: 'fabric', label: 'Fabric'},
-    {value: 'man', label: 'Man'},
-    {value: 'woman', label: 'Woman'},
-    {value: 'shampoo', label: 'Shampoo'},
-    {value: 'shaving', label: 'Shaving'},
-];
+import {TextArea} from "../../../../../components/controls/text-area";
+import DeleteButton from "@/components/controls/delete-button/page";
+import LoadingSpinner from "../../../../../components/controls/loading-spinner";
+import {useRouter} from "next/navigation";
+import axios from "@/axios";
 
 
 export default function Add() {
+
+    const router = useRouter()
     const [images, setImages] = useState<Image[]>([])
+    const [categories , setCategories] = useState([])
+    const [brands , setBrands] = useState([])
+    const [isLoading, setLoading] = useState(false);
+    const [value, setValue] = useState(0)
     const [inpVisible, setInpVisible] = useState<boolean>(false)
     const [attributes, setAttributes] = useState<ProductAttribute[]>([]);
-    const {errors, register, control, handleSubmit} = useAddProductForm();
+    console.log(categories, 'caaate')
+    const {
+        errors,
+        control,
+        register,
+        handleSubmit,
+        getValues
+    } = useAddProductForm();
 
+
+
+    const getCategories = () => {
+        axios.get(`/api/categories`).then((resp) => {
+            setCategories( resp.data.map((item : CategoriesItem) => {
+                return {value : item._id , label: item.name.ru}
+            }))
+        })
+    }
+    const getBrands = () => {
+        axios.get(`/api/brands`).then((resp) => {
+            setBrands( resp.data.map((item : CategoriesItem) => {
+                return {value : item._id , label: item.name.ru}
+            }))
+        })
+    }
     const removeItem = (id: string) => {
-        const removedItem = attributes.filter(item => item.id !== id)
-        setAttributes(removedItem)
+        setAttributes(prev => prev.filter((item) => item.id !== id))
     }
-    const removeImage = (id: string) => {
-        const filteredImages = images.filter((item) => item.id !== id)
-        setImages(filteredImages)
-    }
-    const onSubmit = async (data: Product) => {
-        console.log('submit', data)
-        await addProduct({...data, images})
-    }
-    console.log('errors', errors)
 
+    const onSubmit = async (data: ProductFormFields) => {
+        setLoading(true)
+        await addProduct({...data, images,categories:getValues().categories.map(item => item.value), attributes: []}).then(() => {
+            setLoading(false)
+            router.push('/admin/main/products')
+        }).catch(() => {
+            setLoading(false)
+        })
+    }
 
-    const [value, setValue] = useState(0)
 
     useEffect(() => {
-        console.log('value 1 1 11 1 11', value)
+        getCategories()
+        getBrands()
+    },[])
 
-    }, [value, setValue])
+    const submit = () => {
+        handleSubmit((data) => {
+        console.log("data" , data)
+            onSubmit(data)
+        })()
+    }
 
 
     return (
-        <div className="flex w-full items-start justify-between">
-            <div className='flex-1'>
-                <h1 className="text-xl">Add Product</h1>
-                <form onSubmit={(e) => {
-                    handleSubmit(onSubmit)(e)
-                }} className="mt-10">
-                    <Input label="Title *"
-                           placeholder='Type name'
-                           {...register("title")}
-                           className='w-full mt-2'
-                           error={errors.title?.message}
-                    />
-
-                    <Input
-                        label="description *"
-                        placeholder='Description'
-                        {...register("description", {required: true})}
-                        className='w-full mt-2'
-                        error={errors.description?.message}
-                    />
-
-                    <label className='text-[16px] mb-1 text-dark-grey'>Choose a Category : </label>
-                    <MultiSelectInput control={control} name="categories" options={categories}/>
-                    <div>
-                        <Button type='submit'>Submit</Button>
-                    </div>
-                </form>
+        <div className="w-full">
+            {isLoading && <LoadingSpinner/>}
+            <h1 className="text-xl">Add Product</h1>
+            <div className="mb-5">
+                <ImageGallery uploadedImages={images} onChange={setImages}/>
             </div>
-            <div className="ml-[100px] flex-1">
-                <ImageUploader onChange={(items) => setImages(prev => [...prev, ...items])}/>
-                <div className="grid grid-cols-4 gap-2 my-10">
-                    {
-                        images && images.map((item) => {
-                            return (
-                                <div key={item.id}>
-                                    <button onClick={() => {
-                                        removeImage(item.id)
-                                    }} className="bg-red-600 text-white absolute z-2 w-[25px] h-[25px]">x
-                                    </button>
-                                    <img alt='product image' src={item.src}
-                                         className="w-40 h-25 border-2 z-6 border-red-800"/>
-                                </div>
-                            )
-                        })
-                    }
+            <div className="mb-5">
+                <Input label="Title"
+                       placeholder='Type name'
+                       {...register("title")}
+                       className='w-full mt-1'
+                       error={errors.title?.message}
+                       required={true}
+                />
+            </div>
+            <div className="mb-5">
+                <TextArea
+                    required={true}
+                    label="Description"
+                    placeholder='Description'
+                    {...register("description", {required: true})}
+                    className='w-full mt-1'
+                    error={errors.description?.message}
+                />
+            </div>
+            <div className="mb-5">
+                <MultiSelectInput
+                    control={control}
+                    required={true}
+                    name='categories'
+                    multiselect
+                    options={categories}
+                    error={errors.categories?.message}
+                    label="Choose a Category"
+                />
+            </div>
+            <div className="mb-5">
+                <MultiSelectInput
+                    control={control}
+                    required={true}
+                    name='brand'
+                    options={brands}
+                    error={errors.categories?.message}
+                    label="Choose a Brand"
+                />
+            </div>
+            {/*-----------------------------  ATTRIBUTES  -------------------------*/}
+            <div className="mb-5">
+                <div>
+                    <div className="my-5 text-dark-grey">Attributes</div>
+                    <div>
+                        {attributes.map(({id, name, value}) =>
+                            <div className="my-5 text-dark-grey flex justify-between w-[400px] bg-gray-200 rounded p-[5px]" key={id}>{`${name} : ${value}`}
+                                <DeleteButton remove={() => removeItem(id)}/>
+                            </div>)}
+                    </div>
                 </div>
-
-                <div className="my-5 text-dark-grey">Attributes</div>
-                <label htmlFor="Atributes" className="my-[20px]">
-                    Add Attributes :
+            </div>
+            <div className="mb-5">
+                <label className="mb-2">
                     {
                         inpVisible
-                            ? <AttrForm onAdd={(attr) => {
-                                setAttributes(prev => [...prev, attr]);
-                                setInpVisible(false);
-                            }}/>
+                            ? <AttrForm
+                                name="attributes"
+                                control={control}
+                                onAdd={(attr) => {
+
+                                    setAttributes(prev => [...prev, attr]);
+                                    setInpVisible(false);
+                                }}
+                            />
                             : <Button className="ml-5" onClick={() => setInpVisible(prev => !prev)}>Add
                                 attributes</Button>
                     }
                 </label>
-                <div className="w-full">
-                    {attributes.map(({id, name, value}) =>
-                        <div className="my-5 text-dark-grey flex justify-between" key={id}>{`${name} : ${value}`}
-                            <button onClick={() => {
-                                removeItem(id)
-                            }} className="bg-red-600 text-white w-[25px] h-[25px] ml-1">x
-                            </button>
-                        </div>)}
-                </div>
+            </div>
+            <div className="mb-5">
+                <Button onClick={submit} className="mt-5">Submit</Button>
             </div>
         </div>
     )
