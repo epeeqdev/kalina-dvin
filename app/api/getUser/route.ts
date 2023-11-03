@@ -1,4 +1,4 @@
-import {db} from "@/backend/db";
+import {DB} from "@/backend/db";
 import jwt from 'jsonwebtoken'
 import {NextRequest, NextResponse} from "next/server";
 import {handleUnauthorized, verifyToken} from "@/app/api/helpers";
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
             return notVerified
         }
         const userData = jwt.decode(token) as JWTUserEncoded;
-        const user = await db.User.find({_id: userData?.id})
+        const user = await DB.User.find({_id: userData?.id})
         if (user && userData) {
             return NextResponse.json({authorized: true, user: user?.[0] || null}, {status: 200} as any)
         }

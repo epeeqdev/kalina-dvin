@@ -3,13 +3,13 @@ import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {createFiles, removeFiles, verifyToken} from "@/app/api/helpers";
 import path from "path";
-import {Product} from "@/app/admin/main/products/types";
+import {Brand} from "@/app/admin/main/products/types";
 import {Image} from "@/app/admin/types";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		const product = await DB.Product.findById(context.params.id);
-		return NextResponse.json(product);
+		const brand = await DB.Brand.findById(context.params.id);
+		return NextResponse.json(brand);
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
@@ -24,22 +24,23 @@ export async function PUT(request: NextRequest, context: Params) {
 		const body = await request.json();
 		const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
 
-		const oldProduct = await DB.Product.findById(context.params.id) as Product;
-		if(oldProduct.images?.length){
-			const imageNames = oldProduct.images.map(image => `${image.id}.${image.extension}`);
-			await removeFiles(imageNames,folderPath);
+		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
+		const oldImage = oldBrand.image;
+		if(oldImage){
+			await removeFiles([`${oldImage.id}.${oldImage.extension}`],folderPath);
 		}
 
-		await createFiles(body.images,folderPath);
-		const images = body.images?.map(({id, extension}:Image) => ({id, extension, src: `/uploads/${id}.${extension}`}));
-		const updatedProduct = await DB.Product.findByIdAndUpdate(
+		await createFiles([body.image],folderPath);
+
+		const image = body.image;
+		const updatedBrand = await DB.Brand.findByIdAndUpdate(
 			context.params.id,
 			{
-				$set: {...body, images},
+				$set: {...body, image: {...image, src: `/uploads/${image.id}.${image.extension}`}},
 			},
 			{ new: true }
 		);
-		return NextResponse.json(updatedProduct);
+		return NextResponse.json(updatedBrand);
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
@@ -51,14 +52,14 @@ export async function DELETE(request: NextRequest, context: Params) {
 		if(notVerified){
 			return notVerified
 		}
-
-		const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
-		const oldItem = await DB.Product.findById(context.params.id) as Product;
-		if(oldItem.images?.length){
-			const imageNames = oldItem.images.map(image => `${image.id}.${image.extension}`);
-			await removeFiles(imageNames,folderPath);
+		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
+		const oldImage = oldBrand.image;
+		if(oldImage){
+			const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
+			await removeFiles([`${oldImage.id}.${oldImage.extension}`],folderPath);
 		}
-		await DB.Product.findByIdAndDelete(context.params.id);
+
+		await DB.Brand.findByIdAndDelete(context.params.id);
 		return NextResponse.json(JSON.stringify({success: true}));
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})

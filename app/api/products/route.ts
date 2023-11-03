@@ -1,4 +1,4 @@
-import {db} from "@/backend/db";
+import {DB} from "@/backend/db";
 import {NextResponse} from "next/server";
 
 export async function GET(request: Request) {
@@ -10,15 +10,15 @@ export async function GET(request: Request) {
 		let products;
 
 		if (qNew) {
-			products = await db.Product.find().sort({ createdAt: -1 }).limit(1);
+			products = await DB.Product.find().sort({ createdAt: -1 }).limit(1);
 		} else if (qCategory) {
-			products = await db.Product.find({
+			products = await DB.Product.find({
 				categories: {
 					$in: [qCategory],
 				},
 			});
 		} else {
-			products = await db.Product.find();
+			products = await DB.Product.find();
 		}
 
 		return NextResponse.json(products);

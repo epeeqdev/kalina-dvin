@@ -8,6 +8,11 @@ export interface Product {
     categories : string[];
     attributes : ProductAttribute[]
 }
+export interface Brand {
+    _id?: string;
+    title: Text;
+    image: Image;
+}
 
 export interface ProductAttribute {
     name: string;
@@ -27,8 +32,14 @@ export interface Options {
 }
 
 export interface ImageType{
-    image: string;
-    id: string
+    src: string;
+    id: string;
+    extension: string;
 }
 
+export interface Text {
+    en: string;
+    ru: string;
+    am: string;
+}
 

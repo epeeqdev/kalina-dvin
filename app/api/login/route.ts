@@ -1,12 +1,12 @@
-import {db} from "@/backend/db";
+import {DB} from "@/backend/db";
 import CryptoJS from "crypto-js"
 import jwt from 'jsonwebtoken'
 import {NextResponse} from "next/server";
 
-export async function POST(request: Request, response: Response) {
+export async function POST(request: Request,) {
 	try{
 		const requestBody = await request.json();
-		const user = await db.User.findOne(
+		const user = await DB.User.findOne(
 			{
 				username: requestBody.username
 			}

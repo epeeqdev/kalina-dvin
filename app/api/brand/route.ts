@@ -1,10 +1,8 @@
 import {createFiles, verifyToken} from "@/app/api/helpers";
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {Product} from "@/app/admin/main/products/types";
-import fs from "fs";
+import {Brand} from "@/app/admin/main/products/types";
 import path from "path";
-import {Image} from "@/app/admin/types";
 
 
 
@@ -16,10 +14,10 @@ export async function POST(request: NextRequest) {
 		}
 		const body = await request.json();
 		const folderPath = path.resolve(`${__dirname}/../../../../../public/uploads`);
-		await createFiles(body.images,folderPath);
-		const images = body.images?.map(({id, extension}:Image) => ({id, extension, src: `/uploads/${id}.${extension}`}))
-		const savedProduct = new DB.Product({...body, images}).save() as Product;
-		return NextResponse.json(savedProduct);
+		await createFiles([body.image],folderPath);
+		const image = {...body.image, src: `/uploads/${body.image?.id}.${body.image?.extension}`}
+		const savedBrand = await new DB.Brand({...body, image}).save() as Brand;
+		return NextResponse.json(savedBrand);
 	} catch (err) {
 		console.log(err)
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
