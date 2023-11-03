@@ -5,6 +5,7 @@ interface Props {
 }
 
 export const ProductTemplate = ({item}: Props) => {
+    console.log(item , "item item item mmm")
     return (
             <div className='w-full bg-white hover:bg-[#eeeeee] transition flex gap-[2%] py-2 px-2'>
                 <div className='relative'>

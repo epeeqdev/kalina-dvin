@@ -7,5 +7,7 @@ export const addProduct = async (body:Product) => {
         return axios.post(`/api/product`, body);
     }catch (e){
         console.log(e)
+    }finally {
+
     }
 }

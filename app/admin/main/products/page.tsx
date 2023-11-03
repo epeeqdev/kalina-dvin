@@ -20,7 +20,7 @@ const [products , setProducts] = useState<Product[]>([])
 	},[])
 
 
-	return <div className='flex flex-wrap gap-3 w-full'>
+	return <div className='flex flex-wrap gap-3'>
 		{
 			products.map((item) => <ProductTemplate key={item._id} item={item}/>)
 		}

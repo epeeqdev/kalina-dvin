@@ -1,5 +1,10 @@
 import {Image} from "@/app/admin/types";
+import {Control} from "react-hook-form";
 
+export type Categories = {
+    value: string;
+    label: string
+}
 export interface Product {
     _id?: string;
     title: string;
@@ -20,16 +25,7 @@ export interface ProductAttribute {
     id: string;
 }
 
-type Categories = {
-    value: string;
-    label: string
-}
 
-export interface Options {
-    control: any
-    name: string;
-    options: Categories[];
-}
 
 export interface ImageType{
     src: string;
@@ -41,5 +37,13 @@ export interface Text {
     en: string;
     ru: string;
     am: string;
+}
+export interface CategoriesItem {
+    name: {
+        en : string,
+        ru : string,
+        am : string
+    },
+    _id: string
 }
 
