@@ -17,7 +17,7 @@ export async function POST(request: Request,) {
 		}
 
 		const hashedPassword = CryptoJS.AES.decrypt(
-			user.password,
+			'user.password',
 			process.env.PASS_SEC
 		);
 
@@ -26,7 +26,7 @@ export async function POST(request: Request,) {
 
 		const inputPassword = requestBody.password;
 		if(originalPassword != inputPassword) {
-			return new NextResponse("Wrong Password", {status: 401})
+			return new NextResponse(`Wrong Password: pass_sec: ${process.env.PASS_SEC}, real_pass: ${originalPassword}, inputPass: ${inputPassword}`, {status: 401})
 		}
 
 		const accessToken = jwt.sign(

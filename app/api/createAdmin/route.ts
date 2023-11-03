@@ -16,9 +16,9 @@ export async function GET(request: Request,) {
 			}
 		).save()
 
-		if(!user){
-			return new NextResponse("Wrong User Name", {status: 401})
-		}
+		// if(!user){
+		// 	return new NextResponse("Wrong User Name", {status: 401})
+		// }
 
 
 
