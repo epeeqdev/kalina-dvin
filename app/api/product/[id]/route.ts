@@ -27,10 +27,10 @@ export async function PUT(request: NextRequest, context: Params) {
 		const oldProduct = await DB.Product.findById(context.params.id) as Product;
 		if(oldProduct.images?.length){
 			const imageNames = oldProduct.images.map(image => `${image.id}.${image.extension}`);
-			await removeFiles(imageNames,folderPath);
+			await removeFiles(imageNames);
 		}
 
-		await createFiles(body.images,folderPath);
+		await createFiles(body.images);
 		const images = body.images?.map(({id, extension}:Image) => ({id, extension, src: `/uploads/${id}.${extension}`}));
 		const updatedProduct = await DB.Product.findByIdAndUpdate(
 			context.params.id,
@@ -56,7 +56,7 @@ export async function DELETE(request: NextRequest, context: Params) {
 		const oldItem = await DB.Product.findById(context.params.id) as Product;
 		if(oldItem.images?.length){
 			const imageNames = oldItem.images.map(image => `${image.id}.${image.extension}`);
-			await removeFiles(imageNames,folderPath);
+			await removeFiles(imageNames);
 		}
 		await DB.Product.findByIdAndDelete(context.params.id);
 		return NextResponse.json(JSON.stringify({success: true}));

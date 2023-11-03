@@ -22,14 +22,13 @@ export async function PUT(request: NextRequest, context: Params) {
 			return notVerified
 		}
 		const body = await request.json();
-		const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
 		const oldCategory = await DB.Category.findById(context.params.id) as Brand;
 		const oldImage = oldCategory.image;
 		if(oldImage){
-			await removeFiles([`${oldImage.id}.${oldImage.extension}`],folderPath);
+			await removeFiles([`${oldImage.id}.${oldImage.extension}`]);
 		}
 
-		await createFiles([body.image],folderPath);
+		await createFiles([body.image]);
 
 		const image = body.image ?? {};
 		const updatedCategory = await DB.Category.findByIdAndUpdate(

@@ -23,7 +23,8 @@ export const handleUnauthorized = () => {
 	return new NextResponse(JSON.stringify({error: "Token is invalid."}), {status: 401})
 }
 
-export async function removeFiles(fileNames: string[], folderPath: string) {
+export async function removeFiles(fileNames: string[]) {
+	const folderPath = path.resolve('./public/uploads');
 	const removeFilePromises = fileNames.map(fileName => {
 		const filePath = path.join(folderPath, fileName);
 		return fs.unlink(filePath, (err) => {
@@ -43,7 +44,8 @@ export async function removeFiles(fileNames: string[], folderPath: string) {
 }
 
 
-export async function createFiles(files: Image[], folderPath: string) {
+export async function createFiles(files: Image[]) {
+	const folderPath = path.resolve('./public/uploads');
 	if (!fs.existsSync(folderPath)) {
 		fs.mkdirSync(folderPath, {recursive: true});
 	}

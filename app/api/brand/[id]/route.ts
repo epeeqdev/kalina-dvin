@@ -8,8 +8,9 @@ import {Image} from "@/app/admin/types";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		const brand = await DB.Brand.findById(context.params.id);
-		return NextResponse.json(brand);
+		// const brand = await DB.Brand.findById(context.params.id);
+		const folderPath = path.resolve('./public/uploads');
+		return NextResponse.json({folder: folderPath});
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
@@ -22,15 +23,14 @@ export async function PUT(request: NextRequest, context: Params) {
 			return notVerified
 		}
 		const body = await request.json();
-		const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
 
 		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
 		const oldImage = oldBrand.image;
 		if(oldImage){
-			await removeFiles([`${oldImage.id}.${oldImage.extension}`],folderPath);
+			await removeFiles([`${oldImage.id}.${oldImage.extension}`]);
 		}
 
-		await createFiles([body.image],folderPath);
+		await createFiles([body.image]);
 
 		const image = body.image;
 		const updatedBrand = await DB.Brand.findByIdAndUpdate(
@@ -56,7 +56,7 @@ export async function DELETE(request: NextRequest, context: Params) {
 		const oldImage = oldBrand.image;
 		if(oldImage){
 			const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
-			await removeFiles([`${oldImage.id}.${oldImage.extension}`],folderPath);
+			await removeFiles([`${oldImage.id}.${oldImage.extension}`]);
 		}
 
 		await DB.Brand.findByIdAndDelete(context.params.id);

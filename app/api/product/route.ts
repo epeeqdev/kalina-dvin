@@ -15,8 +15,7 @@ export async function POST(request: NextRequest) {
 			return notVerified
 		}
 		const body = await request.json();
-		const folderPath = path.resolve(`${__dirname}/../../../../../public/uploads`);
-		await createFiles(body.images,folderPath);
+		await createFiles(body.images);
 		const images = body.images?.map(({id, extension}:Image) => ({id, extension, src: `/uploads/${id}.${extension}`}))
 		const savedProduct = new DB.Product({...body, images}).save() as Product;
 		return NextResponse.json(savedProduct);

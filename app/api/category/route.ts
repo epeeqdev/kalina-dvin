@@ -13,8 +13,7 @@ export async function POST(request: NextRequest) {
 			return notVerified
 		}
 		const body = await request.json();
-		const folderPath = path.resolve(`${__dirname}/../../../../../public/uploads`);
-		await createFiles([body.image],folderPath);
+		await createFiles([body.image]);
 		const image = {...body.image, src: `/uploads/${body.image?.id}.${body.image?.extension}`}
 		console.log('image', {...body, image})
 		const savedCategory = await new DB.Category({...body, image}).save() as Brand;
