@@ -1,6 +1,8 @@
 import {DB} from "@/backend/db";
 import {NextResponse} from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
 	try{
 		const brands = await DB.Brand.find();

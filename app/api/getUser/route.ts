@@ -4,6 +4,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {handleUnauthorized, verifyToken} from "@/app/api/helpers";
 import {JWTUserEncoded} from "@/app/api/types";
 
+
 export async function POST(request: NextRequest) {
     try {
         const notVerified = verifyToken(request);

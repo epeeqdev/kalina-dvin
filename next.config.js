@@ -7,7 +7,7 @@ const nextConfig = {
 		ignoreBuildErrors: true,
 	},
 	images: {
-		path: "/",
+		path: "/public/uploads",
 	}
 
 }

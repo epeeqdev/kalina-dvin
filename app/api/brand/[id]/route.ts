@@ -6,6 +6,8 @@ import path from "path";
 import fs from "fs";
 import {Brand} from "@/app/admin/main/products/types";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest, context: Params) {
 	try {
 		const folderPath = path.resolve('./public/uploads');

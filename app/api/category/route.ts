@@ -3,6 +3,7 @@ import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Brand} from "@/app/admin/main/products/types";
 import path from "path";
+import {uploadImage} from "@/backend/imageAPI";
 
 
 
@@ -13,11 +14,8 @@ export async function POST(request: NextRequest) {
 			return notVerified
 		}
 		const body = await request.json();
-		await createFiles([body.image]);
-		const image = {...body.image, src: `/uploads/${body.image?.id}.${body.image?.extension}`}
-		console.log('image', {...body, image})
+		const image = await uploadImage(body.image);
 		const savedCategory = await new DB.Category({...body, image}).save() as Brand;
-		console.log('saved category', savedCategory)
 		return NextResponse.json(savedCategory);
 	} catch (err) {
 		console.log(err)

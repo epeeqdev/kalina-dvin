@@ -2,9 +2,9 @@ import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {createFiles, removeFiles, verifyToken} from "@/app/api/helpers";
-import path from "path";
 import {Brand} from "@/app/admin/main/products/types";
-import {Image} from "@/app/admin/types";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {

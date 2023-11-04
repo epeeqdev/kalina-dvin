@@ -1,6 +1,5 @@
 import {DB} from "@/backend/db";
 import {NextResponse} from "next/server";
-import path from "path";
 
 export const dynamic = "force-dynamic";
 

@@ -3,6 +3,8 @@ import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {verifyToken} from "@/app/api/helpers";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest, context: Params) {
 	try {
 		const attribute = await DB.Attribute.findById(context.params.id);
