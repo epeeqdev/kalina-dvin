@@ -9,15 +9,10 @@ import {Brand} from "@/app/admin/main/products/types";
 export async function GET(request: NextRequest, context: Params) {
 	try {
 		const folderPath = path.resolve('./public/uploads');
-		const files = [];
-		await fs.readdir(folderPath, (err, files) => {
-			files.forEach(file => {
-				files.push(file)
-				console.log(file);
-			});
-		});
-		const brand = await DB.Brand.findById(context.params.id);
-		return NextResponse.json({brand, files});
+		const fileItems = fs.readdirSync(folderPath);
+		console.log('fiiiles', fileItems)
+		// const brand = await DB.Brand.findById(context.params.id);
+		return NextResponse.json({fileItems});
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
