@@ -3,14 +3,21 @@ import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {createFiles, removeFiles, verifyToken} from "@/app/api/helpers";
 import path from "path";
+import fs from "fs";
 import {Brand} from "@/app/admin/main/products/types";
-import {Image} from "@/app/admin/types";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		// const brand = await DB.Brand.findById(context.params.id);
 		const folderPath = path.resolve('./public/uploads');
-		return NextResponse.json({folder: folderPath, dirname: __dirname});
+		const files = [];
+		await fs.readdir(folderPath, (err, files) => {
+			files.forEach(file => {
+				files.push(file)
+				console.log(file);
+			});
+		});
+		const brand = await DB.Brand.findById(context.params.id);
+		return NextResponse.json({brand, files});
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
