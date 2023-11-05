@@ -21,26 +21,26 @@ export interface UploadedImageData {
 	thumbnailUrl: string;
 }
 
-type BrandRequestDTO = string;
-type CategoryRequestDTO = string;
+export type BrandRequestDTO = string;
+export type CategoryRequestDTO = string;
 
-type CategoryResponseDTO = {
+export type CategoryResponseDTO = {
 	id_: string;
 	name: TextStructure;
 	image: ImageDTO
 }[];
-type BrandResponseDTO = {
+export type BrandResponseDTO = {
 	id_: string;
 	name: TextStructure;
 	image: ImageDTO
 }[];
 
-type AttributeRequestDTO = {
+export type AttributeRequestDTO = {
 	id: string;
 	value: TextStructure;
 }[];
 
-type AttributeResponseDTO = {
+export type AttributeResponseDTO = {
 	id_: string
 	name: TextStructure;
 	value: TextStructure;

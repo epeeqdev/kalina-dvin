@@ -1,11 +1,12 @@
 import {ComponentPropsWithoutRef, forwardRef} from "react";
 import clsx from "clsx";
+import {FieldError} from "react-hook-form";
 
 interface Props extends ComponentPropsWithoutRef<'textarea'> {
     label?: string;
     placeholder?: string
     className?: string;
-    error?: string;
+    error?: FieldError["message"];
     required?: boolean
 }
 
