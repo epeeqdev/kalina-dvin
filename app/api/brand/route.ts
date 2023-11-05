@@ -1,8 +1,8 @@
-import {createFiles, verifyToken} from "@/app/api/helpers";
+import {verifyToken} from "@/app/api/helpers";
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Brand} from "@/app/admin/main/products/types";
-import path from "path";
+import {uploadImage} from "@/backend/imageAPI";
 
 
 
@@ -13,8 +13,7 @@ export async function POST(request: NextRequest) {
 			return notVerified
 		}
 		const body = await request.json();
-		await createFiles([body.image]);
-		const image = {...body.image, src: `/uploads/${body.image?.id}.${body.image?.extension}`}
+		const image = await uploadImage(body.image);
 		const savedBrand = await new DB.Brand({...body, image}).save() as Brand;
 		return NextResponse.json(savedBrand);
 	} catch (err) {

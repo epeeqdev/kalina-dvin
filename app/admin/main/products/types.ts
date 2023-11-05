@@ -11,6 +11,7 @@ export interface Product {
     description : string;
     images: Image[];
     categories : string[];
+    brand: string;
     attributes : ProductAttribute[]
 }
 export interface Brand {

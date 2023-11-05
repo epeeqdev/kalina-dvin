@@ -1,20 +1,16 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
-import {createFiles, removeFiles, verifyToken} from "@/app/api/helpers";
-import path from "path";
-import fs from "fs";
+import {verifyToken} from "@/app/api/helpers";
 import {Brand} from "@/app/admin/main/products/types";
+import {deleteImage, uploadImage} from "@/backend/imageAPI";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		const folderPath = path.resolve('./public/uploads');
-		const fileItems = fs.readdirSync(folderPath);
-		console.log('fiiiles', fileItems)
-		// const brand = await DB.Brand.findById(context.params.id);
-		return NextResponse.json({fileItems});
+		const brand = await DB.Brand.findById(context.params.id);
+		return NextResponse.json(brand);
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
@@ -31,16 +27,15 @@ export async function PUT(request: NextRequest, context: Params) {
 		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
 		const oldImage = oldBrand.image;
 		if(oldImage){
-			await removeFiles([`${oldImage.id}.${oldImage.extension}`]);
+			await deleteImage(oldImage.id);
 		}
 
-		await createFiles([body.image]);
+		const image = await uploadImage(body.image);
 
-		const image = body.image;
 		const updatedBrand = await DB.Brand.findByIdAndUpdate(
 			context.params.id,
 			{
-				$set: {...body, image: {...image, src: `/uploads/${image.id}.${image.extension}`}},
+				$set: {...body, image},
 			},
 			{ new: true }
 		);
@@ -57,10 +52,8 @@ export async function DELETE(request: NextRequest, context: Params) {
 			return notVerified
 		}
 		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
-		const oldImage = oldBrand.image;
-		if(oldImage){
-			const folderPath = path.resolve(`${__dirname}/../../../../../../public/uploads`);
-			await removeFiles([`${oldImage.id}.${oldImage.extension}`]);
+		if(oldBrand){
+			await deleteImage(oldBrand.image.id);
 		}
 
 		await DB.Brand.findByIdAndDelete(context.params.id);

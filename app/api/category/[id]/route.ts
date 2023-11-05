@@ -1,8 +1,9 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
-import {createFiles, removeFiles, verifyToken} from "@/app/api/helpers";
+import {verifyToken} from "@/app/api/helpers";
 import {Brand} from "@/app/admin/main/products/types";
+import {deleteImage, uploadImage} from "@/backend/imageAPI";
 
 export const dynamic = "force-dynamic";
 
@@ -25,16 +26,15 @@ export async function PUT(request: NextRequest, context: Params) {
 		const oldCategory = await DB.Category.findById(context.params.id) as Brand;
 		const oldImage = oldCategory.image;
 		if(oldImage){
-			await removeFiles([`${oldImage.id}.${oldImage.extension}`]);
+			await deleteImage(oldImage.id);
 		}
 
-		await createFiles([body.image]);
+		const image = await uploadImage(body.image);
 
-		const image = body.image ?? {};
 		const updatedCategory = await DB.Category.findByIdAndUpdate(
 			context.params.id,
 			{
-				$set: {...body, image: {...image, src: `/uploads/${image.id}.${image.extension}`}},
+				$set: {...body, image},
 			},
 			{ new: true }
 		);
@@ -50,6 +50,10 @@ export async function DELETE(request: NextRequest, context: Params) {
 		const notVerified = verifyToken(request);
 		if(notVerified){
 			return notVerified
+		}
+		const oldCategory = await DB.Category.findById(context.params.id) as Brand;
+		if(oldCategory){
+			await deleteImage(oldCategory.image.id);
 		}
 		await DB.Category.findByIdAndDelete(context.params.id);
 		return NextResponse.json(JSON.stringify({success: true}));

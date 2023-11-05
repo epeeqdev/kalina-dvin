@@ -1,8 +1,7 @@
-import {createFiles, verifyToken} from "@/app/api/helpers";
+import {verifyToken} from "@/app/api/helpers";
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Brand} from "@/app/admin/main/products/types";
-import path from "path";
 import {uploadImage} from "@/backend/imageAPI";
 
 

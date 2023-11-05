@@ -9,8 +9,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		const product = await DB.Product.findById(context.params.id);
-		return NextResponse.json(product);
+		const product = await DB.Product.findById(context.params.id) as Product;
+		const categories = await Promise.all(product.categories.map(item => DB.Category.findById(item)))
+		const brand = DB.Brand.findById(product.brand)
+		return NextResponse.json({...product, categories, brand: brand});
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}

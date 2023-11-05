@@ -56,7 +56,7 @@ export default function Add() {
 
     const onSubmit = async (data: ProductFormFields) => {
         setLoading(true)
-        await addProduct({...data, images,categories:getValues().categories.map(item => item.value), attributes: []}).then(() => {
+        await addProduct({...data, images,categories:getValues().categories.map(item => item.value), brand: getValues().brand?.value, attributes: []}).then(() => {
             setLoading(false)
             router.push('/admin/main/products')
         }).catch(() => {

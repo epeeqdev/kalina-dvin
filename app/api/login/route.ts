@@ -6,18 +6,21 @@ import {NextResponse} from "next/server";
 export async function POST(request: Request,) {
 	try{
 		const requestBody = await request.json();
+		console.log('request username', requestBody.username)
 		const user = await DB.User.findOne(
 			{
 				username: requestBody.username
 			}
 		);
 
+		console.log('useeer ',user)
+
 		if(!user){
 			return new NextResponse("Wrong User Name", {status: 401})
 		}
 
 		const hashedPassword = CryptoJS.AES.decrypt(
-			'user.password',
+			user.password,
 			process.env.PASS_SEC
 		);
 
