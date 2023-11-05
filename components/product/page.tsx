@@ -18,7 +18,6 @@ const descriptionStyles = {
 
 export const ProductTemplate = ({item, className}: Props) => {
     const router = useRouter()
-    console.log(item)
     return (
             <div onClick={() => router.push(`/admin/main/products/edit/${item._id}`)} className={clsx(`w-full bg-white hover:bg-[#eeeeee] transition flex gap-[2%] py-2 px-2 cursor-pointer`, className)}>
                 <div className='relative'>

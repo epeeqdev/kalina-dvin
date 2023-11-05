@@ -2,11 +2,10 @@
 
 import ReactLoading from "react-loading";
 
-
 export default function LoadingSpinner() {
     return (
         <div className="w-full fixed left-0 top-0 z-10 h-full bg-black bg-opacity-50 text-white flex justify-center items-center text-lg">
-            <ReactLoading type="spin" color="red" />
+            <ReactLoading type="bubbles" color="red" />
         </div>
     );
 }

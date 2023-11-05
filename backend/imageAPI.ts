@@ -1,14 +1,13 @@
 import ImageKit from "imagekit";
-import {Image} from "@/app/admin/types";
-import {UploadedImageData} from "@/backend/types";
+import {ImageDTO, UploadedImageData} from "@/backend/types";
 
 export const ImageAPI = new ImageKit({
-	publicKey : "public_qNyTa0LKzjJeUXnktJI8UMFsBTk=",
-	privateKey : "private_Hq5KpxIYtEynlmk3KEFei9zDoYo=",
-	urlEndpoint : "https://ik.imagekit.io/zofeq1cgs"
+	publicKey : process.env.IMAGE_KIT_PUBLIC_KEY,
+	privateKey : process.env.IMAGE_KIT_PRIVATE_KEY,
+	urlEndpoint : process.env.IMAGE_KIT_URL
 });
 
-export const uploadImage = async (image: Image): Promise<Image> => {
+export const uploadImage = async (image: ImageDTO): Promise<ImageDTO> => {
 	if(!image) return;
 	const uploaded = await ImageAPI.upload({
 		file : image.src, //required
@@ -21,12 +20,12 @@ export const deleteImage = (id: string) => {
 	return ImageAPI.deleteFile(id)
 }
 
-export const deleteImages = (images: Image[]) => {
+export const deleteImages = (images: ImageDTO[]) => {
 	if(!images?.length) return;
 	return Promise.all(images.map(({id}) =>deleteImage(id)))
 }
 
-export const uploadImages = (images: Image[]) => {
+export const uploadImages = (images: ImageDTO[]) => {
 	if(!images?.length) return;
 	return Promise.all(images.map(uploadImage))
 }

@@ -1,40 +1,36 @@
 'use client'
 
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {getProducts} from "@/app/admin/main/products/helpers/showProducts";
 import {ProductTemplate} from "@/components/product/page";
-import {Product} from "@/app/admin/main/products/types";
 import {Input} from "@/components/controls/input";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useDebouncedState} from "@/utils/hooks/useDebouncedState";
+import {useQuery} from "@/utils/hooks/useQuery";
+import {useQueryString} from "@/utils/hooks/useQueryString";
 
 export default function ProductsPage() {
+	const {searchParams, pushQueryString} = useQueryString()
+	const {data, isLoading, refetch} = useQuery(getProducts, [], {fetchOnMount: false});
 
-	const [products, setProducts] = useState<Product[]>([]);
-	const [isLoading, setLoading] = useState<boolean>(false);
-	const search = useSearchParams()
-
-	const showProducts = async () => {
-		setLoading(true)
-		const response = await getProducts(search);
-		if (response?.data) {
-			setProducts(response.data)
-		}
-		setLoading(false);
-	}
+	console.log(searchParams.get('search'))
+	const [search, setSearch] = useDebouncedState(searchParams.get('search') ?? '');
 
 	useEffect(() => {
-		showProducts();
-	}, [])
-	if(isLoading) return <LoadingSpinner/>;
-	if (!products?.length) return <div className='flex justify-center text-lg'>Пока продуктов нет.</div>
+			const params = pushQueryString('search', search);
+			refetch(params)
+	},[search])
+
 	return <div className='pt-4'>
-		<Input className='w-full mb-5' placeholder='Search'/>
-		<div className='grid grid-cols-12'>
+		{isLoading && <LoadingSpinner/>}
+		<Input defaultValue={search} className='w-full mb-5' onChange={(e) => setSearch(e.target.value)} placeholder='Search'/>
+		{!data?.length && !isLoading && <div className='flex justify-center text-lg'>Продукты не найдены.</div>}
+		{!!data?.length &&<div className='grid grid-cols-12'>
 			{
-				products.map((item) => <ProductTemplate className='col-span-12 lg:col-span-6 xl:col-span-4' key={item._id}
+				data.map((item) => <ProductTemplate className='col-span-12 lg:col-span-6 xl:col-span-4'
+				                                        key={item._id}
 				                                        item={item}/>)
 			}
-		</div>
+		</div>}
 	</div>
 }

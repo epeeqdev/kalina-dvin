@@ -11,7 +11,6 @@ const categorySchema = new Schema({
 		extension: String,
 		src: String,
 	},
-	slug: String,
 });
 
 export const Category = models.Category || model('Category', categorySchema, 'Category');

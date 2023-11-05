@@ -2,16 +2,7 @@ import {verifyToken} from "@/app/api/helpers";
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Product} from "@/app/admin/main/products/types";
-
-import ImageKit from "imagekit";
 import {uploadImages} from "@/backend/imageAPI";
-
-
-const imagekit = new ImageKit({
-	publicKey : "public_qNyTa0LKzjJeUXnktJI8UMFsBTk=",
-	privateKey : "private_Hq5KpxIYtEynlmk3KEFei9zDoYo=",
-	urlEndpoint : "https://ik.imagekit.io/zofeq1cgs"
-});
 
 
 
