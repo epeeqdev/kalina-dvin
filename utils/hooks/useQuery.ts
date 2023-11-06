@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {QueryHookOptions} from "@/types";
 
-export const useQuery = <QueryFunction extends (...args: any[]) => any, ArgTypes>(query: QueryFunction, args?:ArgTypes[], options?:QueryHookOptions) => {
-	const [data, setData] = useState(null);
+export const useQuery = <ReturnValue, QueryFunction extends (...args: any[]) => any = () => void, ArgTypes = any[]>(query: QueryFunction, args?:ArgTypes[], options?:QueryHookOptions) => {
+	const [data, setData] = useState<ReturnValue | null>(null);
 	const [error, setError] = useState<Error | null>(null);
 	const [isLoading, setLoading] = useState<boolean>(false);
 

@@ -18,7 +18,7 @@ export interface Props {
 }
 
 export default function AutocompleteInput({control, name, options, error, label, required, multiselect}: Props) {
-    return <Controller control={control} name={name} render={({field,fieldState}) => {
+    return <Controller control={control} name={name} render={({field}) => {
         return (
             <div>
                 <div className="flex">
