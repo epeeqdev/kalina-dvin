@@ -13,7 +13,7 @@ const validationSchema = yup.object().shape({
     categories: yup.array(yup.object().shape({label: yup.string(), value: yup.string()})).min(1).required("Categories is required"),
     brand: yup.object().shape({label: yup.string(), value: yup.string()}).required("Brand is required"),
     images: yup.array(yup.object().shape({src: yup.string(), id: yup.string(), extension: yup.string()})),
-    attributes: yup.array(yup.object().shape({label: yup.string(), value: yup.string()}))
+    attributes: yup.array(yup.object().shape({attribute : yup.object(), am: yup.string(), ru: yup.string()}))
 })
 
 export interface ProductFormFields {
@@ -28,19 +28,25 @@ export const useAddProductForm = (data?: Product) => {
         values: {
             title : data?.title,
             description : data?.description,
-            categories: data?.categories.map(item => ({label: item.name.ru, value: item._id})),
+            categories: data?.categories?.map(item => ({label: item.name.ru, value: item._id})),
             images: data?.images,
-            brand: {label: data?.brand?.name.ru, value: data?.brand?._id},
-            attributes: []
+            brand: data?.brand
+                ? {label: data?.brand?.name.ru, value: data?.brand?._id}
+                : null,
+            attributes: data?.attributes?.map(item => ({...item, attribute: {...item.attribute, label: item.attribute?.name?.ru, value: item.attribute?._id}}))
         }
     });
+
+
 
     const getRequestData = ():ProductRequestDTO => {
         const formValues = values.getValues();
         const categories = formValues?.categories.map(item => item.value!)
         const brand = formValues.brand.value!;
+        const attributes = formValues?.attributes
 
-        return {...formValues, categories: categories, brand}
+
+        return {...formValues, categories, brand, attributes}
     }
     return {errors: values.formState.errors,control, getRequestData, ...values}
 }

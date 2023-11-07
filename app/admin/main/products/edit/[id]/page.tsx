@@ -9,6 +9,6 @@ export default function EditProduct(){
 	const {id} = useParams();
 
 	return <div>
-		<ProductForm id={id} />
+		<ProductForm id={id as string} />
 	</div>
 }

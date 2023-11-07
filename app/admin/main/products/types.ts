@@ -21,12 +21,14 @@ export interface Brand {
 }
 
 export interface ProductAttribute {
-    name: string;
-    value: string;
+    am: string;
+    ru: string;
     id: string;
+    attribute: {
+        value: string,
+        label: string
+    }
 }
-
-
 
 export interface ImageType{
     src: string;

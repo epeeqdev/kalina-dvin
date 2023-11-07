@@ -10,9 +10,10 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest, context: Params) {
 	try {
 		const product = await DB.Product.findById(context.params.id) as Product;
-		const categories = await Promise.all(product.categories.map(item => DB.Category.findById(item)))
+		const categories = await Promise.all(product.categories.map(item => DB.Category.findById(item)));
+		const attributes = await Promise.all(product.attributes.map(item => DB.Attribute.findById(item.attribute?.value)));
 		const brand = await DB.Brand.findById(product.brand)
-		return NextResponse.json({...product, categories, brand: brand});
+		return NextResponse.json({...product._doc, attributes: product.attributes.map((item,index) => ({...item, attribute: attributes[index] })), categories, brand: brand});
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
@@ -52,12 +53,14 @@ export async function DELETE(request: NextRequest, context: Params) {
 			return notVerified
 		}
 		const oldItem = await DB.Product.findById(context.params.id) as Product;
+		console.log('oldItem.images',oldItem.images)
 		if(oldItem.images?.length){
 			await deleteImages(oldItem.images);
 		}
 		await DB.Product.findByIdAndDelete(context.params.id);
 		return NextResponse.json(JSON.stringify({success: true}));
 	} catch (err) {
+		console.log(err)
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
 }

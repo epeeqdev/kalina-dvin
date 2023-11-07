@@ -5,7 +5,7 @@ interface Props extends ComponentPropsWithoutRef<'input'> {
     label?: string;
     placeholder?: string
     className?: string;
-    error?: string;
+    error?: string | any;
     required?: boolean;
 }
 

@@ -46,6 +46,11 @@ export type AttributeResponseDTO = {
 	value: TextStructure;
 }[];
 
+export type AttributesResponseDTO = {
+	_id: string
+	name: TextStructure;
+}[];
+
 export interface ImageDTO {
 	src: string;
 	id: string;

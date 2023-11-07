@@ -12,8 +12,6 @@ import {useQueryString} from "@/utils/hooks/useQueryString";
 export default function ProductsPage() {
 	const {searchParams, pushQueryString} = useQueryString()
 	const {data, isLoading, refetch} = useQuery(getProducts, [], {fetchOnMount: false});
-
-	console.log(searchParams.get('search'))
 	const [search, setSearch] = useDebouncedState(searchParams.get('search') ?? '');
 
 	useEffect(() => {

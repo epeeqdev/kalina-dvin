@@ -10,89 +10,77 @@ import ImageGallery from "@/app/admin/main/products/add/components/ImageGallery"
 import {Input} from "@/components/controls/input";
 import {TextArea} from "@/components/controls/text-area";
 import MultiSelectInput from "@/components/controls/autocomplete-input";
-import DeleteButton from "@/components/controls/delete-button/page";
-import AttrForm from "@/app/admin/main/products/add/components/attrForm";
 import {Button} from "@/components/controls/button";
 import axios from "@/axios";
 import {editProduct} from "@/app/admin/main/products/helpers/editProduct";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {CategoryResponseDTO} from "@/backend/types";
+import {useMutation} from "@/utils/hooks/useMutation";
+import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
+import AttributesForm from "@/app/admin/main/products/add/components/attributesForm";
+import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
+import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
 
-export default function ProductForm({id}:{id: any}){
+export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
-    const [brands , setBrands] = useState([])
-    const [isLoading, setLoading] = useState(false);
-    const [inpVisible, setInpVisible] = useState<boolean>(false)
-    const [attributes, setAttributes] = useState<ProductAttribute[]>([]);
-    const [uniqueProductData, setUniqueProductData] = useState<any>();
-    const {data: categoriesResponse} = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`))
+    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
+    const [uniqueProductData, setUniqueProductData] = useState();
+    const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
+    const {data: brandsResponse, isLoading: brandsLoading} = useQuery<BrandResponseDTO[]>(() => axios.get(`/api/brands`));
+    const {mutate: deleteProductMutate, isLoading: deleteLoading} = useMutation(deleteProduct);
+    const {mutate:editProductMutate, isLoading: editProductLoading} = useMutation(editProduct);
+    const {mutate:addProductMutate, isLoading: addProductLoading} = useMutation(addProduct);
+    const isLoading = categoriesLoading || brandsLoading || deleteLoading || editProductLoading || addProductLoading;
 
     const {
         errors,
         control,
         register,
         handleSubmit,
-        getValues,
         getRequestData
     } = useAddProductForm(uniqueProductData);
 
 
-    console.log(errors)
+    console.log("errors", errors)
 
-    const categories = categoriesResponse?.map(item => ({value : item._id , label: item.name.ru})) ?? []
-    const getBrands = () => {
-        axios.get(`/api/brands`).then((resp) => {
-            setBrands( resp.data.map((item : CategoriesItem) => {
-                return {value : item._id , label: item.name.ru}
-            }))
-        })
-    }
-    const removeItem = (id: string) => {
-        setAttributes(prev => prev.filter((item) => item.id !== id))
-    }
+    const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
+    const brands = brandsResponse?.map((item: BrandResponseDTO) => ({value: item._id, label: item.name.ru}))
 
     const onSubmit = async () => {
-        setLoading(true)
-        if(id){
-            await editProduct(id, getRequestData())
-                .then(() => router.push('/admin/main/products'))
-                .catch((err) => console.log(err))
-                .finally(() => setLoading(false))
-        }else{
-            await addProduct(getRequestData())
-                .then(() => router.push('/admin/main/products'))
-                .catch((e) => console.log(e))
-                .finally(() => setLoading(false))
+        if (id) {
+            editProductMutate(id, getRequestData()).then(() => router.push('/admin/main/products'))
+        } else {
+            addProductMutate(getRequestData()).then(() => router.push('/admin/main/products'))
         }
 
     }
 
     const getProductWithId = () => {
-       id && axios.get(`/api/product/${id}`)
-           .then(response => {
-               setUniqueProductData(response.data)
-           })
-           .catch((e) => {
-           console.log("error" , e)
-       })
+        id && axios.get(`/api/product/${id}`)
+            .then(response => {
+                setUniqueProductData(response.data)
+            })
+            .catch((e) => {
+                console.log("error", e)
+            })
     }
 
     useEffect(() => {
-        if(id){
+        if (id) {
             getProductWithId()
         }
-        getBrands()
-    },[])
+    }, [])
+
 
     const submit = () => {
-
-        handleSubmit((data) => {
-            console.log("HANDLE SUBMIT")
-            onSubmit(data)
+        handleSubmit(() => {
+            onSubmit()
         })()
     }
 
-    console.log(getValues())
+   const onDelete = async () => {
+       await deleteProduct(id);
+       router.push('/admin/main/products')
+   }
 
     return (
         <div className="xl:w-[60%] mx-auto w-full">
@@ -142,39 +130,22 @@ export default function ProductForm({id}:{id: any}){
                 />
             </div>
             {/*-----------------------------  ATTRIBUTES  -------------------------*/}
-            <div className="mb-5">
-                <div>
-                    <div className="my-5 text-dark-grey">Attributes</div>
-                    <div>
-                        {attributes.map(({id, name, value}) =>
-                            <div className="my-5 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-[400px] bg-white rounded pl-[10px]" key={id}>
-                                {`${name} : ${value}`}
-                                <DeleteButton remove={() => removeItem(id)}/>
-                            </div>)}
-                    </div>
-                </div>
-            </div>
-            <div className="mb-5">
-                <label className="mb-2">
-                    {
-                        inpVisible
-                            ? <AttrForm
-                                name="attributes"
-                                control={control}
-                                onAdd={(attr) => {
 
-                                    setAttributes(prev => [...prev, attr]);
-                                    setInpVisible(false);
-                                }}
-                            />
-                            : <Button className="ml-5" onClick={() => setInpVisible(prev => !prev)}>Add
-                                attributes</Button>
-                    }
-                </label>
-            </div>
+            <AttributesForm control={control} name='attributes'/>
             <div className="fixed right-4 top-4">
+                {
+                    id ? <Button className='w-[150px] bg-red-700 hover:bg-red-800 text-white' onClick={() => {
+                            setDeleteModalOpen(true)
+                        }}>Удалить</Button>
+                        : <></>
+                }
                 <Button className='w-[150px]' onClick={submit}>Сохранить</Button>
             </div>
+            <DeleteConfirmationModal
+                isOpen={deleteModalOpen}
+                onClose={() => setDeleteModalOpen(false)}
+                onDelete={onDelete}
+            />
         </div>
     )
 }

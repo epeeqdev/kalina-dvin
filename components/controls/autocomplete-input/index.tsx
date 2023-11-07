@@ -3,15 +3,15 @@ import Select from 'react-select';
 import {Control, Controller} from "react-hook-form";
 
 export interface Option {
-    name: string;
+    label: string;
     value: string
 }
 
 export interface Props {
     control: Control<any>
-    options: Option[];
+    options?: Option[];
     name: string;
-    error?: string
+    error?: string | any
     label: string
     required?: boolean;
     multiselect?: boolean;
