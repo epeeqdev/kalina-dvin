@@ -19,6 +19,7 @@ export default function ImageGallery({control, name}: Props) {
                 if (e?.target?.files) {
                     const imgList = Object.values(e.target.files);
                     const images = await Promise.all<Promise<Image>>(imgList.map(item => convertFileToBase64(item)))
+                    console.log("IMAGES IMAGES" , images)
                     field.onChange([...(field.value ?? []), ...images]);
                 }
             }

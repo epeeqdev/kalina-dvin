@@ -6,7 +6,7 @@ interface Props extends ComponentPropsWithoutRef<'textarea'> {
     label?: string;
     placeholder?: string
     className?: string;
-    error?: FieldError["message"];
+    error?: any;
     required?: boolean
 }
 

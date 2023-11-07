@@ -21,7 +21,7 @@ export const ProductTemplate = ({item, className}: Props) => {
     return (
             <div onClick={() => router.push(`/admin/main/products/edit/${item._id}`)} className={clsx(`w-full bg-white hover:bg-[#eeeeee] transition flex gap-[2%] py-2 px-2 cursor-pointer`, className)}>
                 <div className='relative'>
-                    <img className='w-[150px] h-[150px] min-w-[150px] object-contain bg-[#dadada] rounded left-0 top-0' src={item.images[0]?.src} alt="photo"/>
+                    <img className='w-[150px] h-[150px] min-w-[150px] object-contain bg-[#dadada] rounded left-0 top-0' src={item.images?.[0]?.src} alt="photo"/>
                 </div>
                 <div className='pr-4'>
                     <p className='text-[#666060] text-[10px]'>{item.brand?.name?.ru}</p>
