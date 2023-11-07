@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function ShowAttributes({attributes, removeItem, onAddClick} : Props){
-    console.log(attributes, "ATTR bUITEs")
     return (
         <div className="mb-5">
             <div>
@@ -24,7 +23,6 @@ export default function ShowAttributes({attributes, removeItem, onAddClick} : Pr
                 <div>
                     {
                         attributes?.map(({id, am, ru, attribute}) => {
-                            console.log(id,am,ru,attribute, "GGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
                             return <div className="my-5 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-[400px] bg-white rounded pl-[10px]" key={id}>
                                 {`${attribute?.label} : AM - ${am} | RU - ${ru}`}
                                 <DeleteButton remove={() => removeItem(id)}/>

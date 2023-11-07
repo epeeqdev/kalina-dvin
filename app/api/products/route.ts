@@ -5,7 +5,7 @@ import {Product} from "@/app/admin/main/products/types";
 
 export async function GET(request: Request) {
 	try {
-		const searchParams = new URLSearchParams(request.url?.slice(request.url?.indexOf('?')));
+		const searchParams = new URLSearchParams(request?.url?.slice(request.url?.indexOf('?')));
 
 		const brandQuery = searchParams?.get('brandId');
 		const categoryQuery = searchParams?.get('categoryId');

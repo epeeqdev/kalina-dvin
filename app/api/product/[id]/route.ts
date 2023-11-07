@@ -30,8 +30,13 @@ export async function PUT(request: NextRequest, context: Params) {
 		if(oldProduct?.images?.length){
 			await deleteImages(oldProduct.images);
 		}
+		let images;
+		if(body?.images?.length){
+			images = await uploadImages(body.images)
+		}else {
+			images = [];
+		}
 
-		const images = body.images?.length ? await uploadImages(body.images) : [];
 		const updatedProduct = await DB.Product.findByIdAndUpdate(
 			context.params.id,
 			{

@@ -1,12 +1,11 @@
-"use client"
+'use client'
 
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
-import {CategoriesItem, ProductAttribute} from "@/app/admin/main/products/types";
-import {useAddProductForm} from "@/app/admin/main/products/add/form";
+import {useAddProductForm} from "@/app/admin/main/products/components/addForm";
 import {addProduct} from "@/app/admin/main/products/helpers/addProduct";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import ImageGallery from "@/app/admin/main/products/add/components/ImageGallery";
+import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import {TextArea} from "@/components/controls/text-area";
 import MultiSelectInput from "@/components/controls/autocomplete-input";
@@ -16,7 +15,7 @@ import {editProduct} from "@/app/admin/main/products/helpers/editProduct";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
 import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
-import AttributesForm from "@/app/admin/main/products/add/components/attributesForm";
+import AttributesForm from "@/app/admin/main/products/components/attributesForm";
 import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
 

@@ -5,7 +5,7 @@ export const verifyToken = (req: NextRequest) => {
 	const authHeader = req.headers.get("Authorization");
 	if (authHeader) {
 		const token = authHeader.split(" ")[1];
-		jwt.verify(token, process.env.JWT_SEC, (err) => {
+		jwt.verify(token, process.env.JWT_SEC!, (err) => {
 			if (err) {
 				return new NextResponse(JSON.stringify({error: "Token is invalid."}), {status: 401})
 			}

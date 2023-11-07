@@ -1,6 +1,6 @@
 "use client"
 
-import ProductForm from "@/app/admin/main/products/add/productForm";
+import ProductForm from "@/app/admin/main/products/components/productForm";
 import {useParams} from "next/navigation";
 
 

@@ -3,14 +3,16 @@ import {Input} from "@/components/controls/input";
 import {Button} from "@/components/controls/button";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import uniqid from "uniqid";
 import * as yup from "yup";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {useQuery} from "@/utils/hooks/useQuery";
 import {AttributesResponseDTO} from "@/backend/types";
 import axios from "@/axios";
 
+const schema = yup.object().shape({
+    am: yup.string().required("AM language is required"),
+    ru: yup.string().required("RU language is required"),
+    attribute: yup.object().required("Attribute name is required")
+})
 export default function AddAttributes({onSubmit}:{onSubmit : any}){
     const {data: attributesResponse} = useQuery<AttributesResponseDTO>(() => axios.get(`/api/attributes`))
     const attrOnSubmit = () => {
@@ -19,24 +21,17 @@ export default function AddAttributes({onSubmit}:{onSubmit : any}){
         })()
     }
 
-    const schema = yup.object().shape({
-        am: yup.string().required("AM language is required"),
-        ru: yup.string().required("RU language is required"),
-        attribute: yup.object().required("Attribute name is required")
-    })
-
     const {
         register,
         handleSubmit,
-        getValues,
         control: localFormControl,
-        formState: {errors}, reset
+        formState: {errors}
     }
         = useForm({
         resolver: yupResolver(schema)
     });
 
-    const attributesOptions = attributesResponse?.map(item => ({label: item.name.ru, value: item._id}));
+    const attributesOptions = attributesResponse?.map(item => ({label: item?.name?.ru, value: item?._id}));
 
     console.log(attributesOptions)
     return (
