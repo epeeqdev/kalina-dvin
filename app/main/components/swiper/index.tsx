@@ -20,7 +20,7 @@ export const Slider = () => {
             spaceBetween={50}
             slidesPerView={1}
             navigation
-            // autoplay={{delay: 2500}}
+            autoplay={{delay: 2500}}
             pagination={{
                 clickable: true,
                 bulletClass: 'bg-primary w-1 h-1 md:w-1.5 md:h-1.5 lg:w-2.5 lg:h-2.5 xl:w-3.5 xl:h-3.5 inline-block rounded-full m-1',
