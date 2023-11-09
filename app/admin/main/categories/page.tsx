@@ -1,30 +1,39 @@
 "use client"
 import {CategoryTemplate} from "@/app/admin/main/categories/halpers/categoryTamplate";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
+import {CategoryResponseDTO} from "@/backend/types";
 import axios from "@/axios";
-import {useState} from "react";
 import LoadingSpinner from "@/components/controls/loading-spinner";
+import {Button} from "@/components/controls/button";
+import Link from "next/link";
 
-export default function Categories(){
+export default function Categories() {
 
-    const {data: categorieResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO>(() => axios.get(`/api/categories`));
-    const categories = categorieResponse?.map(item => {
-        return ({
-            value: item._id,
-            label: item.name.ru,
-            image : item.image.src
-        })
-    }) ?? []
+    const {
+        data: categories,
+        isLoading: categoriesLoading
+    } = useQuery<CategoryResponseDTO>(() => axios.get(`/api/categories`));
 
-    console.log("categoriesResponse" , categories)
-    return <div>
-        {categories.map((item) => {
-             return (
-                 <CategoryTemplate item={item.label} className={"classname"} image={item.image.src} key={item.value}/>
-             )
+    console.log("categoriesResponse", categories)
+    return (
+        <div>
+            <div className={"flex justify-end mb-5"}>
+                <Link href="/admin/main/categories/add-category">
+                    <Button className="">Добавить категорию</Button>
+                </Link>
+            </div>
+
+            {categories?.map((item) => {
+                console.log("item" , item)
+                return (
+                    <CategoryTemplate
+                        item={item}
+                        key={item._id}
+                    />
+                )
             })
-        }
-        {categoriesLoading && <LoadingSpinner/>}
-    </div>
+            }
+            {categoriesLoading && <LoadingSpinner/>}
+        </div>
+    )
 }

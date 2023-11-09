@@ -12,3 +12,7 @@ export interface UserContext {
     setData: (data: User | null) => void;
     data: User | null;
 }
+
+export interface EventWrap<T = EventTarget> {
+    target: T;
+}
