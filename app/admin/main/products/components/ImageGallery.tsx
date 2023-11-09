@@ -1,58 +1,86 @@
 "use client"
 
-import {ChangeEvent} from "react";
+import {ChangeEvent, useState} from "react";
 import {convertFileToBase64} from "@/app/admin/main/products/helpers/convertImage";
-import {Image} from "@/app/admin/types";
 import DeleteButton from "@/components/controls/delete-button/page";
 import {Control, Controller} from "react-hook-form";
-import {Product} from "@/app/admin/main/products/types";
+import clsx from "clsx";
+import {EventWrap} from "@/app/admin/types";
+import {ImageDTO} from "@/backend/types";
 
 interface Props {
-   control: Control<Product>;
-   name: string;
+    control: Control<any>;
+    name: string;
+    className?: string,
+    multiple?: boolean
 }
-export default function ImageGallery({control, name}: Props) {
+
+export default function ImageGallery({control, name, className, multiple = false }: Props) {
+
+    const [isImageChoosed, setIsImageChoosed] = useState(true)
+    const handleFileChange = (e:EventWrap<HTMLInputElement>) => {
+        if (e.target.files?.length! > 0) {
+            setIsImageChoosed(false);
+        }
+    }
 
     return (
-        <Controller render={({field}) =>  {
+        <Controller render={({field}) => {
             const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
                 if (e?.target?.files) {
                     const imgList = Object.values(e.target.files);
-                    const images = await Promise.all<Promise<Image>>(imgList.map(item => convertFileToBase64(item)))
-                    console.log("IMAGES IMAGES" , images)
-                    field.onChange([...(field.value ?? []), ...images]);
+                    const images = await Promise.all<Promise<any>>(imgList.map(item => convertFileToBase64(item)))
+                    console.log(images[0], "images")
+                    field.onChange(multiple ? [...(field.value ?? []), ...images] : images[0]);
                 }
             }
 
-            const onRemove = (id:string) => {
-                if(field.value){
-                    field.onChange(field.value.filter(image => image.id !== id))
+            const onRemove = (id: string) => {
+                if (field.value) {
+                    field.onChange(multiple ? field.value.filter((image:ImageDTO) => image.id !== id): null)
+                    setIsImageChoosed(true)
                 }
             }
-            return <div>
-                <div className='grid grid-cols-4 gap-2 border-2 rounded p-2 min-h-[100px] lg:min-h-[200px]'>
+            return <div
+                    className={clsx('border-2 rounded',{
+                        'grid grid-cols-4 gap-2 p-2 min-h-[100px] lg:min-h-[200px]': multiple,
+                        'min-h-[100px] max-w-[50%] w-full min-w-[150px] flex items-center':!multiple
+                    }, className)}>
                     {
-                        field.value?.map((item: Image) => {
+                        multiple ? field.value?.map((item: ImageDTO) => {
                             return (
-                                <div key={item.id} className="relative pt-[100%]">
-                                    <img alt='product image' src={item.src} className="absolute w-full h-full left-0 top-0 object-contain bg-[#dadada]"/>
-                                    <DeleteButton remove={() => onRemove(item.id)} className={"absolute top-[3%] right-[3%]"}/>
+                                <div key={item.id} className="relative pt-[100%] w-full">
+                                    <img alt='product image' src={item.src}
+                                         className="absolute w-full h-full left-0 top-0 object-contain bg-[#dadada]"/>
+                                    <DeleteButton remove={() => onRemove(item.id)}
+                                                  className={"absolute top-[3%] right-[3%]"}/>
                                 </div>
                             )
-                        })
+                        }): !!field.value &&  <div key={field.value.id} className="relative pt-[100%] w-full">
+                            <img alt='product image' src={field.value.src}
+                                 className="absolute h-full left-0 top-0 object-contain bg-[#dadada] w-full"/>
+                            <DeleteButton remove={() => onRemove(field.value.id)}
+                                          className={"absolute top-[3%] right-[3%]"}/>
+                        </div>
                     }
-                    <div className="text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%]">
-                        <label className="w-full h-full cursor-pointer flex justify-center items-center text-[100px] absolute top-0 left-0">
+                    {
+                        (multiple || isImageChoosed) && <div className="text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%] w-full">
+                        <label
+                            className="w-full h-full cursor-pointer flex justify-center items-center text-[100px] absolute top-0 left-0">
                             <input className="hidden"
                                    type="file"
                                    multiple
-                                   onChange={onImageChange}
+                                   onChange={(e) => {
+                                       handleFileChange(e)
+                                       onImageChange(e)
+                                   }}
                                    accept="image/*"
                             />
                             +
                         </label>
                     </div>
+                    }
                 </div>
-            </div>}} name={name} control={control}/>
+        }} name={name} control={control}/>
     )
 }

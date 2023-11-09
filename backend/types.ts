@@ -25,7 +25,7 @@ export type BrandRequestDTO = string;
 export type CategoryRequestDTO = string;
 
 export type CategoryResponseDTO = {
-	id_: string;
+	_id: string;
 	name: TextStructure;
 	image: ImageDTO
 }[];

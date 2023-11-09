@@ -18,16 +18,23 @@ import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
 import AttributesForm from "@/app/admin/main/products/components/attributesForm";
 import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
+import Link from "next/link";
 
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const [uniqueProductData, setUniqueProductData] = useState();
-    const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
-    const {data: brandsResponse, isLoading: brandsLoading} = useQuery<BrandResponseDTO[]>(() => axios.get(`/api/brands`));
+    const {
+        data: categoriesResponse,
+        isLoading: categoriesLoading
+    } = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
+    const {
+        data: brandsResponse,
+        isLoading: brandsLoading
+    } = useQuery<BrandResponseDTO[]>(() => axios.get(`/api/brands`));
     const {mutate: deleteProductMutate, isLoading: deleteLoading} = useMutation(deleteProduct);
-    const {mutate:editProductMutate, isLoading: editProductLoading} = useMutation(editProduct);
-    const {mutate:addProductMutate, isLoading: addProductLoading} = useMutation(addProduct);
+    const {mutate: editProductMutate, isLoading: editProductLoading} = useMutation(editProduct);
+    const {mutate: addProductMutate, isLoading: addProductLoading} = useMutation(addProduct);
     const isLoading = categoriesLoading || brandsLoading || deleteLoading || editProductLoading || addProductLoading;
 
     const {
@@ -76,17 +83,17 @@ export default function ProductForm({id}: { id: string }) {
         })()
     }
 
-   const onDelete = async () => {
-       await deleteProduct(id);
-       router.push('/admin/main/products')
-   }
+    const onDelete = async () => {
+        await deleteProduct(id);
+        router.push('/admin/main/products')
+    }
 
     return (
         <div className="xl:w-[60%] mx-auto w-full">
             {isLoading && <LoadingSpinner/>}
             <h1 className="text-xl mb-5">{id ? "Edit Product" : "Add Product"}</h1>
             <div className="mb-5">
-                <ImageGallery control={control} name='images'/>
+                <ImageGallery control={control} name='images' multiple/>
             </div>
             <div className="mb-5">
                 <Input label="Title"
@@ -131,14 +138,20 @@ export default function ProductForm({id}: { id: string }) {
             {/*-----------------------------  ATTRIBUTES  -------------------------*/}
 
             <AttributesForm control={control} name='attributes'/>
-            <div className="fixed right-4 top-4">
+            <div className="fixed right-4 top-4 flex gap-2">
                 {
-                    id ? <Button className='w-[150px] bg-red-700 hover:bg-red-800 text-white' onClick={() => {
+                    id
+                        ?
+                        <Button className='w-[100px] bg-red-700 hover:bg-red-800 text-white' onClick={() => {
                             setDeleteModalOpen(true)
                         }}>Удалить</Button>
                         : <></>
                 }
-                <Button className='w-[150px]' onClick={submit}>Сохранить</Button>
+                <Link href="/admin/main/products">
+                    <Button className="w-[100px] bg-blue-700 hover:bg-blue-800">Отмена</Button>
+                </Link>
+                <Button className='w-[200px]' onClick={submit}>Сохранить</Button>
+
             </div>
             <DeleteConfirmationModal
                 isOpen={deleteModalOpen}
