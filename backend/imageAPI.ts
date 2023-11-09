@@ -7,32 +7,22 @@ export const ImageAPI = new ImageKit({
 	urlEndpoint : process.env.IMAGE_KIT_URL!
 });
 
-export const uploadImage = async (image: ImageDTO): Promise<ImageDTO | undefined> => {
-	if(!image) return;
+export const uploadImage = async (image: ImageDTO): Promise<ImageDTO | null> => {
+	if(!image) return null;
 	const uploaded = await ImageAPI.upload({
 		file : image.src, //required
 		fileName : `${image.id}.${image.extension}`, //required
 	});
 	return {id: uploaded.fileId, src:uploaded.url, extension: image.extension }
 }
-export const deleteImage = (id: string) => {
+export const deleteImage = async (id: string) => {
 	if(!id) return;
-	try {
-		return ImageAPI.deleteFile(id)
-	}catch(e) {
-		return null
-	}
-
+	return ImageAPI.deleteFile(id)
 }
 
 export const deleteImages = (images: ImageDTO[]) => {
 	if(!images?.length) return;
-	console.log(images)
-	try{
-		return Promise.all(images.map(({id}) => id && deleteImage(id)))
-	}catch(e){
-		return []
-	}
+	return Promise.all(images.map(({id}) => id && deleteImage(id)))
 
 }
 
