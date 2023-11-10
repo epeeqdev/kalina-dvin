@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import {useLanguage} from "@/app/main/hooks/useLanguage";
-import {Typography} from "@/components/controls/typography";
+import {Typography} from "@/app/main/components/controls/typography";
 import clsx from "clsx";
 import IconComponent from "@/components/icon";
 

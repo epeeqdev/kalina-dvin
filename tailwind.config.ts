@@ -22,14 +22,10 @@ const config: Config = {
       fontFamily: {
         body: 'Montserrat arm'
       },
-      screens: {
-        'tablet': '640px',
-        'laptop': '1024px',
-        'desktop': '1280px',
-      },
       fontSize: {
         small: '6px',
-        medium: '8px'
+        medium: '8px',
+        header: '32px'
       }
     },
   },

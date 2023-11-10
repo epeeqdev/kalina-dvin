@@ -1,4 +1,4 @@
-import {Options} from "@/components/controls/dropdown";
+import {Options} from "@/app/main/components/controls/dropdown";
 
 export interface NavigationItemsType {
     id: string,

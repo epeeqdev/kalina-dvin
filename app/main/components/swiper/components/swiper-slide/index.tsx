@@ -1,10 +1,10 @@
-import {Typography} from "@/components/controls/typography";
-import {Button} from "@/components/controls/button";
 import './style.css'
 import {useLanguage} from "@/app/main/hooks/useLanguage";
 import {useRouter} from "next/navigation";
 import Image from "next/image";
-import {LanguageType} from "@/components/controls/dropdown";
+import {LanguageType} from "@/app/main/components/controls/dropdown";
+import {Typography} from "@/app/main/components/controls/typography";
+import {Button} from "@/app/main/components/controls/button";
 
 const buttonTitle = {arm: 'Տեսնել Ավելին', ru: 'Узнать больше'}
 

@@ -5,8 +5,8 @@ import IconComponent from "@/components/icon";
 import clsx from "clsx";
 import {IconNameOptions} from "@/components/icon/icons";
 import {useLanguage} from "@/app/main/hooks/useLanguage";
-import {Typography} from "@/components/controls/typography";
-import Link from "next/link";
+import {Option} from "@/app/main/components/controls/dropdown/components/option";
+import {Typography} from "@/app/main/components/controls/typography";
 
 export type LanguageType = {arm: string, ru: string} | {arm: string} | {ru: string};
 
@@ -90,16 +90,13 @@ export const Dropdown = ({ title, className, options, onChange, size, dropdownCl
                 >
                     <div className="py-[20px] flex flex-col w-full" role="none">
                         {options?.map((el) => (
-                            <Link href="#" key={el.id} className="group hover:bg-primary hover:text-white transition" onClick={() => handleChange(el.id, el.isChanged)}>
-                                <div className={clsx(['flex h-[46px] items-center ',dropdownClassname?.items])}>
-                                    {el.icon && (
-                                        <div className="w-[22px] h-[32px]">
-                                            <IconComponent name={el.icon} className="group-hover:text-white text-primary" />
-                                        </div>
-                                    )}
-                                    <Typography title={getLanguage(el.title)} color="text-inherit" fontSize="text-base"/>
-                                </div>
-                            </Link>
+                            <Option
+                                key={el.id}
+                                title={getLanguage(el.title)}
+                                icon={el.icon}
+                                onClick={() =>handleChange(el.id, el.isChanged)}
+                                dropdownClassname={dropdownClassname?.items}
+                            />
                         ))}
                     </div>
                 </div>

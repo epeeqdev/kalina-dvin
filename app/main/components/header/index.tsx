@@ -12,7 +12,7 @@ export const Header = () => {
     return (
         <div className='w-full flex px-[10%] py-[10px] lg:py-[21px] items-center shadow-md'>
             <div>
-                <Image src='/logo.png' alt='logo' width={100} height={44} className='w-[65px] h-[24px] lg:w-[100px] lg:h-[44px] '/>
+                <Image src='/logo.png' alt='logo' width={100} height={44} className='w-auto h-[24px] lg:w-auto lg:h-[44px] '/>
             </div>
             <div className='flex-1'>
                 <div className='MOBILE-MENU flex lg:hidden justify-end'>

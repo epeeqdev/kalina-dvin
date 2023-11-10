@@ -1,12 +1,12 @@
 'use client'
 import {NavigationItems} from "@/app/main/components/header/constants";
 import Link from 'next/link'
-import {Typography} from "@/components/controls/typography";
 import {useLanguage} from "@/app/main/hooks/useLanguage";
-import {Dropdown} from "@/components/controls/dropdown";
 import {usePathname} from "next/navigation";
 import clsx from "clsx";
 import {useMainContext} from "@/app/main/hooks/useMainContext";
+import {Typography} from "@/app/main/components/controls/typography";
+import {Dropdown} from "@/app/main/components/controls/dropdown";
 
 
 export const Navigation = () => {
