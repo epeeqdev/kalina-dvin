@@ -28,7 +28,7 @@ export const ProductTemplate = ({item, className}: Props) => {
                     <h3 className='text-[16px] mb-1'>{item.title}</h3>
                     <div className='text-[10px] text-grey' style={descriptionStyles}>{item.description}</div>
                     <div className='mt-3 text-[12px] font-medium'>Категории:</div>
-                    <div className='text-[10px] text-grey'>{item.categories.map((category, index) => <span key={category.id}>{category.name.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
+                    <div className='text-[10px] text-grey'>{item.categories.map((category, index) => <span key={category?.id}>{category?.name?.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
                 </div>
             </div>
     )

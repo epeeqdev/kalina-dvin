@@ -1,5 +1,4 @@
 import {Image} from "@/app/admin/types";
-import {Control} from "react-hook-form";
 
 export type Categories = {
     value: string;

@@ -1,12 +1,12 @@
 "use client"
 
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent} from "react";
 import {convertFileToBase64} from "@/app/admin/main/products/helpers/convertImage";
 import DeleteButton from "@/components/controls/delete-button/page";
 import {Control, Controller} from "react-hook-form";
 import clsx from "clsx";
-import {EventWrap} from "@/app/admin/types";
 import {ImageDTO} from "@/backend/types";
+import EmptyImageTemplate from "@/app/admin/main/products/helpers/emptyImageTemplate";
 
 interface Props {
     control: Control<any>;
@@ -15,14 +15,7 @@ interface Props {
     multiple?: boolean
 }
 
-export default function ImageGallery({control, name, className, multiple = false }: Props) {
-
-    const [isImageChoosed, setIsImageChoosed] = useState(true)
-    const handleFileChange = (e:EventWrap<HTMLInputElement>) => {
-        if (e.target.files?.length! > 0) {
-            setIsImageChoosed(false);
-        }
-    }
+export default function ImageGallery({control, name, className, multiple = false}: Props) {
 
     return (
         <Controller render={({field}) => {
@@ -30,7 +23,6 @@ export default function ImageGallery({control, name, className, multiple = false
                 if (e?.target?.files) {
                     const imgList = Object.values(e.target.files);
                     const images = await Promise.all<Promise<any>>(imgList.map(item => convertFileToBase64(item)))
-                    console.log(images[0], "images")
                     field.onChange(multiple ? [...(field.value ?? []), ...images] : images[0]);
                 }
             }
@@ -38,7 +30,6 @@ export default function ImageGallery({control, name, className, multiple = false
             const onRemove = (id: string) => {
                 if (field.value) {
                     field.onChange(multiple ? field.value.filter((image:ImageDTO) => image.id !== id): null)
-                    setIsImageChoosed(true)
                 }
             }
             return <div
@@ -57,23 +48,25 @@ export default function ImageGallery({control, name, className, multiple = false
                                 </div>
                             )
                         }): !!field.value &&  <div key={field.value.id} className="relative pt-[100%] w-full">
-                            <img alt='product image' src={field.value.src}
-                                 className="absolute h-full left-0 top-0 object-contain bg-[#dadada] w-full"/>
+
+                            {
+                                        field.value?.src
+                                            ? <img alt='product image' src={field?.value?.src}
+                                          className="absolute h-full left-0 top-0 object-contain bg-[#dadada] w-full"/>
+                                            : <EmptyImageTemplate />
+                            }
                             <DeleteButton remove={() => onRemove(field.value.id)}
                                           className={"absolute top-[3%] right-[3%]"}/>
                         </div>
                     }
                     {
-                        (multiple || isImageChoosed) && <div className="text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%] w-full">
+                        (multiple || !field.value) && <div className="text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%] w-full">
                         <label
                             className="w-full h-full cursor-pointer flex justify-center items-center text-[100px] absolute top-0 left-0">
                             <input className="hidden"
                                    type="file"
                                    multiple
-                                   onChange={(e) => {
-                                       handleFileChange(e)
-                                       onImageChange(e)
-                                   }}
+                                   onChange={onImageChange}
                                    accept="image/*"
                             />
                             +

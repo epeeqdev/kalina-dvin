@@ -1,10 +1,9 @@
 'use client'
+
 import {useParams} from "next/navigation";
-import AddCategoryPage from "@/app/admin/main/categories/add/addCategoryPage";
+import {CategoryForm} from "@/app/admin/main/categories/components/category-form";
 
 export default function EditCategory(){
     const {id} = useParams();
-    return <div>
-        <AddCategoryPage id={id}/>
-    </div>
+    return <CategoryForm id={id as string}/>
 }

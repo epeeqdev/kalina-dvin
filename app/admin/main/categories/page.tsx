@@ -14,17 +14,15 @@ export default function Categories() {
         isLoading: categoriesLoading
     } = useQuery<CategoryResponseDTO>(() => axios.get(`/api/categories`));
 
-    console.log("categoriesResponse", categories)
     return (
         <div>
             <div className={"flex justify-end mb-5"}>
-                <Link href="/admin/main/categories/add-category">
-                    <Button className="">Добавить категорию</Button>
+                <Link href="/admin/main/categories/add">
+                    <Button className="bg-green-800 hover:bg-green-900">Добавить категорию</Button>
                 </Link>
             </div>
 
             {categories?.map((item) => {
-                console.log("item" , item)
                 return (
                     <CategoryTemplate
                         item={item}

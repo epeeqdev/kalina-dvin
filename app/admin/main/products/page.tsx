@@ -25,9 +25,10 @@ export default function ProductsPage() {
 		{!data?.length && !isLoading && <div className='flex justify-center text-lg'>Продукты не найдены.</div>}
 		{!!data?.length &&<div className='grid grid-cols-12'>
 			{
-				data.map((item) => <ProductTemplate className='col-span-12 lg:col-span-6 xl:col-span-4'
-				                                        key={item._id}
-				                                        item={item}/>)
+				data?.map((item) => <ProductTemplate
+					className='col-span-12 lg:col-span-6 xl:col-span-4'
+					key={item._id}
+					item={item}/>)
 			}
 		</div>}
 	</div>

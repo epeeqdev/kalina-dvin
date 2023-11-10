@@ -33,7 +33,6 @@ export default function AddAttributes({onSubmit}:{onSubmit : any}){
 
     const attributesOptions = attributesResponse?.map(item => ({label: item?.name?.ru, value: item?._id}));
 
-    console.log(attributesOptions)
     return (
         <div>
             <MultiSelectInput

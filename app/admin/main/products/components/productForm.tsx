@@ -24,14 +24,8 @@ export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const [uniqueProductData, setUniqueProductData] = useState();
-    const {
-        data: categoriesResponse,
-        isLoading: categoriesLoading
-    } = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
-    const {
-        data: brandsResponse,
-        isLoading: brandsLoading
-    } = useQuery<BrandResponseDTO[]>(() => axios.get(`/api/brands`));
+    const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
+    const {data: brandsResponse, isLoading: brandsLoading} = useQuery<BrandResponseDTO[]>(() => axios.get(`/api/brands`));
     const {mutate: deleteProductMutate, isLoading: deleteLoading} = useMutation(deleteProduct);
     const {mutate: editProductMutate, isLoading: editProductLoading} = useMutation(editProduct);
     const {mutate: addProductMutate, isLoading: addProductLoading} = useMutation(addProduct);
@@ -46,8 +40,6 @@ export default function ProductForm({id}: { id: string }) {
     } = useAddProductForm(uniqueProductData);
 
 
-    console.log("errors", errors)
-
     const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
     const brands = brandsResponse?.map((item: BrandResponseDTO) => ({value: item._id, label: item.name.ru}))
 
@@ -57,7 +49,6 @@ export default function ProductForm({id}: { id: string }) {
         } else {
             addProductMutate(getRequestData()).then(() => router.push('/admin/main/products'))
         }
-
     }
 
     const getProductWithId = () => {
@@ -84,8 +75,7 @@ export default function ProductForm({id}: { id: string }) {
     }
 
     const onDelete = async () => {
-        await deleteProduct(id);
-        router.push('/admin/main/products')
+        deleteProductMutate(id).then(() => router.push('/admin/main/products'))
     }
 
     return (
@@ -148,9 +138,9 @@ export default function ProductForm({id}: { id: string }) {
                         : <></>
                 }
                 <Link href="/admin/main/products">
-                    <Button className="w-[100px] bg-blue-700 hover:bg-blue-800">Отмена</Button>
+                    <Button className="bg-blue-700 hover:bg-blue-800 w-[100px]">Отмена</Button>
                 </Link>
-                <Button className='w-[200px]' onClick={submit}>Сохранить</Button>
+                <Button className='w-[200px] bg-green-800 hover:bg-green-900' onClick={submit}>Сохранить</Button>
 
             </div>
             <DeleteConfirmationModal
