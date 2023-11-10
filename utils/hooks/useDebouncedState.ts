@@ -2,9 +2,8 @@ import {useEffect, useState} from "react";
 import {useRef} from "react";
 
 export const useDebouncedState = <StateValue>(defaultValue?: StateValue, timeoutMS: number = 300) => {
-	console.log('defauuult', defaultValue)
-	const [value, setValue] = useState<StateValue>(defaultValue);
-	const changeTimeout = useRef<ReturnType<NodeJS.Timeout>>()
+	const [value, setValue] = useState<StateValue | undefined>(defaultValue);
+	const changeTimeout = useRef<ReturnType<typeof setTimeout>>()
 
 	const onChange = (value: StateValue) => {
 		clearTimeout(changeTimeout.current);
@@ -17,5 +16,5 @@ export const useDebouncedState = <StateValue>(defaultValue?: StateValue, timeout
 		return () => clearTimeout(changeTimeout.current)
 	}, [])
 
-	return [value, onChange]
+	return [value, onChange] as [StateValue, (value: StateValue) => void]
 }

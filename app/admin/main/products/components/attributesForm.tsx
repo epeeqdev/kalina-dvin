@@ -32,7 +32,6 @@ export default function AttributesForm({control, name}: Props) {
                         const oldFieldValue = field.value || [];
                         setAdding(false);
                         field.onChange([...oldFieldValue, value])
-                        console.log([...oldFieldValue, value], "oldFieldValue")
                     }}
                     onCancel={() => setAdding(false)}
                     />}

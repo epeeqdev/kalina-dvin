@@ -1,8 +1,10 @@
 import {ProductAttribute} from "@/app/admin/main/products/types";
 import DeleteButton from "@/app/admin/main/components/controls/delete-button";
+import {AttributesResponseDTO, ProductAttributeResponseDTO} from "@/backend/types";
+import {ProductForm} from "@/app/admin/main/products/helpers/useProductForm";
 
 interface Props {
-    attributes: ProductAttribute[];
+    attributes: ProductForm['attributes'];
     removeItem : (id:string) => void;
     onAddClick: () => void;
 }
@@ -22,10 +24,10 @@ export default function ShowAttributes({attributes, removeItem, onAddClick} : Pr
 
                 <div>
                     {
-                        attributes?.map(({id, am, ru, attribute}) => {
+                        attributes?.map(({id, value, attribute}) => {
                             return <div className="my-5 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-[400px] bg-white rounded pl-[10px]" key={id}>
-                                {`${attribute?.label} : AM - ${am} | RU - ${ru}`}
-                                <DeleteButton remove={() => removeItem(id)}/>
+                                {`${attribute.label} : AM - ${value.am} | RU - ${value.ru}`}
+                                <DeleteButton remove={() => removeItem(id!)}/>
                             </div>
                         })
                     }

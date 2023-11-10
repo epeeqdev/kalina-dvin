@@ -28,28 +28,31 @@ export type CategoryResponseDTO = {
 	_id: string;
 	name: TextStructure;
 	image: ImageDTO
-}[];
+};
 export type BrandResponseDTO = {
 	_id: string;
 	name: TextStructure;
 	image: ImageDTO
-}[];
+};
 
 export type AttributeRequestDTO = {
-	id: string;
+	attribute: string;
 	value: TextStructure;
-}[];
+};
 
-export type AttributeResponseDTO = {
-	id_: string
-	name: TextStructure;
+export type ProductAttributeResponseDTO = {
+	_id: string
+	attribute: {
+		name: TextStructure;
+		_id: string;
+	};
 	value: TextStructure;
-}[];
+};
 
 export type AttributesResponseDTO = {
 	_id: string
 	name: TextStructure;
-}[];
+};
 
 export interface ImageDTO {
 	src: string;
@@ -63,15 +66,16 @@ export interface ProductRequestDTO {
 	description: TextStructure;
 	brand: BrandRequestDTO;
 	categories: CategoryRequestDTO[];
-	attributes: AttributeRequestDTO[];
-	images: ImageDTO[]
+	attributes?: AttributeRequestDTO[];
+	images?: ImageDTO[]
 }
 
 export interface ProductResponseDTO {
+	_id: string;
 	title: TextStructure;
 	description: TextStructure;
 	brand: BrandResponseDTO;
 	categories: CategoryResponseDTO[];
-	attributes: AttributeResponseDTO[];
+	attributes: ProductAttributeResponseDTO[];
 	images: ImageDTO[]
 }

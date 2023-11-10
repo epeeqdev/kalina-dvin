@@ -1,7 +1,7 @@
 "use client"
 
-import ProductForm from "@/app/admin/main/products/components/productForm";
 import {useParams} from "next/navigation";
+import ProductForm from "@/app/admin/main/products/components/productForm";
 
 
 export default function Add() {

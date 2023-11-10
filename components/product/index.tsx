@@ -1,10 +1,10 @@
 'use client'
-import {Product} from "@/app/admin/main/products/types";
 import clsx from "clsx";
 import {useRouter} from "next/navigation";
+import {ProductResponseDTO} from "@/backend/types";
 
 interface Props {
-    item: Product;
+    item: ProductResponseDTO;
     className?: string;
 }
 
@@ -25,10 +25,12 @@ export const ProductTemplate = ({item, className}: Props) => {
                 </div>
                 <div className='pr-4'>
                     <p className='text-[#666060] text-[10px]'>{item.brand?.name?.ru}</p>
-                    <h3 className='text-[16px] mb-1'>{item.title}</h3>
-                    <div className='text-[10px] text-grey' style={descriptionStyles}>{item.description}</div>
+                    <h3 className='text-[16px] mb-1'>{item.title.ru}</h3>
+                    <div className='text-[10px] text-grey' style={descriptionStyles}>{item.description.ru}</div>
                     <div className='mt-3 text-[12px] font-medium'>Категории:</div>
-                    <div className='text-[10px] text-grey'>{item.categories.map((category, index) => <span key={category?.id}>{category?.name?.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
+                    <div className='text-[10px] text-grey'>{item.categories.map((category, index) => <span key={category?._id}>{category?.name?.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
+                    <div className='mt-3 text-[12px] font-medium'>Аттрибуты:</div>
+                    <div className='text-[10px] text-grey'>{item.attributes.map((attribute, index) => <span key={attribute?._id}>{attribute.attribute?.name?.ru}:{attribute.value.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
                 </div>
             </div>
     )

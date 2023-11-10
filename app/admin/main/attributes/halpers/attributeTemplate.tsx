@@ -1,10 +1,10 @@
 'use client'
 import clsx from "clsx";
-import {AttributeResponseDTO} from "@/backend/types";
+import {ProductAttributeResponseDTO} from "@/backend/types";
 import Link from "next/link";
 
 interface Props {
-    item: AttributeResponseDTO[0];
+    item: ProductAttributeResponseDTO[0];
     className?: string;
 }
 

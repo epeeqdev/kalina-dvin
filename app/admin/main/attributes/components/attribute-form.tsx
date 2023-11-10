@@ -5,7 +5,7 @@ import {editAttribute} from "@/app/admin/main/attributes/halpers/editAttribute";
 import {deleteAttribute} from "@/app/admin/main/attributes/halpers/deleteAttribute";
 import {useState} from "react";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {AttributeResponseDTO} from "@/backend/types";
+import {ProductAttributeResponseDTO} from "@/backend/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
@@ -38,7 +38,7 @@ export const AttributeForm = ({id}:Props) => {
     const {mutate: editAttributeMutate, isLoading: editAttributeLoading } = useMutation(editAttribute);
     const {mutate: deleteAttributeMutate, isLoading: deleteAttributeLoading} = useMutation(deleteAttribute);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: attributeResponse, isLoading: attributeLoading} = useQuery<AttributeResponseDTO[]>(getAttribute,[id], {fetchOnMount: !!id});
+    const {data: attributeResponse, isLoading: attributeLoading} = useQuery<ProductAttributeResponseDTO[]>(getAttribute,[id], {fetchOnMount: !!id});
 
     const attribute = attributeResponse
     const loading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading

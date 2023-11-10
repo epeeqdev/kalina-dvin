@@ -2,7 +2,7 @@
 
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
-import {useAddProductForm} from "@/app/admin/main/products/components/addForm";
+import {useProductForm} from "@/app/admin/main/products/helpers/useProductForm";
 import {addProduct} from "@/app/admin/main/products/helpers/addProduct";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
@@ -38,7 +38,7 @@ export default function ProductForm({id}: { id: string }) {
         handleSubmit,
         getValues,
         getRequestData
-    } = useAddProductForm(uniqueProductData);
+    } = useProductForm(uniqueProductData);
 
 
     const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
@@ -48,7 +48,8 @@ export default function ProductForm({id}: { id: string }) {
         if (id) {
             editProductMutate(id, getRequestData()).then(() => router.push('/admin/main/products'))
         } else {
-            addProductMutate(getRequestData()).then(() => router.push('/admin/main/products'))
+            console.log('request dataaa',getRequestData())
+            addProductMutate(getRequestData())
         }
     }
 
@@ -93,26 +94,26 @@ export default function ProductForm({id}: { id: string }) {
                        {...register("title.am")}
                        className='flex-1'
                        error={errors.title?.ru?.message}
-                       required={true}
+                       required
                 />
                 <Input label="Заголовок на русском"
                        placeholder='Введите заголовок'
                        {...register("title.ru")}
                        className='flex-1'
                        error={errors.title?.am?.message}
-                       required={true}
+                       required
                 />
             </div>
             <div className="mb-5">
                 <TextArea
-                    required={true}
+                    required
                     label="Описание на армянском"
                     placeholder='Введите описание'
                     {...register("description.am", {required: true})}
                     error={errors.description?.am?.message}
                 />
                 <TextArea
-                    required={true}
+                    required
                     label="Описание на русском"
                     placeholder='Введите описание'
                     {...register("description.ru", {required: true})}
@@ -123,7 +124,7 @@ export default function ProductForm({id}: { id: string }) {
             <div className="mb-5">
                 <MultiSelectInput
                     control={control}
-                    required={true}
+                    required
                     name='categories'
                     multiselect
                     options={categories}
@@ -135,7 +136,7 @@ export default function ProductForm({id}: { id: string }) {
             <div className="mb-5">
                 <MultiSelectInput
                     control={control}
-                    required={true}
+                    required
                     name='brand'
                     options={brands}
                     error={errors.brand?.message}

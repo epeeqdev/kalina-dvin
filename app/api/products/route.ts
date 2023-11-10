@@ -28,21 +28,9 @@ export async function GET(request: Request) {
 					$options: 'i'
 				},
 			} : {}),
-		}) as Product[]
-		console.log('products', products)
-		if(products.length){
-			const categories = await Promise.all(products?.map((product) => Promise.all(product.categories.map(item => DB.Category.findById(item)))));
-			const attributes = await Promise.all(products?.map((product) => Promise.all(product.attributes.map(item => DB.Attribute.findById(item.attribute.value)))));
-			const brands = await Promise.all(products?.map((product) => DB.Brand.findById(product.brand)));
-			const productsFilled = Array.from(products).map((item, index) => {
-				const productCategories = categories?.[index] ?? [];
-				const brand = brands?.[index];
-				return {...item._doc, categories: productCategories, brand, attributes: attributes[index]}
-			})
-			return NextResponse.json(productsFilled);
-		}
-		return NextResponse.json([]);
-		// console.log(productsFilled)
+		}).populate('categories').populate('brand').populate('attributes.attribute') as Product[]
+
+		return NextResponse.json(products);
 
 	} catch (err) {
 		console.log(err)
