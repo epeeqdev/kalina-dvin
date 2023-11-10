@@ -1,6 +1,6 @@
 "use client"
 
-import BrandTemplate from "@/app/admin/main/brands/halpers/brandTemplate";
+import BrandTemplate from "@/app/admin/main/brands/helpers/brandTemplate";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {BrandResponseDTO} from "@/backend/types";
 import axios from "@/axios";
@@ -15,7 +15,7 @@ export default function Brands() {
     } = useQuery<BrandResponseDTO>(() => axios.get(`/api/brands`));
 
     return (
-        <div>
+        <div className="xl:w-[60%] mx-auto w-full pb-16">
             <div className="text-3xl">Бренды</div>
             <div className={"flex justify-end mb-5"}>
                 <Link href="/admin/main/brands/add">

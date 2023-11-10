@@ -10,7 +10,7 @@ export default function DeleteButton({remove, className}: Props) {
         <button onClick={(e) => {
             remove()
         }}
-                className={clsx(className , "bg-red-700 text-white w-[25px] h-[25px] m-2 rounded-3xl flex justify-center items-center")}>
+                className={clsx(className , "bg-red-700 text-white w-[25px] h-[25px] m-2 rounded-3xl flex justify-center items-center active:text-red-600 active:bg-white")}>
             X
         </button>
     )

@@ -16,11 +16,11 @@ export const Button = forwardRef<HTMLButtonElement, Props>(({children,className,
 		className={
 		clsx(
 			{
-				'bg-green-800 hover:bg-green-900': variant === "primary" ,
-				'bg-blue-800 hover:bg-blue-900': variant === "secondary" ,
-				'bg-red-800 hover:bg-red-900': variant === "alert"
+				'bg-green-800 hover:bg-green-900 active:text-green-600 active:bg-white': variant === "primary" ,
+				'bg-blue-800 hover:bg-blue-900 active:text-blue-600 active:bg-white': variant === "secondary" ,
+				'bg-red-800 hover:bg-red-900 active:text-red-600 active:bg-white': variant === "alert"
 			},
-			'border px-4 text-white active:text-green-600 active:bg-white py-1.5 md:py-2',
+			'border px-4 text-white py-1.5 md:py-2',
 			className)}>
 		{children}
 	</button>
