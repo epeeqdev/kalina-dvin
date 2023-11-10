@@ -15,9 +15,10 @@ export interface Props {
     label: string
     required?: boolean;
     multiselect?: boolean;
+    placeholder?: string;
 }
 
-export default function AutocompleteInput({control, name, options, error, label, required, multiselect}: Props) {
+export default function AutocompleteInput({control, name, options, error, label,placeholder, required, multiselect}: Props) {
     return <Controller control={control} name={name} render={({field}) => {
         return (
             <div>
@@ -28,6 +29,7 @@ export default function AutocompleteInput({control, name, options, error, label,
                 <Select
                     value={field.value}
                     isMulti={multiselect}
+                    placeholder={placeholder}
                     options={options}
                     className={`mt-1 outline-none border ${!!error && "border-2 border-red-600"}`}
                     onChange={(v) => {field.onChange(v)}}

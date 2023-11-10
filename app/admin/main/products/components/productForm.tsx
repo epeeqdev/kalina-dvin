@@ -36,6 +36,7 @@ export default function ProductForm({id}: { id: string }) {
         control,
         register,
         handleSubmit,
+        getValues,
         getRequestData
     } = useAddProductForm(uniqueProductData);
 
@@ -77,33 +78,48 @@ export default function ProductForm({id}: { id: string }) {
     const onDelete = async () => {
         deleteProductMutate(id).then(() => router.push('/admin/main/products'))
     }
-
+    console.log(errors)
+    console.log(getValues())
     return (
-        <div className="xl:w-[60%] mx-auto w-full">
+        <div className="xl:w-[60%] mx-auto w-full pb-16">
             {isLoading && <LoadingSpinner/>}
-            <h1 className="text-xl mb-5">{id ? "Edit Product" : "Add Product"}</h1>
+            <h1 className="text-xl mb-5">{id ? "Редактировать продукт" : "Добавить продукт"}</h1>
             <div className="mb-5">
                 <ImageGallery control={control} name='images' multiple/>
             </div>
-            <div className="mb-5">
-                <Input label="Title"
-                       placeholder='Type name'
-                       {...register("title")}
-                       className='w-full mt-1'
-                       error={errors.title?.message}
+            <div className="mb-5 flex gap-3 w-full">
+                <Input label="Заголовок на армянском"
+                       placeholder='Введите заголовок'
+                       {...register("title.am")}
+                       className='flex-1'
+                       error={errors.title?.ru?.message}
+                       required={true}
+                />
+                <Input label="Заголовок на русском"
+                       placeholder='Введите заголовок'
+                       {...register("title.ru")}
+                       className='flex-1'
+                       error={errors.title?.am?.message}
                        required={true}
                 />
             </div>
             <div className="mb-5">
                 <TextArea
                     required={true}
-                    label="Description"
-                    placeholder='Description'
-                    {...register("description", {required: true})}
-                    className='w-full mt-1'
-                    error={errors.description?.message}
+                    label="Описание на армянском"
+                    placeholder='Введите описание'
+                    {...register("description.am", {required: true})}
+                    error={errors.description?.am?.message}
+                />
+                <TextArea
+                    required={true}
+                    label="Описание на русском"
+                    placeholder='Введите описание'
+                    {...register("description.ru", {required: true})}
+                    error={errors.description?.ru?.message}
                 />
             </div>
+
             <div className="mb-5">
                 <MultiSelectInput
                     control={control}
@@ -112,7 +128,8 @@ export default function ProductForm({id}: { id: string }) {
                     multiselect
                     options={categories}
                     error={errors.categories?.message}
-                    label="Choose a Category"
+                    placeholder='Выберите категории'
+                    label="Категории"
                 />
             </div>
             <div className="mb-5">
@@ -122,7 +139,7 @@ export default function ProductForm({id}: { id: string }) {
                     name='brand'
                     options={brands}
                     error={errors.brand?.message}
-                    label="Choose a Brand"
+                    label="Выберите бренд"
                 />
             </div>
             {/*-----------------------------  ATTRIBUTES  -------------------------*/}

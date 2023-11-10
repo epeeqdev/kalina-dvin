@@ -1,51 +1,38 @@
-import {DB} from "@/backend/db";
-import CryptoJS from "crypto-js"
-import jwt from 'jsonwebtoken'
-import {NextResponse} from "next/server";
+import { DB } from "@/backend/db";
+import CryptoJS from "crypto-js";
+import { NextResponse } from "next/server";
+import { SignJWT } from 'jose';
 
-export async function POST(request: Request,) {
-	try{
+export async function POST(request: Request) {
+	try {
 		const requestBody = await request.json();
-		console.log('request username', requestBody.username)
-		const user = await DB.User.findOne(
-			{
-				username: requestBody.username
-			}
-		);
+		const user = await DB.User.findOne({
+			username: requestBody.username
+		});
 
-		console.log('useeer ',user)
-
-		if(!user){
-			return new NextResponse("Wrong User Name", {status: 401})
+		if (!user) {
+			return new NextResponse("Wrong User Name", { status: 401 });
 		}
 
 		const hashedPassword = CryptoJS.AES.decrypt(
 			user.password,
-			process.env.PASS_SEC
+			process.env.PASS_SEC!
 		);
-
-
 		const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
-		const inputPassword = requestBody.password;
-		if(originalPassword != inputPassword) {
-			return new NextResponse(`Wrong Password: pass_sec: ${process.env.PASS_SEC}, real_pass: ${originalPassword}, inputPass: ${inputPassword}`, {status: 401})
+		if (originalPassword !== requestBody.password) {
+			return new NextResponse(`Wrong Password`, { status: 401 });
 		}
 
-		const accessToken = jwt.sign(
-			{
-				id: user._id,
-			},
-			process.env.JWT_SEC,
-			{expiresIn:"3d"}
-		);
+		// Create JWT using jose
+		const accessToken = await new SignJWT({ id: user._id })
+			.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
+			.setExpirationTime('3d')
+			.sign(new TextEncoder().encode(process.env.JWT_SEC));
 
 		const { password, ...others } = user._doc;
-		return NextResponse.json({...others, accessToken});
-
-	}catch(err){
-		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
+		return NextResponse.json({ ...others, accessToken });
+	} catch (err) {
+		return new NextResponse(JSON.stringify({ message: "Something went wrong on our side." }), { status: 500 });
 	}
 }
-
-

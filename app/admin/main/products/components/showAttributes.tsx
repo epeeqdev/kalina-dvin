@@ -12,7 +12,7 @@ export default function ShowAttributes({attributes, removeItem, onAddClick} : Pr
         <div className="mb-5">
             <div>
                 <div className="my-5 text-dark-grey flex gap-4">
-                    <div>Attributes</div>
+                    <div>Аттрибуты</div>
                     <button
                         onClick={onAddClick}
                         className='text-[24px] w-[30px] h-[30px] bg-green-600 rounded-full border-none transition hover:bg-green-700 text-white flex justify-center leading-[29px]'>

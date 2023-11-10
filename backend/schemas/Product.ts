@@ -1,13 +1,14 @@
 import { Schema, model, models } from 'mongoose';
+import {ImageFragment, TextFragment} from "@/backend/fragments";
 
 const ProductSchema = new Schema(
 	{
-		title: { type: String},
-		description: { type: String },
-		images: { type: Array, required: true },
-		categories: { type: Array! },
-		attributes: { type: Array },
-		brand: String!
+		title: { type: {...TextFragment}, required: true },
+		description: { type: {...TextFragment}, required: true },
+		images: { type: [{...ImageFragment}], required: true },
+		categories: { type: [{type: Schema.Types.ObjectId!, ref: 'Category'}]!, required: true },
+		attributes: { type: [{id:{type: Schema.Types.ObjectId!, ref: 'Attribute'}, value: {...TextFragment}}] },
+		brand: {type: Schema.Types.ObjectId, required: true, ref: 'Brand'}
 	},
 	{ timestamps: true }
 );

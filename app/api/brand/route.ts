@@ -1,4 +1,3 @@
-import {verifyToken} from "@/app/api/helpers";
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Brand} from "@/app/admin/main/products/types";
@@ -8,10 +7,6 @@ import {uploadImage} from "@/backend/imageAPI";
 
 export async function POST(request: NextRequest) {
 	try {
-		const notVerified = verifyToken(request);
-		if(notVerified){
-			return notVerified
-		}
 		const body = await request.json();
 		const image = await uploadImage(body.image);
 		const savedBrand = await new DB.Brand({...body, image}).save() as Brand;

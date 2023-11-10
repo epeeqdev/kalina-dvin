@@ -4,25 +4,19 @@ import {NextResponse} from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request,) {
+export async function GET() {
 	try{
-		const hashedPassword = await CryptoJS.AES.encrypt(
+		const hashedPassword = CryptoJS.AES.encrypt(
 			'1234',
-			process.env.PASS_SEC
+			process.env.PASS_SEC!
 		);
 		console.log('hashedPassword',hashedPassword)
-		const user = await new DB.User(
+		await new DB.User(
 			{
 				username: 'admin',
 				password: hashedPassword
 			}
 		).save()
-
-		// if(!user){
-		// 	return new NextResponse("Wrong User Name", {status: 401})
-		// }
-
-
 
 		return NextResponse.json({});
 

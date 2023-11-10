@@ -8,6 +8,6 @@ export default function Add() {
     const {id} = useParams()
 
     return (
-        <ProductForm id={id}/>
+        <ProductForm id={id as string}/>
     )
 }

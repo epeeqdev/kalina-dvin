@@ -1,5 +1,4 @@
-export const TitleFragment = {
-	en: String,
+export const TextFragment = {
 	ru: String,
 	am: String,
 }
