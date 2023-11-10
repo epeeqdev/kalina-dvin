@@ -27,15 +27,11 @@ export const BreakPointCarousel = ({brands}: Props) => {
                 breakpoints={Breakpoints}
                 className="breakpoint h-[47px] md:h-[80px] lg:h-[137px]"
             >
-                {brands?.map((item, index) => {
+                {brands?.map((item) => {
                     return (
-                        <div key={index}>
-                            <SwiperSlide  className='hover:shadow-md border border-secondary w-full min-w-[125px] max-w-[282px] h-full'>
-                                {/*<img src={item.image?.src} alt={`${}`} className='h-full w-full object-contain'/>*/}
+                            <SwiperSlide key={item._id}  className='hover:shadow-md border border-secondary w-full min-w-[125px] max-w-[282px] h-full'>
                                 <CarouselCard src={item.image?.src}/>
                             </SwiperSlide>
-                        </div>
-
                     );
                 })}
             </Swiper>

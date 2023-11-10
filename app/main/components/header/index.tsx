@@ -4,18 +4,16 @@ import Image from "next/image";
 import IconComponent from "@/components/icon";
 import {useState} from "react";
 import clsx from "clsx";
-import {useMainContext} from "@/app/main/hooks/useMainContext";
 
 export const Header = () => {
     const [isNavOpen, setIsNavOpen] = useState(false);
-
     return (
         <div className='w-full flex px-[10%] py-[10px] lg:py-[21px] items-center shadow-md'>
             <div>
                 <Image src='/logo.png' alt='logo' width={100} height={44} className='w-auto h-[24px] lg:w-auto lg:h-[44px] '/>
             </div>
             <div className='flex-1'>
-                <div className='MOBILE-MENU flex lg:hidden justify-end'>
+                <div className='flex lg:hidden justify-end'>
                     <IconComponent name='burgerManu' size={{width: 20, height: 18}} color='secondary' className='cursor-pointer' onClick={() => setIsNavOpen((prev) => !prev)}/>
                     <div className={clsx({
                         'absolute w-full h-screen top-0 left-0 bg-white z-10 flex flex-col items-center': isNavOpen,
@@ -27,7 +25,7 @@ export const Header = () => {
                         </div>
                     </div>
                 </div>
-                <div className='DESKTOP-MENU hidden lg:flex gap-x-[7%] justify-end items-center'>
+                <div className='hidden lg:flex gap-x-[7%] justify-end items-center'>
                     <Navigation/>
                 </div>
             </div>

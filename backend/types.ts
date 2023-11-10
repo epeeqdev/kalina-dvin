@@ -30,7 +30,7 @@ export type CategoryResponseDTO = {
 	image: ImageDTO
 }[];
 export type BrandResponseDTO = {
-	id_: string;
+	_id: string;
 	name: TextStructure;
 	image: ImageDTO
 }[];

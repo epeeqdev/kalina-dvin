@@ -1,13 +1,13 @@
 import {Slider} from "@/app/main/components/swiper";
 import {Carousel} from "@/app/main/components/carousel";
 import {BlockBox} from "@/app/main/components/controls/block-box";
-import {GetBrandsData} from "@/app/main/get-main-data/get-brands-data";
-import {BrandResponseDTO} from "@/backend/types";
+import {getBrandsData} from "@/app/main/get-main-data/get-brands-data";
+import {getCurrentUrl} from "@/utils/heplers";
 
 
 export default  async  function Home() {
-
-    const brands = await GetBrandsData()
+    const origin = getCurrentUrl();
+    const brands = await getBrandsData(origin)
 
     return (
     <main className="">
