@@ -1,5 +1,5 @@
 'use client'
-import {Typography} from "@/components/controls/typography";
+import {Typography} from "@/app/main/components/controls/typography";
 import Image from "next/image";
 import IconComponent from "@/components/icon";
 import {Index} from "@/app/main/components/footer/components/footer-blogs";

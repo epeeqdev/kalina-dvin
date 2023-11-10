@@ -1,5 +1,5 @@
-import {LanguageType} from "@/components/controls/dropdown";
 import {useMainContext} from "@/app/main/hooks/useMainContext";
+import {LanguageType} from "@/app/main/components/controls/dropdown";
 
 export const useLanguage = () => {
     const [language] = useMainContext()
