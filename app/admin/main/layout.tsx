@@ -15,6 +15,7 @@ export default function Layout({children}:PropsWithChildren){
 			<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/brands'>Brands</Link>
 			<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/products'>Products</Link>
 			<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/products/add'>Add Product</Link>
+			<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/attributes'>Attributes</Link>
 			<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/about-us'>About</Link>
 		</div>
 		<div className='px-4 py-5 w-full'>

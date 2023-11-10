@@ -19,7 +19,7 @@ export default function ProductsPage() {
 			refetch(params)
 	},[search])
 
-	return <div className='pt-4'>
+	return <div className="xl:w-[60%] mx-auto w-full pb-16">
 		{isLoading && <LoadingSpinner/>}
 		<Input defaultValue={search} className='w-full mb-5' onChange={(e) => setSearch(e.target.value)} placeholder='Search'/>
 		{!data?.length && !isLoading && <div className='flex justify-center text-lg'>Продукты не найдены.</div>}

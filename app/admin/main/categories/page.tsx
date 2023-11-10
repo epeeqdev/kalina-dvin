@@ -15,7 +15,7 @@ export default function Categories() {
     } = useQuery<CategoryResponseDTO>(() => axios.get(`/api/categories`));
 
     return (
-        <div>
+        <div className="xl:w-[60%] mx-auto w-full pb-16">
             <div className="text-3xl">Категории</div>
             <div className={"flex justify-end mb-5"}>
                 <Link href="/admin/main/categories/add">

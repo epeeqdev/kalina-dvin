@@ -1,21 +1,20 @@
 import {useRouter} from "next/navigation";
 import {useMutation} from "@/utils/hooks/useMutation";
-import {addBrand} from "@/app/admin/main/brands/helpers/addBrand";
-import {editBrand} from "@/app/admin/main/brands/helpers/editBrand";
-import {deleteBrand} from "@/app/admin/main/brands/helpers/deleteBrand";
+import {addAttribute} from "@/app/admin/main/attributes/halpers/addAttribute";
+import {editAttribute} from "@/app/admin/main/attributes/halpers/editAttribute";
+import {deleteAttribute} from "@/app/admin/main/attributes/halpers/deleteAttribute";
 import {useState} from "react";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {BrandResponseDTO, ImageDTO, TextStructure} from "@/backend/types";
-import {getBrand} from "@/app/admin/main/brands/helpers/getBrand";
+import {AttributeResponseDTO} from "@/backend/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
+import {getAttribute} from "@/app/admin/main/attributes/halpers/grtAttributes";
 
 interface Props {
     id?: string
@@ -25,41 +24,40 @@ const validationSchema = yup.object().shape({
         am: yup.string().required("Обязательное поле"),
         ru: yup.string().required("Обязательное поле"),
     }),
-    image: yup.object().shape({extension: yup.string(), id: yup.string(), src: yup.string() }).nullable(),
 })
 
-interface Category {
-    name: TextStructure;
-    image?: ImageDTO
+interface Attribute {
+    name: {
+        am: string,
+        ru: string
+    }
 }
-export const BrandForm = ({id}:Props) => {
+export const AttributeForm = ({id}:Props) => {
     const router = useRouter()
-    const {mutate: addBrandMutate, isLoading : addBrandLoading} = useMutation(addBrand);
-    const {mutate: editBrandMutate, isLoading: editBrandLoading } = useMutation(editBrand);
-    const {mutate: deleteBrandMutate, isLoading: deleteBrandLoading} = useMutation(deleteBrand);
+    const {mutate: addAttributeMutate, isLoading : addAttributeLoading} = useMutation(addAttribute);
+    const {mutate: editAttributeMutate, isLoading: editAttributeLoading } = useMutation(editAttribute);
+    const {mutate: deleteAttributeMutate, isLoading: deleteAttributeLoading} = useMutation(deleteAttribute);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: brandResponse, isLoading: brandLoading} = useQuery<BrandResponseDTO[]>(getBrand,[id], {fetchOnMount: !!id});
+    const {data: attributeResponse, isLoading: attributeLoading} = useQuery<AttributeResponseDTO[]>(getAttribute,[id], {fetchOnMount: !!id});
 
-    const brand = brandResponse
-
-    console.log(brandResponse, "brandResponse")
-
-
-    const loading = editBrandLoading || addBrandLoading || deleteBrandLoading || brandLoading
+    const attribute = attributeResponse
+    const loading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading
 
     const {
-        control ,
         handleSubmit,
         register,
         getValues,
         formState: {errors}
-    } = useForm<Category>({
+    } = useForm<Attribute>({
         resolver: yupResolver(validationSchema),
-        ...(brand ? {
+        ...(attribute ? {
             values: {
-                name: brand?.name,
-                image: brand?.image
+                name: {
+                    am: attribute?.name?.am,
+                    ru: attribute?.name?.ru
+                }
             }
+
         }: {})
     }) ?? {};
 
@@ -68,15 +66,15 @@ export const BrandForm = ({id}:Props) => {
         setDeleteModalOpen(false)
     }
     const onDelete = async () => {
-        deleteBrandMutate(id).then(() => router.push('/admin/main/brands')).catch((e) => console.log("cqatch error" , e));
+        deleteAttributeMutate(id).then(() => router.push('/admin/main/attributes')).catch((e) => console.log("catch error" , e));
     }
 
 
     const onSubmit = async () => {
         if (id) {
-            editBrandMutate(id, getValues()).then(() => router.push('/admin/main/brands'))
+            editAttributeMutate(id, getValues()).then(() => router.push('/admin/main/attributes'))
         } else {
-            addBrandMutate(getValues()).then(() => router.push('/admin/main/brands'))
+            addAttributeMutate(getValues()).then(() => router.push('/admin/main/attributes'))
         }
     }
 
@@ -92,8 +90,8 @@ export const BrandForm = ({id}:Props) => {
                 isOpen={deleteModalOpen}
                 onDelete={onDelete}
                 onClose={onCancel}
-                title="Вы уверены, что хотите удалить данный бренд?"
-                message="После удаления бренд не возможно восстановить!"
+                title="Вы уверены, что хотите удалить данный атрибут?"
+                message="После удаления атрибут не возможно восстановить!"
             />
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
@@ -105,19 +103,18 @@ export const BrandForm = ({id}:Props) => {
                         }}>Удалить</Button>
                         : <></>
                 }
-                <Link href="/admin/main/brands">
+                <Link href="/admin/main/attributes">
                     <Button variant="secondary">Отмена</Button>
                 </Link>
                 <Button variant="primary" onClick={submit}>Сохранить</Button>
             </div>
             <div className="xl:w-[60%] mx-auto w-full col-auto">
-                <div className="text-3xl mb-10">Добавить Бренд</div>
+                <div className="text-3xl mb-10">Добавить Атрибуты</div>
                 <div className="flex gap-4">
-                    <ImageGallery control={control} name='image' />
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}
-                            label="Название категории по АРМ"
+                            label="Название атрибута по АРМ"
                             placeholder="Название по АРМ"
                             error={errors.name?.am?.message}
                             required={true}
@@ -125,7 +122,7 @@ export const BrandForm = ({id}:Props) => {
                         />
                         <Input
                             {...register("name.ru")}
-                            label="Название категории по РУС"
+                            label="Название атрибута по РУС"
                             placeholder="Название по РУС"
                             error={errors.name?.ru?.message}
                             required={true}

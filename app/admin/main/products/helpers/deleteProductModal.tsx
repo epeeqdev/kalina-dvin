@@ -44,17 +44,15 @@ export default function DeleteConfirmationModal({ isOpen, onClose, onDelete , ti
                     <p className="text-gray-700">{message}</p>
 
                     {/* Buttons */}
-                    <div className="mt-4 flex justify-end space-x-2">
+                    <div className="mt-4 flex justify-end gap-1">
                         <Button
                             onClick={onDelete}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                             variant="alert"
                         >
                             да
                         </Button>
                         <Button
                             onClick={onClose}
-                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
                             variant="secondary"
                         >
                             нет
