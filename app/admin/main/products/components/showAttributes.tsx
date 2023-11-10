@@ -1,5 +1,5 @@
-import DeleteButton from "@/components/controls/delete-button/page";
 import {ProductAttribute} from "@/app/admin/main/products/types";
+import DeleteButton from "@/app/admin/main/components/controls/delete-button";
 
 interface Props {
     attributes: ProductAttribute[];
