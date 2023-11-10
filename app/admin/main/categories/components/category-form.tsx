@@ -12,11 +12,11 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {log} from "util";
 import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import {Button} from "@/components/controls/button";
 import Link from "next/link";
 import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
+import {Button} from "../../components/controls/button";
 
 
 interface Prop {
@@ -94,21 +94,27 @@ export  const CategoryForm = ({id} : Prop) => {
     console.log(getValues().image)
     return (
         <div>
-            <DeleteConfirmationModal isOpen={deleteModalOpen} onDelete={onDelete} onClose={onCancel} />
+            <DeleteConfirmationModal
+                isOpen={deleteModalOpen}
+                onDelete={onDelete}
+                onClose={onCancel}
+                title="Вы уверены, что хотите удалить данную категорию?"
+                message="После удаления категорию не возможно восстановить!"
+            />
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
                 {
                     id
                         ?
-                        <Button className='w-[100px] bg-red-700 hover:bg-red-800 text-white' onClick={() => {
+                        <Button variant="alert" onClick={() => {
                             setDeleteModalOpen(true)
                         }}>Удалить</Button>
                         : <></>
                 }
                 <Link href="/admin/main/categories">
-                    <Button className="bg-blue-700 hover:bg-blue-800">Отмена</Button>
+                    <Button variant="secondary">Отмена</Button>
                 </Link>
-                <Button className="bg-green-800 hover:bg-green-900" onClick={submit}>Сохранить</Button>
+                <Button variant="primary" onClick={submit}>Сохранить</Button>
             </div>
             <div className="xl:w-[60%] mx-auto w-full col-auto">
                 <div className="text-3xl mb-10">Добавить категорию</div>

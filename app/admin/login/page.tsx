@@ -3,12 +3,12 @@ import {useForm} from "react-hook-form";
 import * as yup from 'yup'
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Input} from "@/components/controls/input";
-import {Button} from "@/components/controls/button";
 import {Credentials} from "@/app/admin/login/types";
 import {useAuth} from "@/app/admin/hooks";
 import {useUserContext} from "@/app/admin/userContext";
 import { useRouter } from 'next/navigation'
 import {useEffect} from 'react'
+import {Button} from "../main/components/controls/button";
 
 const validationSchema = yup.object().shape({
 	username: yup.string().required("Username is required"),
@@ -36,7 +36,7 @@ export default function Login(){
 		<div>
 			<Input label='Password' placeholder='Enter password' {...register('password')} className='w-full'/>
 		</div>
-		<Button type='submit' className='mt-2'>Login</Button>
+		<Button type='submit' className='mt-2' variant="primary">Login</Button>
 	</form>
 	</div>
 }

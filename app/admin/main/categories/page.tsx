@@ -4,8 +4,8 @@ import {useQuery} from "@/utils/hooks/useQuery";
 import {CategoryResponseDTO} from "@/backend/types";
 import axios from "@/axios";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import {Button} from "@/components/controls/button";
 import Link from "next/link";
+import {Button} from "@/app/admin/main/components/controls/button";
 
 export default function Categories() {
 
@@ -16,9 +16,10 @@ export default function Categories() {
 
     return (
         <div>
+            <div className="text-3xl">Категории</div>
             <div className={"flex justify-end mb-5"}>
                 <Link href="/admin/main/categories/add">
-                    <Button className="bg-green-800 hover:bg-green-900">Добавить категорию</Button>
+                    <Button variant="primary">Добавить категорию</Button>
                 </Link>
             </div>
 

@@ -9,7 +9,6 @@ import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import {TextArea} from "@/components/controls/text-area";
 import MultiSelectInput from "@/components/controls/autocomplete-input";
-import {Button} from "@/components/controls/button";
 import axios from "@/axios";
 import {editProduct} from "@/app/admin/main/products/helpers/editProduct";
 import {useQuery} from "@/utils/hooks/useQuery";
@@ -19,6 +18,7 @@ import AttributesForm from "@/app/admin/main/products/components/attributesForm"
 import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
 import Link from "next/link";
+import {Button} from "../../components/controls/button";
 
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
@@ -132,21 +132,30 @@ export default function ProductForm({id}: { id: string }) {
                 {
                     id
                         ?
-                        <Button className='w-[100px] bg-red-700 hover:bg-red-800 text-white' onClick={() => {
+                        <Button
+                            variant="alert"
+                            onClick={() => {
                             setDeleteModalOpen(true)
                         }}>Удалить</Button>
                         : <></>
                 }
                 <Link href="/admin/main/products">
-                    <Button className="bg-blue-700 hover:bg-blue-800 w-[100px]">Отмена</Button>
+                    <Button variant="secondary">Отмена</Button>
                 </Link>
-                <Button className='w-[200px] bg-green-800 hover:bg-green-900' onClick={submit}>Сохранить</Button>
+                <Button
+                    variant="primary"
+                    onClick={submit}
+                >
+                    Сохранить
+                </Button>
 
             </div>
             <DeleteConfirmationModal
                 isOpen={deleteModalOpen}
                 onClose={() => setDeleteModalOpen(false)}
                 onDelete={onDelete}
+                title="Вы уверены, что хотите удалить данный продукт?"
+                message="После удаления продукт не возможно восстановить!"
             />
         </div>
     )

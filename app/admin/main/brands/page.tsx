@@ -1,14 +1,12 @@
 "use client"
 
-
 import BrandTemplate from "@/app/admin/main/brands/halpers/brandTemplate";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {BrandResponseDTO} from "@/backend/types";
 import axios from "@/axios";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import {Button} from "@/components/controls/button";
 import Link from "next/link";
-
+import {Button} from "@/app/admin/main/components/controls/button";
 export default function Brands() {
 
     const {
@@ -18,12 +16,12 @@ export default function Brands() {
 
     return (
         <div>
+            <div className="text-3xl">Бренды</div>
             <div className={"flex justify-end mb-5"}>
                 <Link href="/admin/main/brands/add">
-                    <Button className="bg-green-800 hover:bg-green-900">Добавить Бренд</Button>
+                    <Button variant="primary">Добавить Бренд</Button>
                 </Link>
             </div>
-
             {brands?.map((item) => {
                 return (
                     <BrandTemplate
