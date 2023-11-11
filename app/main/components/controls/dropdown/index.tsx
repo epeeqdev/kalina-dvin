@@ -8,7 +8,7 @@ import {useLanguage} from "@/app/main/hooks/useLanguage";
 import {Option} from "@/app/main/components/controls/dropdown/components/option";
 import {Typography} from "@/app/main/components/controls/typography";
 
-export type LanguageType = {arm: string, ru: string} | {arm: string} | {ru: string};
+export type LanguageType = {am: string, ru: string} | {am: string} | {ru: string};
 
 export interface Options {
     id: string,
@@ -16,7 +16,7 @@ export interface Options {
     title: LanguageType,
     isChanged: boolean;
 }
-export interface Props {
+interface Props {
     title: string;
     size?: {width: string | number, height: string | number };
     className?: string;
@@ -72,7 +72,7 @@ export const Dropdown = ({ title, className, options, onChange, size, dropdownCl
                     onClick={toggleView}
                 >
                     {<Typography title={title} fontWeight="font-inherit" fontSize="text-base" color='text-inherit'/>}
-                    {<IconComponent name={isShow ? "chevronUp" : "chevronDown"} className='w-[12px]' size={{ width: 16, height: 10 }} color="secondary"/>}
+                    {<IconComponent name={isShow ? "chevronUp" : "chevronDown"} className='w-[12px]' size={{ width: 16, height: 10 }} color="inherit"/>}
                 </button>
             </div>
                 <div

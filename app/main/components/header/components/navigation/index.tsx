@@ -1,5 +1,5 @@
 'use client'
-import {NavigationItems} from "@/app/main/components/header/constants";
+import {ContactsOptions, LanguageOptions, NavigationItems} from "@/app/main/components/header/constants";
 import Link from 'next/link'
 import {useLanguage} from "@/app/main/hooks/useLanguage";
 import {usePathname} from "next/navigation";
@@ -27,19 +27,22 @@ export const Navigation = () => {
                         'border-primary': item.link && isLinkActive(item.link),
                         'border-transparent': !item.link || !isLinkActive(item.link)
                     })}>
-                        {item.isSelect
-                            ? <Dropdown options={item.options} title={getLanguage(item.title)} dropdownClassname={item.dropdownClassname} onChange={onChangeLanguage}/>
-                            : <Typography
+                        <Typography
                                 title={getLanguage(item.title)}
                                 color={isLinkActive(item.link!) ? 'text-primary' : 'text-inherit' }
                                 fontSize='text-base'
                                 className='transition-[color]'
                             />
-                        }
                     </Link>
                 )
                 )
             }
+            <div className='border-b-[1px] hover:border-primary transition border-transparent'>
+                <Dropdown options={ContactsOptions.options} title={getLanguage(ContactsOptions.title)} dropdownClassname={ContactsOptions.dropdownClassname}/>
+            </div>
+            <div className='border-b-[1px] hover:border-primary transition border-transparent'>
+                <Dropdown options={LanguageOptions.options} title={getLanguage(LanguageOptions.title)} dropdownClassname={LanguageOptions.dropdownClassname}  onChange={onChangeLanguage}/>
+            </div>
         </>
     )
 }

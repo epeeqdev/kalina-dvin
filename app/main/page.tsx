@@ -13,9 +13,9 @@ export default  async  function Home() {
     <main className="">
         <Slider/>
         <BlockBox
-            header={{arm: 'Բրենդեր', ru: 'Категории'}}
-            childrenClassName='pl-[24px] md:pl-[100px] xl:pl-[184px]'
-            className='pt-[45px] lg:pt-[120px]'
+            header={{am: 'Բրենդեր', ru: 'Категории'}}
+            childrenClassName='pl-[5%]'
+            className='pt-[45px] lg:pt-[120px] pb-[45px]'
         >
             <Carousel brands={brands}/>
         </BlockBox>

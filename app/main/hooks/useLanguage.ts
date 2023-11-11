@@ -4,7 +4,7 @@ import {LanguageType} from "@/app/main/components/controls/dropdown";
 export const useLanguage = () => {
     const [language] = useMainContext()
     const getLanguage = (title: LanguageType) => {
-        const selectLng: string = language || 'arm'
+        const selectLng: string = language || 'am'
         const result = Object.keys(title).find((item) => {
             return item === selectLng
         });

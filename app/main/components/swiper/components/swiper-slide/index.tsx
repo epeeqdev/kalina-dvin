@@ -6,7 +6,7 @@ import {LanguageType} from "@/app/main/components/controls/dropdown";
 import {Typography} from "@/app/main/components/controls/typography";
 import {Button} from "@/app/main/components/controls/button";
 
-const buttonTitle = {arm: 'Տեսնել Ավելին', ru: 'Узнать больше'}
+const buttonTitle = {am: 'Տեսնել Ավելին', ru: 'Узнать больше'}
 
 interface Props {
     title: LanguageType;
