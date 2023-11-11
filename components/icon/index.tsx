@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-type Color = 'primary' | 'secondary' | 'white';
+type Color = 'primary' | 'secondary' | 'white' | 'inherit';
 
 import {type IconNameOptions, icons} from './icons';
 
@@ -15,7 +15,7 @@ export interface Props {
 type TextProps = Props;
 
 export default function IconComponent({
-  size = {width: 22 , height: 32},
+  size = {width: 24 , height: 24},
   color = 'primary',
   name,
   className,

@@ -2,10 +2,10 @@
 import React, {useEffect, useState} from 'react';
 import {MainContextProvider} from "@/app/main/provaider";
 
-const DEFAULT_STATE = 'arm'
+const DEFAULT_STATE = 'am'
 
 export const LngProvider = React.memo(({ children }: any) => {
-    const [defaultLng, setDefaultLng] = useState('arm')
+    const [defaultLng, setDefaultLng] = useState('am')
     useEffect(() => {
         const selectLng = localStorage.getItem('lng')
         if(selectLng) {
