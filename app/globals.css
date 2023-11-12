@@ -24,3 +24,20 @@
 
 body {
 }
+
+
+/*Swiper*/
+.hor-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px
+}
+.hor-pagination-bullet {
+  flex: 1;
+  background-color: rgba(7, 7, 7, 0.18);
+  height: 5px;
+  transition: .2s ease
+}
+.hor-pagination-bullet-active {
+  background-color: rgba(28, 27, 25, 1);
+}

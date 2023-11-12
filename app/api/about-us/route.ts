@@ -1,7 +1,6 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
-import {verifyToken} from "@/app/api/helpers";
 
 export const dynamic = "force-dynamic";
 
@@ -32,11 +31,6 @@ export async function PUT(request: NextRequest, context: Params) {
 
 export async function DELETE(request: NextRequest, context: Params) {
     try {
-        const notVerified = verifyToken(request);
-        if(notVerified){
-            return notVerified
-        }
-
         await DB.Attribute.findByIdAndDelete(context.params.id);
         return NextResponse.json(JSON.stringify({success: true}));
     } catch (err) {

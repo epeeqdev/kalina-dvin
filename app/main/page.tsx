@@ -13,7 +13,7 @@ export default  async  function Home() {
     <main className="">
         <Slider/>
         <BlockBox
-            header={{am: 'Բրենդեր', ru: 'Категории'}}
+            header={{am: 'Բրենդեր', ru: 'Бренды'}}
             childrenClassName='pl-[5%]'
             className='pt-[45px] lg:pt-[120px] pb-[45px]'
         >

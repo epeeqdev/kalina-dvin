@@ -1,23 +1,60 @@
-import clsx from 'clsx';
-
-type Color = 'text-primary' | 'text-secondary' | 'text-white' | 'text-inherit';
-type FontSize = 'text-xs' | 'text-sm' | 'text-md' | 'text-lg' | 'text-xl' | 'text-base' | 'text-small' | 'text-medium' | 'text-7xl' | 'text-2xl' | 'text-inherit' | 'text-header';
-type FontWeight = 'font-normal' | 'font-medium' | 'font-semibold' | 'font-bold' | 'font-inherit';
-
+import {
+    ColorProps,
+    TextLeadingProps,
+    TitleSizeProps,
+    TitleTagProps, WeightProps
+} from "@/app/main/components/controls/typography/types";
+import clsx from "clsx";
+import {getColorClass, getFontWeightClass, getLeadingClass} from "@/app/main/components/controls/typography/helpers";
 
 interface Props {
-    title: string,
-    color?: Color,
-    fontSize?: FontSize,
-    fontWeight?: FontWeight,
-    lineHeight?: string,
-    className?: string
+    as?: TitleTagProps;
+    size?: TitleSizeProps;
+    color?: ColorProps;
+    leading?: TextLeadingProps;
+    fontWeight?: WeightProps;
+    className?: string;
+    onClick?: () => void;
+    children?: React.ReactNode;
+    small?: boolean;
 }
-type TextPros = Props
-export const Typography = ({color = 'text-secondary', fontSize = 'text-sm', fontWeight = 'font-normal', lineHeight, className, title}: TextPros) => {
-    return(
-        <span className={clsx([color,fontSize, fontWeight, lineHeight, 'font-body', className,])}>
-            {title}
-        </span>
-    )
+
+export const Typography = ({
+                               as: Tag = 'h2',
+                               size = 'lg',
+                               color = 'primary',
+                               leading = 'clean',
+                               fontWeight = 400,
+                               className,
+                               onClick,
+                               children,
+                               small = false,
+                           }: Props) => {
+    return (
+        <Tag
+            className={clsx([
+                className,
+                {
+                    'text-2xl sm:text-3xl md:text-5xl lg:text-7xl xl:text-8xl': size === '8xl',
+                    'text-7xl': size === '7xl',
+                    'text-6xl': size === '6xl',
+                    'text-5xl': size === '5xl',
+                    'text-xl md:text-2xl xl:text-4xl': size === '4xl',
+                    'text-3xl': size === '3xl',
+                    'text-2xl': size === '2xl',
+                    'text-xl': size === 'xl',
+                    'text-lg': size === 'lg',
+                    'text-base': size === 'base',
+                    'text-sm': size === 'sm',
+                    'text-xs': size === 'xs',
+                },
+                getFontWeightClass(fontWeight),
+                getColorClass(color),
+                leading && getLeadingClass(leading),
+            ])}
+            onClick={onClick}
+        >
+            {small ? <small>{children}</small> : children}
+        </Tag>
+    );
 }

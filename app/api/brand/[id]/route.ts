@@ -1,7 +1,6 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
-import {verifyToken} from "@/app/api/helpers";
 import {Brand} from "@/app/admin/main/products/types";
 import {deleteImage, uploadImage} from "@/backend/imageAPI";
 
@@ -18,10 +17,6 @@ export async function GET(request: NextRequest, context: Params) {
 
 export async function PUT(request: NextRequest, context: Params) {
 	try {
-		const notVerified = verifyToken(request);
-		if(notVerified){
-			return notVerified
-		}
 		const body = await request.json();
 
 		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
@@ -47,10 +42,6 @@ export async function PUT(request: NextRequest, context: Params) {
 
 export async function DELETE(request: NextRequest, context: Params) {
 	try {
-		const notVerified = verifyToken(request);
-		if(notVerified){
-			return notVerified
-		}
 		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
 		if(oldBrand){
 			await deleteImage(oldBrand.image.id);

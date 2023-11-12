@@ -8,7 +8,7 @@ interface Props {
 }
 export const BrandCard = ({data, className}: Props) => {
     return (
-        <Link href={`/main/products?brand=${data._id}`} className='hover:shadow-md border border-[#e8e8e8] w-full h-full px-1 py-1 md:py-2 transition block select-none'>
+        <Link href={`/main/products?brand=${data._id}`} className='hover:bg-gray-lighter border border-gray w-full h-full px-1 py-1 md:py-2 transition block select-none'>
             <img src={data.image?.src} alt={data.name.ru} className={clsx('h-full w-full object-contain', className)}/>
         </Link>
     )

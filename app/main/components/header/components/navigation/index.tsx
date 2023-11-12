@@ -28,11 +28,10 @@ export const Navigation = () => {
                         'border-transparent': !item.link || !isLinkActive(item.link)
                     })}>
                         <Typography
-                                title={getLanguage(item.title)}
-                                color={isLinkActive(item.link!) ? 'text-primary' : 'text-inherit' }
-                                fontSize='text-base'
+                                color={isLinkActive(item.link!) ? 'secondary' : 'primary' }
                                 className='transition-[color]'
-                            />
+                                size='xs'
+                        >{getLanguage(item.title)}</Typography>
                     </Link>
                 )
                 )

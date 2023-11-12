@@ -6,13 +6,16 @@ export const NavigationItems: Record<string, NavigationItemsType> = {
         id: 'general',
         title: { am: 'Գլխավոր', ru: 'Главная' },
         link: '/main',
-
-
     },
     categories:{
         id: 'categories',
         title: {am: 'Կատեգորիաներ', ru: 'Категории'},
         link: '/main/categories',
+    },
+    products:{
+        id: 'products',
+        title: {am: 'Պրոդուկտներ', ru: 'Продукты'},
+        link: '/main/products',
     },
     about: {
         id: 'about',

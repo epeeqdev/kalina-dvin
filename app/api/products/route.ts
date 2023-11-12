@@ -7,8 +7,8 @@ export async function GET(request: Request) {
 	try {
 		const searchParams = new URLSearchParams(request?.url?.slice(request.url?.indexOf('?')));
 
-		const brandQuery = searchParams?.get('brandId');
-		const categoryQuery = searchParams?.get('categoryId');
+		const brandQuery = searchParams?.get('brand');
+		const categoryQuery = searchParams?.get('category');
 		const searchQuery = searchParams?.get('search');
 
 		const products = await DB.Product.find({

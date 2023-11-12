@@ -19,7 +19,7 @@ export const Option = ({icon, dropdownClassname, title, onClick}: Props) => {
                         <IconComponent name={icon} className="group-hover:text-white text-primary" />
                     </div>
                 )}
-                <Typography title={title} color="text-inherit" fontSize="text-base"/>
+                <Typography>{title}</Typography>
             </div>
         </div>
 

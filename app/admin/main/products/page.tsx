@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect} from "react";
-import {getProducts} from "@/app/admin/main/products/helpers/showProducts";
+import {getProducts} from "@/app/admin/main/products/helpers/getProducts";
 import {ProductTemplate} from "@/components/product";
 import {Input} from "@/components/controls/input";
 import LoadingSpinner from "@/components/controls/loading-spinner";

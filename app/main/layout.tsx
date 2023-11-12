@@ -1,6 +1,11 @@
 import {Header} from "@/app/main/components/header";
 import {Footer} from "@/app/main/components/footer";
 import {LngProvider} from "@/app/main/lng-provaider";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay'
 
 export default function MainLayout({children}:React.PropsWithChildren){
 
