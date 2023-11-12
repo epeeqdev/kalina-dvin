@@ -16,12 +16,12 @@ export const CategoriesGrid = ({categories}: Props) => {
         router.push('/main/categories')
     }
     const getSelectProductData = (id:string) => {
-        router.push(`/main/products?categories=${id}`)
+        router.push(`/main/products?category=${id}`)
     }
     const categoriesData = categories.slice(0,6)
     return(
         <div>
-            <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-[10px]'>
+            <div className='grid grid-cols-2 xl:grid-cols-3 gap-[10px]'>
                 {
                     categoriesData?.map((item) => (
                         <CategoryCard key={item._id} data={item} onClick={getSelectProductData}/>

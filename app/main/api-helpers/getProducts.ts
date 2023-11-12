@@ -4,7 +4,7 @@ import {API_ROUTES} from "@/app/api/constants";
 import {getCurrentUrl} from "@/utils/heplers";
 
 
-export const getProducts = async (search?: any) => {
+export const getProducts = async (search?: string) => {
     const origin = getCurrentUrl();
     const res = await axios<ProductResponseDTO[]>(`${origin}${API_ROUTES.products}?${new URLSearchParams(search)?.toString()}`);
     return res.data;

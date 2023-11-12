@@ -15,8 +15,6 @@ export const BreakPointCarousel = ({brands}: Props) => {
                 modules={[Scrollbar, Mousewheel, Autoplay]}
                 loop={true}
                 pagination={{ clickable: true }}
-                // centeredSlides={true}
-                // grabCursor={true}
                 mousewheel={{
                     invert: false,
                 }}

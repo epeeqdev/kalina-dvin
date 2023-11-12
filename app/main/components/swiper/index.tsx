@@ -9,7 +9,7 @@ import {HOME_PAGE_SLIDER_DATA} from "@/app/main/components/swiper/constants";
 export const Slider = () => {
     return (
         <Swiper
-            className={clsx(['h-[400px]', 'md:h-[calc(100vh-68px)]','bg-white !pb-4'])}
+            className={clsx(['sm:h-[400px]', 'md:h-[calc(100vh-68px)]','bg-white !pb-4'])}
             modules={[Pagination, A11y, Autoplay]}
             spaceBetween={50}
             slidesPerView={1}

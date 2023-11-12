@@ -29,7 +29,7 @@ const getIconSize = (size: SizesProps) => {
     }
 };
 
-const getColorClass = (color: ColorProps) => {
+const getColorClass = (color?: ColorProps) => {
     switch (color) {
         case "primary": {
             return 'text-primary';
@@ -44,14 +44,14 @@ const getColorClass = (color: ColorProps) => {
             return 'text-white';
         }
         default: {
-            return 'text-primary';
+            return 'text-inherit';
         }
     }
 }
 
 export default function IconComponent({
                                           size = 'md',
-                                          color = 'primary',
+                                          color,
                                           name,
                                           className,
                                           onClick,
