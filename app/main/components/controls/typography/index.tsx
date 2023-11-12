@@ -3,15 +3,15 @@ import {getColorClass, getFontWeightClass, getLeadingClass} from "@/app/main/com
 import clsx from "clsx";
 
 const sizes = {
-    '7xl': "lg:text-7xl md:text-6xl sm:text-5xl text-3xl",
-    '6xl': "lg:text-6xl md:text-5xl sm:text-4xl text-2xl",
-    '5xl': "lg:text-5xl md:text-4xl sm:text-3xl text-xl",
-    '4xl': "lg:text-4xl md:text-3xl sm:text-2xl text-lg",
-    '3xl': "lg:text-3xl md:text-2xl text-xl",
-    '2xl': "lg:text-2xl md:text-xl text-lg",
-    xl: "lg:text-xl md:text-lg text-base",
-    lg: "lg:text-lg md:text-md text-sm",
-    md:'lg:text-md text-sm',
+    '7xl': "lg:text-7xl md:text-6xl sm:text-5xl text-[32px]",
+    '6xl': "lg:text-6xl md:text-5xl sm:text-4xl text-[30px]",
+    '5xl': "lg:text-5xl md:text-4xl sm:text-[32px] text-[28px]",
+    '4xl': "lg:text-4xl text-[24px]",
+    '3xl': "lg:text-3xl text-[22px]",
+    '2xl': "lg:text-2xl text-xl",
+    xl: "lg:text-xl text-lg",
+    lg: "lg:text-lg text-base",
+    md:'lg:text-base text-sm',
     sm: "lg:text-sm text-xs",
 };
 

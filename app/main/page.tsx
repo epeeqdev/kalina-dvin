@@ -3,6 +3,7 @@ import {Carousel} from "@/app/main/components/carousel";
 import {BlockBox} from "@/app/main/components/controls/block-box";
 import {getBrandsData} from "@/app/main/get-main-data/get-brands-data";
 import {getCurrentUrl} from "@/utils/heplers";
+import {CategoriesBlock} from "@/app/main/components/categories-block";
 
 
 export default  async  function Home() {
@@ -12,6 +13,7 @@ export default  async  function Home() {
     return (
     <main className="">
         <Slider/>
+        <CategoriesBlock/>
         <BlockBox
             header={{am: 'Բրենդեր', ru: 'Бренды'}}
             childrenClassName='pl-[5%]'

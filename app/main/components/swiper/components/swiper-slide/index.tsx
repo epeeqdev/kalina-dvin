@@ -34,6 +34,7 @@ export const SliderItem = ({title, link, description, img}:SliderItemProps) => {
                     size='7xl'
                     color='secondary'
                     fontWeight={500}
+                    className='mb-4'
                 >{getLanguage(title)}</Typography>
                 <Typography
                     color='white'
