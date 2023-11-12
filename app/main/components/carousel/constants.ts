@@ -22,10 +22,10 @@ export const Breakpoints = {
     },
     1440: {
         spaceBetween: 12,
-        slidesPerView: 7,
+        slidesPerView: 5,
     },
     1560: {
         spaceBetween: 10,
-        slidesPerView: 7,
+        slidesPerView: 5,
     }
 }

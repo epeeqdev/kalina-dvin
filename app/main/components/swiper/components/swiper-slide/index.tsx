@@ -31,7 +31,7 @@ export const SliderItem = ({title, link, description, img}:SliderItemProps) => {
             <div className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-30 px-[5%] flex flex-col justify-center items-start'
             >
                 <Typography
-                    size='8xl'
+                    size='7xl'
                     color='secondary'
                     fontWeight={500}
                 >{getLanguage(title)}</Typography>

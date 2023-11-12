@@ -3,19 +3,15 @@ export type WeightProps = 400 | 500 | 600 | 700;
 export type TitleTagProps = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'p';
 
 export type TitleSizeProps =
+    | '3xs'
+    | '2xs'
     | 'xs'
     | 'sm'
-    | 'base'
+    | 'md'
     | 'lg'
     | 'xl'
     | '2xl'
     | '3xl'
-    | '4xl'
-    | '5xl'
-    | '6xl'
-    | '7xl'
-    | '8xl'
-    | 'string';
 
 export type TextTrackingProps =
     | 'tighter'
