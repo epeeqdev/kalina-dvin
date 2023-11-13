@@ -13,14 +13,16 @@ export const usePagination = <T>(items: T[], itemsPerPage: number) => {
     const totalPages = Math.ceil(items.length / itemsPerPage);
 
     useEffect(() => {
-        // Update the URL when the current page changes
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('page', currentPage.toString());
-        router.push(`${pathname}/?${params.toString()}`);
+        if(searchParams.get('page')){
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('page', currentPage.toString());
+            router.push(`${pathname}/?${params.toString()}`);
+        }
     }, [currentPage, router]);
 
     useEffect(() => {
         if(currentPage !== 1){
+            console.log('set page')
             setCurrentPage(1);
         }
     }, [items?.length]);

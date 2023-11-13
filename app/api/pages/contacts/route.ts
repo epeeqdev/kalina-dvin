@@ -24,11 +24,15 @@ export async function PUT(request: NextRequest) {
 }
 
 const initialData:ContactsPageDTO = {
-    phone: "",
-    email: "",
+    phone: "+37499999999",
+    email: "kalina_dvin@gmail.com",
     address: {
-        ru: "",
-        am: ""
+        ru: "Ереван,ул. А. Агароняна 1/8",
+        am: "Երեւան, Ա.Ահարոնյան 1/8"
+    },
+    socialLinks: {
+        instagram: "https://instagram.com/dvinkalina?igshid=MW4xMHRzMjU0aHljNg==",
+        facebook: "https://www.facebook.com/profile.php?id=100095384140736"
     }
 }
 export async function GET() {

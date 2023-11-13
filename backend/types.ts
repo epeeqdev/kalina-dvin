@@ -117,5 +117,9 @@ export interface ContactsPageDTO {
 	_id?: string;
 	phone: string;
 	email: string;
-	address: TextStructure
+	address: TextStructure;
+	socialLinks: {
+        instagram: string;
+        facebook: string;
+    }
 }

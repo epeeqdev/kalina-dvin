@@ -24,6 +24,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
     const handlePageClick = (event: {
         selected: number
     }) => {
+        console.log('page click')
         onPageChange(event.selected + 1);
     };
 
