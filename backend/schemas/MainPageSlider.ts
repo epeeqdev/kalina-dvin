@@ -16,4 +16,4 @@ const MainPageSliderSchema = new Schema(
     }
 );
 
-export default models.MainPageSlider || model("MainPageSliderSchema", MainPageSliderSchema);
+export default models.MainPageSlider || model("MainPageSlider", MainPageSliderSchema);
