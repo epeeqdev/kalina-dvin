@@ -12,7 +12,7 @@ export default function Categories() {
     const {
         data: categories,
         isLoading: categoriesLoading
-    } = useQuery<CategoryResponseDTO>(() => axios.get(`/api/categories`));
+    } = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
 
     return (
         <div className="xl:w-[60%] mx-auto w-full pb-16">

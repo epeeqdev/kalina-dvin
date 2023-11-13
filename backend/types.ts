@@ -79,3 +79,43 @@ export interface ProductResponseDTO {
 	attributes: ProductAttributeResponseDTO[];
 	images: ImageDTO[]
 }
+
+export interface SlideDTO {
+	_id?: string;
+	title: TextStructure;
+	description: TextStructure;
+	image: ImageDTO;
+}
+
+export interface MainPageSliderDTO {
+	_id?: string;
+	slides: SlideDTO[]
+}
+
+export interface AboutUsDTO {
+	_id?: string;
+	image: ImageDTO,
+	homePageDescription: TextStructure,
+	aboutUsPageDescriptionTop: TextStructure,
+	aboutUsPageDescriptionBottom: TextStructure,
+	assortmentCount: number,
+	brandsCount: number,
+	partnersCount: number
+}
+
+export interface ProductsPageDTO {
+	_id?: string;
+	image: ImageDTO
+}
+
+export interface CategoriesPageDTO {
+	_id?: string;
+	image: ImageDTO
+}
+
+export interface ContactsPageDTO {
+	_id?: string;
+	phone: string;
+	email: string;
+	address: TextStructure
+}
