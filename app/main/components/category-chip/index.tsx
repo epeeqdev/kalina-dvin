@@ -14,11 +14,14 @@ export const CategoryChip = memo(({data, isActive, onClick = () => null}: Props)
     const {getLanguage} = useLanguage();
     return (
         <Typography color='white' size='md' onClick={() => onClick(data._id)}
-             className={clsx("flex items-center justify-center p-1 capitalize transition cursor-pointer", {
+             className={clsx("flex items-center justify-center py-2 px-1 transition cursor-pointer", {
                  'bg-primary hover:bg-primary-darker': !isActive,
                  'bg-secondary hover:bg-secondary-darker': isActive
              })}>
-            {getLanguage(data.name)}
+            <span className='whitespace-nowrap text-ellipsis capitalize overflow-hidden'>
+                 {getLanguage(data.name)}
+            </span>
+
         </Typography>
     )
 })

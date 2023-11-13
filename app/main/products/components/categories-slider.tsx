@@ -11,9 +11,6 @@ import {CategoryResponseDTO} from "@/backend/types";
 export const SLIDER_BREAKPOINTS = {
     0: {
         spaceBetween: 4,
-        slidesPerView: 1.1,
-    },
-    468: {
         slidesPerView: 2.1,
     },
     768: {
@@ -23,17 +20,6 @@ export const SLIDER_BREAKPOINTS = {
     1024: {
         slidesPerView: 5.1,
     },
-    1280: {
-        slidesPerView: 6.1,
-    },
-    1440: {
-        spaceBetween: 8,
-        slidesPerView: 8.1,
-    },
-    1560: {
-        spaceBetween: 10,
-        slidesPerView: 10.1,
-    }
 }
 
 interface Props {
@@ -50,14 +36,14 @@ export const CategoriesSlider = ({categories}: Props) => {
         params.set('category', id);
         router.push(`${pathname}/?${params.toString()}`);
     }
-    const navigationButtonClassName = "hover:text-white absolute cursor-pointer top-1/2 transform -translate-y-1/2 transition hover:bg-primary-lighter text-secondary"
+    const navigationButtonClassName = "hidden sm:block hover:text-white absolute cursor-pointer top-1/2 transform -translate-y-1/2 transition hover:bg-primary-lighter text-secondary"
     return <div className='py-4 relative'>
         <div className={clsx('prev-btn left-0 sm:left-[calc(5%-32px)]', navigationButtonClassName)}>
             <IconComponent
                 size='lg'
                 name='chevronLeft'/>
         </div>
-        <div className='sm:px-[5%] px-[30px]'>
+        <div className='px-[5%]'>
             <Swiper breakpoints={SLIDER_BREAKPOINTS} slidesPerView={4} spaceBetween={4} modules={[Navigation]}
                     navigation={{
                         enabled: true,
