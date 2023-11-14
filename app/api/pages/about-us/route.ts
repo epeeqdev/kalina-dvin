@@ -1,6 +1,6 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {deleteImage, uploadImage} from "@/backend/imageAPI";
+import {deleteImage, handleImage, uploadImage} from "@/backend/imageAPI";
 import {AboutUsDTO} from "@/backend/types";
 
 
@@ -8,14 +8,12 @@ export async function PUT(request: NextRequest) {
     try {
         const body = await request.json() as AboutUsDTO;
         const existing = await DB.AboutUs.findOne() as AboutUsDTO;
-        if (existing) {
-            try {
-                await deleteImage(existing.image?.id);
-            } catch (err) {
-                console.log(err);
-            }
+        let image = existing?.image;
+        try{
+            image = await handleImage(existing?.image, body.image)
+        }catch (e){
+            console.log(e)
         }
-        const image = await uploadImage(body.image);
         const aboutUs = {
             ...body,
             image

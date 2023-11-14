@@ -2,7 +2,7 @@ import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {Product} from "@/app/admin/main/products/types";
-import {deleteImages, uploadImages} from "@/backend/imageAPI";
+import {deleteImages, handleImages, uploadImages} from "@/backend/imageAPI";
 
 export const dynamic = "force-dynamic";
 
@@ -20,17 +20,7 @@ export async function PUT(request: NextRequest, context: Params) {
 	try {
 		const body = await request.json();
 		const oldProduct = await DB.Product.findById(context.params.id) as Product;
-		if(oldProduct?.images?.length){
-			await deleteImages(oldProduct.images);
-		}
-		let images;
-		if(body?.images?.length){
-			images = await uploadImages(body.images)
-		}else {
-			images = [];
-		}
-
-		body.images = images;
+		body.images = await handleImages(oldProduct.images, body.images)
 
 		const updatedProduct = await DB.Product.findByIdAndUpdate(
 			context.params.id,

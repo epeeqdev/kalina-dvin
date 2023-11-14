@@ -2,7 +2,7 @@ import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {Brand} from "@/app/admin/main/products/types";
-import {deleteImage, uploadImage} from "@/backend/imageAPI";
+import {deleteImage, handleImage, handleImages, uploadImage} from "@/backend/imageAPI";
 
 export const dynamic = "force-dynamic";
 
@@ -20,12 +20,13 @@ export async function PUT(request: NextRequest, context: Params) {
 		const body = await request.json();
 
 		const oldBrand = await DB.Brand.findById(context.params.id) as Brand;
-		const oldImage = oldBrand.image;
-		if(oldImage){
-			await deleteImage(oldImage.id);
+		let image = oldBrand.image;
+		try{
+			image = await handleImage(oldBrand.image, body.image)
+		}catch (e){
+			console.log(e)
 		}
 
-		const image = await uploadImage(body.image);
 
 		const updatedBrand = await DB.Brand.findByIdAndUpdate(
 			context.params.id,
@@ -36,7 +37,7 @@ export async function PUT(request: NextRequest, context: Params) {
 		);
 		return NextResponse.json(updatedBrand);
 	} catch (err) {
-		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
+		return new NextResponse(JSON.stringify({message: err?.message}), {status: 500})
 	}
 }
 

@@ -1,6 +1,6 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {deleteImages, uploadImages} from "@/backend/imageAPI";
+import {deleteImages, handleImages, uploadImages} from "@/backend/imageAPI";
 import {MainPageSliderDTO} from "@/backend/types";
 
 
@@ -15,7 +15,7 @@ export async function PUT(request: NextRequest) {
                 console.log(err);
             }
         }
-        const images = await uploadImages(body.slides.map(slide => slide.image));
+        const images = await handleImages(existing?.slides?.map(slide => slide.image), body.slides?.map(slide => slide.image))
         const slider = {
             ...body,
             slides: body.slides.map((slide, index) => ({...slide, image: images?.[index]}))

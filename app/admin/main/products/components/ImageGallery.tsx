@@ -40,8 +40,8 @@ export default function ImageGallery({control, name, className, multiple = false
                     {
                         multiple ? field.value?.map((item: ImageDTO) => {
                             return (
-                                <div key={item.id} className="relative pt-[100%] w-full">
-                                    <img alt='product image' src={item.src}
+                                <div key={item?.id} className="relative pt-[100%] w-full">
+                                    <img alt='product image' src={item?.src}
                                          className="absolute w-full h-full left-0 top-0 object-contain bg-[#dadada]"/>
                                     <DeleteButton
                                         remove={() => onRemove(item.id)}
