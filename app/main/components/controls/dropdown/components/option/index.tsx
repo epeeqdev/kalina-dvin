@@ -4,22 +4,24 @@ import {Typography} from "@/app/main/components/controls/typography";
 import {IconNameOptions} from "@/components/icon/icons";
 
 type Props = {
-    dropdownClassname?: string;
+    className?: string;
     title: string;
     icon?: IconNameOptions;
     onClick?: () => void;
+    id?:string;
+    isChanged?: boolean;
 }
 
-export const Option = ({icon, dropdownClassname, title, onClick}: Props) => {
+export const Option = ({icon, className, title, onClick,isChanged,id, }: Props) => {
     return(
-        <div className="group hover:bg-primary hover:text-white transition" onClick={() => onClick ? onClick() : null}>
-            <div className={clsx(['flex h-[46px] items-center',dropdownClassname])} >
+        <div className="group hover:bg-secondary hover:text-white transition" onClick={onClick}>
+            <div className={clsx(['flex h-[46px] items-center',className])} >
                 {icon && (
                     <div className="w-[24px] h-[24px]">
-                        <IconComponent name={icon} className="group-hover:text-white text-primary" />
+                        <IconComponent name={icon} className="group-hover:text-white text-primary transition" />
                     </div>
                 )}
-                <Typography>{title}</Typography>
+                <Typography className='group-hover:text-white transition'>{title}</Typography>
             </div>
         </div>
 

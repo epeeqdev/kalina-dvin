@@ -4,7 +4,7 @@ import {type IconNameOptions, icons} from './icons';
 
 type SizesProps = 'sm' | 'md' | 'lg';
 
-type ColorProps = 'primary' | 'secondary' | 'white' | 'gray';
+type ColorProps = 'primary' | 'secondary' | 'white' | 'gray' | 'inherit';
 
 export interface Props {
     name: IconNameOptions;
