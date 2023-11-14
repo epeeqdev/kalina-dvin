@@ -1,4 +1,3 @@
-'use client'
 import {Navigation} from "@/app/main/components/header/components/navigation";
 import Image from "next/image";
 import IconComponent from "@/components/icon";
@@ -6,8 +5,13 @@ import {useState} from "react";
 import clsx from "clsx";
 import {MobileNavigation} from "@/app/main/components/header/components/mobile-navigation";
 import Link from "next/link";
+import {ContactsPageDTO} from "@/backend/types";
 
-export const Header = () => {
+interface Props {
+    contacts: ContactsPageDTO
+}
+
+export const Header = ({contacts}: Props) => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const menuButton = isNavOpen ? 'close' : 'burgerManu'
     return (
@@ -17,7 +21,7 @@ export const Header = () => {
                 'w-full flex px-[5%] py-[8px] lg:py-[12px] items-center shadow-md relative z-[999]': isNavOpen
             })}>
                 <Link href='/main'>
-                    <Image src='/logo.png' alt='logo' width={100} height={44} className='w-auto h-[24px] lg:w-auto lg:h-[44px] '/>
+                    <Image src='/logo.png' alt='logo' width={100} height={44} className='w-auto h-[36px] lg:w-auto lg:h-[46px] '/>
                 </Link>
                 <div className='flex-1'>
                     <div className='flex lg:hidden justify-end'>
@@ -26,16 +30,16 @@ export const Header = () => {
                         </div>
                     </div>
                     <div className='hidden lg:flex gap-x-[7%] justify-end items-center'>
-                        <Navigation/>
+                        <Navigation contacts={contacts}/>
                     </div>
                 </div>
             </div>
             <div className={clsx({
-                'w-full h-screen bg-white z-10 flex lg:hidden flex-col items-center fixed top-[40px] left-0': isNavOpen,
+                'w-full h-screen bg-white z-10 flex lg:hidden flex-col items-center fixed top-[46px] left-0': isNavOpen,
                 'hidden': !isNavOpen
             })}>
                 <div className='flex flex-col w-full justify-between'>
-                    <MobileNavigation/>
+                    <MobileNavigation contacts={contacts}/>
                 </div>
             </div>
         </div>

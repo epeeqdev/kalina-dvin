@@ -35,4 +35,5 @@ export type ColorProps =
     | 'white'
     | 'primary'
     | 'secondary'
-    | 'gray';
+    | 'gray'
+    | 'inherit';

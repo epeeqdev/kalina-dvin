@@ -1,10 +1,20 @@
-import {Options} from "@/app/main/components/controls/dropdown";
+import {LanguageType} from "@/app/main/components/controls/dropdown";
+import {IconNameOptions} from "@/components/icon/icons";
 
 export interface NavigationItemsType {
-    id: string,
+    id: string | number,
     title: {am: string, ru: string},
     isSelect?: boolean,
     link?: string,
-    options?: Options[],
     dropdownClassname?: {container: string, items: string}
+}
+type DropdownOptionsType = {
+    id: string;
+    title: LanguageType;
+    icon?: IconNameOptions;
+    isChanged?: boolean;
+    link?: string
+}
+export type ContactsType = {
+    options: DropdownOptionsType[];
 }
