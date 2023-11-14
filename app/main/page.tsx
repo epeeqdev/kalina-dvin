@@ -4,13 +4,14 @@ import {BlockBox} from "@/app/main/components/controls/block-box";
 import {getBrandsData} from "@/app/main/get-main-data/get-brands-data";
 import {getCurrentUrl} from "@/utils/heplers";
 import {CategoriesBlock} from "@/app/main/components/categories-block";
-import {getCategoriesData} from "@/app/main/get-main-data/get-categories-data";
+import {AboutBlock} from "@/app/main/components/about-block";
+import {getPageData} from "@/app/main/api-helpers/getPageData";
 
 
 export default  async  function Home() {
     const origin = getCurrentUrl();
     const brands = await getBrandsData(origin)
-    const categories = await getCategoriesData(origin)
+    const [categories,_, aboutUs] = await getPageData();
     return (
     <main className="">
         <Slider/>
@@ -22,6 +23,7 @@ export default  async  function Home() {
         >
             <Carousel brands={brands}/>
         </BlockBox>
+        <AboutBlock data={aboutUs}/>
     </main>
   )
 }

@@ -33,10 +33,10 @@ export const Footer = ({categories, contacts}:Props) => {
                         </Typography>
                         <div className='flex gap-x-[12px]'>
                             <a href={contacts.socialLinks.facebook} target='_blank' className='group hover:text-white-darker'>
-                                <IconComponent name='facebook' color='white' size='lg' className='group-hover:text-white-darker'/>
+                                <IconComponent name='facebook' color='white' size='sm' className='group-hover:text-white-darker md:w-[24px] md:h-[24px] lg:w-[32px] lg:h-[32px]'/>
                             </a>
                             <a href={contacts.socialLinks.instagram} target='_blank' className='group hover:text-white-darker'>
-                                <IconComponent name='instagram' color='white'  size='lg' className='group-hover:text-white-darker'/>
+                                <IconComponent name='instagram' color='white'  size='sm' className='group-hover:text-white-darker md:w-[24px] md:h-[24px] lg:w-[32px] lg:h-[32px]'/>
                             </a>
                         </div>
                     </div>
