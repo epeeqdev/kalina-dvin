@@ -7,7 +7,7 @@ import {NavigationItems} from "@/app/main/components/header/constants";
 import {CategoryResponseDTO, ContactsPageDTO} from "@/backend/types";
 import {
     FooterContactsBlock
-} from "@/app/main/components/footer/components/footer-block/components/footer-contacts-block-item/intex";
+} from "@/app/main/components/footer/components/footer-block/components/footer-contacts-block-item";
 import {FooterBlock} from "@/app/main/components/footer/components/footer-block";
 import {FooterBlockItem} from "@/app/main/components/footer/components/footer-block/components/footer-block-item";
 
@@ -21,22 +21,19 @@ export const Footer = ({categories, contacts}:Props) => {
     const categoriesData = categories?.slice(0,5)
 
     return(
-        <div className='bg-primary w-full h-[280px] lg:h-[398px] flex flex-col'>
+        <div className='bg-primary w-full flex flex-col'>
             <div className='flex-1 pt-[14px] lg:pt-[48px] pb-[12px] lg:pb-[48px] pl-[7%] pr-[7.5%]'>
                 <div className='flex flex-col lg:flex-row h-full'>
                     <div className='flex justify-around pr-[48px] lg:justify-between flex-col border-r-[0] border-b-[1px] lg:border-r-[1px] lg:border-b-[0] border-secondary w-full max-w-full lg:max-w-[230px] xl:max-w-[383px] h-full'>
                         <div>
-                            <Image src='/footerLogo.png' alt='footerLogo' width={152} height={60} className='w-[68px] h-[26px] lg:w-[152px] lg:h-[60px]'/>
+                            <Image src='/footerLogo.png' alt='footerLogo' width={152} height={60} className='w-[100px] lg:w-[152px] mb-4'/>
                         </div>
-                        <Typography color='white' size="sm">
-                            Լորեմ Իպսումը տպագրության և տպագրական արդյունաբերության տեքստ է։
-                        </Typography>
-                        <div className='flex gap-x-[12px]'>
+                        <div className='flex gap-x-3 mb-4'>
                             <a href={contacts.socialLinks.facebook} target='_blank' className='group hover:text-white-darker'>
-                                <IconComponent name='facebook' color='white' size='sm' className='group-hover:text-white-darker md:w-[24px] md:h-[24px] lg:w-[32px] lg:h-[32px]'/>
+                                <IconComponent name='facebook' color='white' size='md' className='group-hover:text-white-darker md:w-[24px] md:h-[24px] lg:w-[32px] lg:h-[32px]'/>
                             </a>
                             <a href={contacts.socialLinks.instagram} target='_blank' className='group hover:text-white-darker'>
-                                <IconComponent name='instagram' color='white'  size='sm' className='group-hover:text-white-darker md:w-[24px] md:h-[24px] lg:w-[32px] lg:h-[32px]'/>
+                                <IconComponent name='instagram' color='white'  size='md' className='group-hover:text-white-darker md:w-[24px] md:h-[24px] lg:w-[32px] lg:h-[32px]'/>
                             </a>
                         </div>
                     </div>

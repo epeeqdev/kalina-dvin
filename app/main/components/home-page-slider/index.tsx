@@ -11,6 +11,7 @@ interface Props {
 }
 export const HomePageSlider = ({slides}:Props) => {
     return (
+        <div className='flex'>
         <Swiper
             className={clsx(['sm:h-[400px]', 'md:h-[calc(100vh-68px)]','bg-white !pb-4'])}
             modules={[Pagination, A11y, Autoplay]}
@@ -34,5 +35,6 @@ export const HomePageSlider = ({slides}:Props) => {
             }
 
         </Swiper>
+        </div>
     );
 };

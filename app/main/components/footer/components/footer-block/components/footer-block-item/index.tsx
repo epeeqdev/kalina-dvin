@@ -8,8 +8,8 @@ type Props = {
 }
 export const FooterBlockItem = ({title,link}: Props) => {
     return(
-        <Link href={link ? link: '#'} className='cursor-pointer flex items-center gap-x-1 group hover:text-white-darker transition'>
-            <Typography color='white' size='sm' className='group-hover:text-inherit transition'>{title}</Typography>
+        <Link href={link ? link: '#'} className='cursor-pointer flex items-center gap-x-1 group hover:text-secondary transition-[color] mb-2'>
+            <Typography color='white' size='md' className='group-hover:text-inherit transition'>{title}</Typography>
         </Link>
     )
 }
