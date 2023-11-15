@@ -29,7 +29,7 @@ export const CategoriesGrid = ({categories}: Props) => {
                 }
 
             </div>
-            <div className='flex justify-end mt-6 md:mt-9 xl:mt-12'>
+            <div className='flex justify-items-start lg:justify-end mt-6 md:mt-9 xl:mt-12'>
                 <Button onClick={handleSeeMore}>{getLanguage(BUTTON_TITLE)}</Button>
             </div>
         </div>

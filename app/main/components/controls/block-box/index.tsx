@@ -15,7 +15,7 @@ export const BlockBox = ({children, className, header,childrenClassName,...props
     const {getLanguage} = useLanguage()
     return(
         <div className={clsx('flex flex-col items-start', className)}>
-            <div className='px-[5%] mb-2 md:mb-6'>
+            <div className='px-[5%] mb-4 md:mb-8'>
             <div>
                 <Typography size='4xl'>{getLanguage(header)}</Typography>
             </div>

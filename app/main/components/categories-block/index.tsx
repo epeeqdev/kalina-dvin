@@ -12,7 +12,7 @@ export const CategoriesBlock = ({categories}: Props) => {
         <BlockBox
             header={BLOCK_TITLE}
             childrenClassName='px-[5%]'
-            className='pt-[45px] lg:pt-[120px] pb-[45px]'
+            className='pt-[45px] pb-0 lg:pt-[60px] lg:pb-[45px]'
         >
             <CategoriesGrid categories={categories}/>
         </BlockBox>
