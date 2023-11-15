@@ -85,6 +85,8 @@ export interface SlideDTO {
 	title: TextStructure;
 	description: TextStructure;
 	image: ImageDTO;
+	buttonLink?: string;
+	buttonText?: TextStructure;
 }
 
 export interface MainPageSliderDTO {

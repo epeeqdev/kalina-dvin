@@ -1,17 +1,17 @@
 'use client'
 import {ComponentPropsWithoutRef} from "react";
 import {Typography} from "@/app/main/components/controls/typography";
-import {LanguageType} from "@/app/main/components/controls/dropdown";
 import {useLanguage} from "@/app/main/hooks/useLanguage";
 import clsx from "clsx";
+import {TextStructure} from "@/backend/types";
 
 
 interface Props extends ComponentPropsWithoutRef<'div'>{
-    header: LanguageType,
+    header: TextStructure,
     childrenClassName?: string
 }
 
-export const BlockBox = ({children, className, header,childrenClassName,...props}:Props) => {
+export const HomePageSection = ({children, className, header,childrenClassName}:Props) => {
     const {getLanguage} = useLanguage()
     return(
         <div className={clsx('flex flex-col items-start', className)}>

@@ -16,6 +16,9 @@ export const API_ROUTES = {
     product: '/api/product',
     user: '/api/getUser',
     login: '/api/login',
+    mainPage:'/api/pages/main-slider',
+    aboutUs:'/api/pages/about-us',
+    contacts:'/api/pages/contacts'
 }
 
 export const PROTECTED_ROUTES = {

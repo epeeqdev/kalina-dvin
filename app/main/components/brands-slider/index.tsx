@@ -1,16 +1,17 @@
-import { Scrollbar, Mousewheel, Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+'use client'
 import {BrandResponseDTO} from "@/backend/types";
-import {Breakpoints} from "@/app/main/components/carousel/constants";
-import {BrandCard} from "@/app/main/components/carousel/components/carousel-card";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Autoplay, Mousewheel, Scrollbar} from "swiper/modules";
+import {Breakpoints} from "@/app/main/components/brands-slider/constants";
+import {BrandCard} from "@/app/main/components/brands-slider/components/brand-card";
 
-type Props = {
-    brands: BrandResponseDTO[],
+interface Props {
+    brands: BrandResponseDTO[];
 }
-export const BreakPointCarousel = ({brands}: Props) => {
+
+export const BrandsSlider = ({brands}: Props) => {
     const brandsDoubled = brands ? [...brands, ...brands, ...brands] : []
     return (
-        <div>
             <Swiper
                 modules={[Scrollbar, Mousewheel, Autoplay]}
                 loop={true}
@@ -28,12 +29,11 @@ export const BreakPointCarousel = ({brands}: Props) => {
             >
                 {brandsDoubled.map((item, index) => {
                     return (
-                            <SwiperSlide key={`${item._id}_${index}`}  className='py-1'>
-                                <BrandCard data={item}/>
-                            </SwiperSlide>
+                        <SwiperSlide key={`${item._id}_${index}`}  className='py-1'>
+                            <BrandCard data={item}/>
+                        </SwiperSlide>
                     );
                 })}
             </Swiper>
-        </div>
     );
 }

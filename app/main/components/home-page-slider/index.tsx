@@ -1,12 +1,15 @@
 'use client'
-import { Navigation, Pagination, Autoplay, A11y } from 'swiper/modules';
-import {SliderItem} from "@/app/main/components/swiper/components/swiper-slide";
+import { Pagination, Autoplay, A11y } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import clsx from "clsx";
-import './components/swiper-slide/style.css'
-import {HOME_PAGE_SLIDER_DATA} from "@/app/main/components/swiper/constants";
+import '@/app/main/components/home-page-slider/components/slide/style.css'
+import {SlideDTO} from "@/backend/types";
+import {Slide} from "@/app/main/components/home-page-slider/components/slide";
 
-export const Slider = () => {
+interface Props {
+    slides?: SlideDTO[]
+}
+export const HomePageSlider = ({slides}:Props) => {
     return (
         <Swiper
             className={clsx(['sm:h-[400px]', 'md:h-[calc(100vh-68px)]','bg-white !pb-4'])}
@@ -23,9 +26,9 @@ export const Slider = () => {
             }}
         >
             {
-                HOME_PAGE_SLIDER_DATA.map((item) => (
-                    <SwiperSlide className='w-full' key={item.id} >
-                        <SliderItem title={item.title} description={item.description} img={item.img} link={item.link}/>
+                slides?.map((item) => (
+                    <SwiperSlide className='w-full' key={item._id} >
+                        <Slide data={item}/>
                     </SwiperSlide>
                 ))
             }

@@ -1,5 +1,5 @@
 'use client'
-import {BlockBox} from "@/app/main/components/controls/block-box";
+import {HomePageSection} from "../home-page-section";
 import {CategoriesGrid} from "@/app/main/components/categories-block/components/categories-grid";
 import {CategoryResponseDTO} from "@/backend/types";
 import {BLOCK_TITLE} from "@/app/main/components/categories-block/costants";
@@ -9,12 +9,12 @@ interface Props {
 }
 export const CategoriesBlock = ({categories}: Props) => {
     return  (
-        <BlockBox
+        <HomePageSection
             header={BLOCK_TITLE}
             childrenClassName='px-[5%]'
             className='pt-[45px] pb-0 lg:pt-[60px] lg:pb-[45px]'
         >
             <CategoriesGrid categories={categories}/>
-        </BlockBox>
+        </HomePageSection>
     )
 }

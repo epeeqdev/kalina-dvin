@@ -26,8 +26,8 @@ export const NavigationItems:  NavigationItemsType[] = [
 ]
 export const LanguageOptions: ContactsType = {
     options: [
-        {id: 'am', title:{am: 'AM'}, isChanged: true},
-        {id: 'ru', title: {ru: 'RU'}, isChanged: true}
+        {id: 'am', title:{am: 'AM', ru: 'AM'}, isChanged: true},
+        {id: 'ru', title: {ru: 'RU', am: 'RU'}, isChanged: true}
     ],
 }
 export const CONTACTS_TITLE = { am:'Կապ', ru: 'Контакты' }

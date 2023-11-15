@@ -18,7 +18,7 @@ interface Props {
 
 export const Footer = ({categories, contacts}:Props) => {
     const { getLanguage } = useLanguage();
-    const categoriesData = categories.slice(0,5)
+    const categoriesData = categories?.slice(0,5)
 
     return(
         <div className='bg-primary w-full h-[280px] lg:h-[398px] flex flex-col'>

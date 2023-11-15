@@ -1,9 +1,10 @@
 import {useMainContext} from "@/app/main/hooks/useMainContext";
-import {LanguageType} from "@/app/main/components/controls/dropdown";
+import {TextStructure} from "@/backend/types";
 
 export const useLanguage = () => {
     const [language] = useMainContext()
-    const getLanguage = (title: LanguageType) => {
+    const getLanguage = (title?: TextStructure) => {
+        if(!title) return ''
         const selectLng: string = language || 'am'
         const result = Object.keys(title).find((item) => {
             return item === selectLng

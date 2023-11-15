@@ -1,5 +1,5 @@
-import {LanguageType} from "@/app/main/components/controls/dropdown";
 import {IconNameOptions} from "@/components/icon/icons";
+import {TextStructure} from "@/backend/types";
 
 export interface NavigationItemsType {
     id: string | number,
@@ -10,7 +10,7 @@ export interface NavigationItemsType {
 }
 type DropdownOptionsType = {
     id: string;
-    title: LanguageType;
+    title: TextStructure;
     icon?: IconNameOptions;
     isChanged?: boolean;
     link?: string

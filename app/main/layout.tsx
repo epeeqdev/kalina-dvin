@@ -4,13 +4,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay'
 import {LayoutWrapper} from "@/app/main/layoutWrapper";
-import axios from "axios";
-import {getCurrentUrl} from "@/utils/heplers";
-import {CategoryResponseDTO, ContactsPageDTO} from "@/backend/types";
-import {getPageData} from "@/app/main/api-helpers/getPageData";
+import {getCategories} from "@/app/main/api-helpers/getCategories";
+import {getContactsPage} from "@/app/main/api-helpers/getContactsPage";
 
 export default async function MainLayout({children}:React.PropsWithChildren){
-    const [categories, contacts,_] = await getPageData();
+    const [categories, contacts] = await Promise.all([getCategories(), getContactsPage()])
     return <LayoutWrapper categories={categories} contacts={contacts}>
         {children}
     </LayoutWrapper>

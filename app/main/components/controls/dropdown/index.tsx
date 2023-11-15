@@ -2,9 +2,6 @@ import {Children, cloneElement, useEffect, useRef, useState} from "react";
 import IconComponent from "@/components/icon";
 import clsx from "clsx";
 import {Typography} from "@/app/main/components/controls/typography";
-
-export type LanguageType = {am: string, ru: string} | {am: string} | {ru: string};
-
 interface Props {
     title: string;
     size?: { width: string | number; height: string | number };
@@ -16,9 +13,9 @@ interface Props {
 
 type DropdownProps = Props;
 
-export const Dropdown = ({ title, className, onChange, size, dropdownClassName, children }: DropdownProps) => {
+export const Dropdown = ({ title, className, onChange, dropdownClassName, children }: DropdownProps) => {
     const [isShow, setIsShow] = useState(false);
-    const dropdownRef = useRef(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     const closeDropdownOnOutsideClick = (event: MouseEvent) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
