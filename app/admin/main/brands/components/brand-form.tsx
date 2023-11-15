@@ -9,13 +9,13 @@ import {BrandResponseDTO, ImageDTO, TextStructure} from "@/backend/types";
 import {getBrand} from "@/app/admin/main/brands/helpers/getBrand";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
 import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
+import Alert from "@/app/admin/main/products/helpers/alert";
 
 interface Props {
     id?: string
@@ -45,7 +45,7 @@ export const BrandForm = ({id}:Props) => {
     console.log(brandResponse, "brandResponse")
 
 
-    const loading = editBrandLoading || addBrandLoading || deleteBrandLoading || brandLoading
+    const loading = editBrandLoading || addBrandLoading || deleteBrandLoading
 
     const {
         control ,
@@ -88,13 +88,10 @@ export const BrandForm = ({id}:Props) => {
 
     return (
         <div>
-            <DeleteConfirmationModal
-                isOpen={deleteModalOpen}
-                onDelete={onDelete}
-                onClose={onCancel}
-                title="Вы уверены, что хотите удалить данный бренд?"
-                message="После удаления бренд не возможно восстановить!"
-            />
+            <Alert onAccept={onDelete} onClose={onCancel} onCancel={onCancel} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный бренд?</p>
+                <p className="text-gray-700">После удаления бренд не возможно восстановить!</p>
+            </Alert>
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
                 {

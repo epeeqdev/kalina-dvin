@@ -15,10 +15,11 @@ import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
 import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
 import AttributesForm from "@/app/admin/main/products/components/attributesForm";
-import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
+import Modal from "@/app/admin/main/products/helpers/modal";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
 import Link from "next/link";
 import {Button} from "../../components/controls/button";
+import Alert from "@/app/admin/main/products/helpers/alert";
 
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
@@ -166,15 +167,11 @@ export default function ProductForm({id}: { id: string }) {
                 >
                     Сохранить
                 </Button>
-
             </div>
-            <DeleteConfirmationModal
-                isOpen={deleteModalOpen}
-                onClose={() => setDeleteModalOpen(false)}
-                onDelete={onDelete}
-                title="Вы уверены, что хотите удалить данный продукт?"
-                message="После удаления продукт не возможно восстановить!"
-            />
+            <Alert onAccept={onDelete} onClose={() => setDeleteModalOpen(false)} onCancel={() => {}} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный продукт?</p>
+                <p className="text-gray-700">После удаления продукт не возможно восстановить!</p>
+            </Alert>
         </div>
     )
 }

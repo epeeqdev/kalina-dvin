@@ -8,14 +8,7 @@ export async function PUT(request: NextRequest) {
     try {
         const body = await request.json() as MainPageSliderDTO;
         const existing = await DB.MainPageSlider.findOne() as MainPageSliderDTO;
-        if (existing) {
-            try {
-                await deleteImages(existing.slides.map(slide => slide.image));
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        const images = await handleImages(existing?.slides?.map(slide => slide.image), body.slides?.map(slide => slide.image))
+        const images = await handleImages(existing?.slides?.map(slide => slide.image), body.slides?.map(slide => slide.image));
         const slider = {
             ...body,
             slides: body.slides.map((slide, index) => ({...slide, image: images?.[index]}))

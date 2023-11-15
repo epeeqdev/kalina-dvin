@@ -10,13 +10,14 @@ import {getCategory} from "@/app/admin/main/categories/halpers/getCategory";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {log} from "util";
-import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
+import Modal from "@/app/admin/main/products/helpers/modal";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
 import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
+import Alert from "@/app/admin/main/products/helpers/alert";
 
 
 interface Prop {
@@ -94,13 +95,10 @@ export  const CategoryForm = ({id} : Prop) => {
     console.log(getValues().image)
     return (
         <div>
-            <DeleteConfirmationModal
-                isOpen={deleteModalOpen}
-                onDelete={onDelete}
-                onClose={onCancel}
-                title="Вы уверены, что хотите удалить данную категорию?"
-                message="После удаления категорию не возможно восстановить!"
-            />
+            <Alert onAccept={onDelete} onClose={onCancel} onCancel={onCancel} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данную категорию?</p>
+                <p className="text-gray-700">После удаления категорию не возможно восстановить!</p>
+            </Alert>
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
                 {

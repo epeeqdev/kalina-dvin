@@ -17,6 +17,7 @@ interface Props {
 
 export default function ImageGallery({control, name, className, multiple = false}: Props) {
 
+
     return (
         <Controller render={({field}) => {
             const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +27,7 @@ export default function ImageGallery({control, name, className, multiple = false
                     field.onChange(multiple ? [...(field.value ?? []), ...images] : images[0]);
                 }
             }
+
 
             const onRemove = (id: string) => {
                 if (field.value) {

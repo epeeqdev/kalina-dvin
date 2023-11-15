@@ -8,13 +8,14 @@ import {useQuery} from "@/utils/hooks/useQuery";
 import {ProductAttributeResponseDTO} from "@/backend/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
+import Modal from "@/app/admin/main/products/helpers/modal";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
 import {getAttribute} from "@/app/admin/main/attributes/halpers/grtAttributes";
+import Alert from "@/app/admin/main/products/helpers/alert";
 
 interface Props {
     id?: string
@@ -86,13 +87,10 @@ export const AttributeForm = ({id}:Props) => {
 
     return (
         <div>
-            <DeleteConfirmationModal
-                isOpen={deleteModalOpen}
-                onDelete={onDelete}
-                onClose={onCancel}
-                title="Вы уверены, что хотите удалить данный атрибут?"
-                message="После удаления атрибут не возможно восстановить!"
-            />
+            <Alert onAccept={onDelete} onClose={onCancel} onCancel={onCancel} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный атрибут?</p>
+                <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
+            </Alert>
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
                 {

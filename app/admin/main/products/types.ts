@@ -1,9 +1,10 @@
-import {Image} from "@/app/admin/types";
+import {ImageDTO} from "@/backend/types";
 
 export type Categories = {
     value: string;
     label: string
 }
+
 export interface Product {
     _id?: string;
     title: string;
