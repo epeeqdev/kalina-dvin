@@ -10,13 +10,13 @@ import {getCategory} from "@/app/admin/main/categories/halpers/getCategory";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {log} from "util";
-import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
 import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
+import Alert from "@/app/admin/main/products/helpers/alert";
 
 
 interface Prop {
@@ -28,9 +28,7 @@ export  const CategoryForm = ({id} : Prop) => {
     const {mutate: editCategoryMutate, isLoading: editCategoryLoading } = useMutation(editCategory);
     const {mutate: deleteCategoryMutate, isLoading: deleteCategoryLoading} = useMutation(deleteCategory);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: categoryResponse, isLoading: categoryLoading} = useQuery<CategoryResponseDTO[]>(() => getCategory(id), [], {fetchOnMount: !!id});
-
-    const category = categoryResponse
+    const {data: category, isLoading: categoryLoading} = useQuery<CategoryResponseDTO[]>(() => getCategory(id), [], {fetchOnMount: !!id});
 
     const validationSchema = yup.object().shape({
         name: yup.object().shape({
@@ -56,7 +54,7 @@ export  const CategoryForm = ({id} : Prop) => {
         register,
         getValues,
         formState: {errors}
-    } = useForm<Category>({
+    } = useForm<CategoryResponseDTO>({
         resolver: yupResolver(validationSchema),
         ...(category ? {
             values: {
@@ -65,9 +63,6 @@ export  const CategoryForm = ({id} : Prop) => {
             }
         }: {})
     }) ?? {};
-
-    console.log(errors, "errorssssss")
-
 
     const onCancel = () => {
         setDeleteModalOpen(false)
@@ -91,16 +86,12 @@ export  const CategoryForm = ({id} : Prop) => {
         })()
     }
 
-    console.log(getValues().image)
     return (
         <div>
-            <DeleteConfirmationModal
-                isOpen={deleteModalOpen}
-                onDelete={onDelete}
-                onClose={onCancel}
-                title="Вы уверены, что хотите удалить данную категорию?"
-                message="После удаления категорию не возможно восстановить!"
-            />
+            <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данную категорию?</p>
+                <p className="text-gray-700">После удаления категорию не возможно восстановить!</p>
+            </Alert>
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
                 {
@@ -111,7 +102,7 @@ export  const CategoryForm = ({id} : Prop) => {
                         }}>Удалить</Button>
                         : <></>
                 }
-                <Link href="/admin/main/categories">
+                <Link href='/admin/main/categories'>
                     <Button variant="secondary">Отмена</Button>
                 </Link>
                 <Button variant="primary" onClick={submit}>Сохранить</Button>

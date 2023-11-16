@@ -29,7 +29,7 @@ export default function Modal({ isOpen, onClose , title , message, children, cla
 
     return (
         <div className={`fixed inset-0 flex items-center justify-center z-50 ${isOpen ? 'block' : 'hidden'}`}>
-            <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
+            <div className="modal-overlay fixed inset-0 bg-black opacity-10"></div>
 
             <div className={clsx("modal-container bg-white w-1/3 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto", classname)}>
                 <div className="modal-content py-4 text-left px-6">

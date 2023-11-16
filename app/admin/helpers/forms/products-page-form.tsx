@@ -52,7 +52,7 @@ export default function ProductsPageForm(){
                 onEdit()
             }}>Сохранить</Button>
             <div className="flex gap-4 justify-center">
-                <ImageGallery control={control} name='image' className="max-w-[80%] border-none" classNameSecond="w-[100%] h-[50%] object-fill" classNameThree="pt-[50%]"/>
+                <ImageGallery control={control} name='image' className="max-w-[80%] border-none" classNameSecond="w-[100%] max-h-[50%] object-fill" classNameThree="pt-[50%]"/>
             </div>
 
         </div>

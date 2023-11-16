@@ -36,7 +36,7 @@ export type BrandResponseDTO = {
 };
 
 export type AttributeRequestDTO = {
-	attribute: string;
+	attribute: TextStructure;
 	value: TextStructure;
 };
 
@@ -53,6 +53,15 @@ export type AttributesResponseDTO = {
 	_id: string
 	name: TextStructure;
 };
+
+export type AttributeDTO = {
+	name: {
+		_id: string,
+		am: string,
+		ru:string
+	}
+	_id: string
+}
 
 export interface ImageDTO {
 	src: string;
