@@ -26,7 +26,8 @@ export async function PUT(request: NextRequest, context: Params) {
 			context.params.id,
 			{
 				$set: body,
-			}
+			},
+			{new:true}
 		);
 		return NextResponse.json(updatedProduct);
 	} catch (err) {
@@ -35,7 +36,7 @@ export async function PUT(request: NextRequest, context: Params) {
 	}
 }
 
-export async function DELETE(request: NextRequest, context: Params) {
+export async function DELETE(_: NextRequest, context: Params) {
 	try {
 		const oldItem = await DB.Product.findById(context.params.id) as Product;
 		if(oldItem.images?.length){

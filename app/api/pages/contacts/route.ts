@@ -12,7 +12,8 @@ export async function PUT(request: NextRequest) {
                 existing._id,
                 {
                     $set: body,
-                }
+                },
+                {new: true}
             );
             return NextResponse.json(saved);
         }

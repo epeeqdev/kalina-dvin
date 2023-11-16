@@ -1,7 +1,7 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {deleteImage, handleImage, uploadImage} from "@/backend/imageAPI";
-import {CategoriesPageDTO} from "@/backend/types";
+import {handleImage} from "@/backend/imageAPI";
+import {CategoriesPageDTO, ImageDTO} from "@/backend/types";
 
 
 export async function PUT(request: NextRequest) {
@@ -10,7 +10,7 @@ export async function PUT(request: NextRequest) {
         const existing = await DB.CategoriesPage.findOne() as CategoriesPageDTO;
         let image = existing?.image;
         try{
-            image = await handleImage(existing?.image, body.image)
+            image = await handleImage(existing?.image, body.image) as ImageDTO;
         }catch (e){
             console.log(e)
         }
@@ -23,7 +23,8 @@ export async function PUT(request: NextRequest) {
                 existing._id,
                 {
                     $set: pageData,
-                }
+                },
+                {new: true}
             );
             return NextResponse.json(saved);
         }

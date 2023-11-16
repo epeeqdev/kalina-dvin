@@ -6,6 +6,6 @@ import {getCurrentUrl} from "@/utils/heplers";
 
 export const getContactsPage = async () => {
     const origin = getCurrentUrl();
-    const req = await axios<ContactsPageDTO>(`${origin}${API_ROUTES.contacts}`);
+    const req = await axios<ContactsPageDTO>(`${origin}${API_ROUTES.pages.contacts}`);
     return req.data;
 }

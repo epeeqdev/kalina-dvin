@@ -6,6 +6,6 @@ import {getCurrentUrl} from "@/utils/heplers";
 
 export const getMainPage = async () => {
     const origin = getCurrentUrl();
-    const req = await axios<MainPageSliderDTO>(`${origin}${API_ROUTES.mainPage}`);
+    const req = await axios<MainPageSliderDTO>(`${origin}${API_ROUTES.pages.mainPage}`);
     return req.data;
 }

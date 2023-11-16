@@ -7,8 +7,7 @@ import {uploadImages} from "@/backend/imageAPI";
 export async function POST(request: NextRequest) {
 	try {
 		const body = await request.json();
-		const images = await uploadImages(body.images);
-		body.images = images;
+		body.images = await uploadImages(body.images);
 		const savedProduct = await new DB.Product(body).save() as Product;
 		return NextResponse.json(savedProduct);
 	} catch (err:any) {

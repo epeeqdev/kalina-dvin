@@ -19,16 +19,17 @@ export async function PUT(request: NextRequest) {
             image
         }
         if (existing) {
-            await DB.AboutUs.findByIdAndUpdate(
+            const updated = await DB.AboutUs.findByIdAndUpdate(
                 existing._id,
                 {
                     $set: aboutUs,
-                }
+                },
+                { new: true }
             );
-            return NextResponse.json(aboutUs);
+            return NextResponse.json(updated);
         }
-        await new DB.AboutUs(aboutUs).save();
-        return NextResponse.json(aboutUs);
+        const updated = await new DB.AboutUs(aboutUs).save();
+        return NextResponse.json(updated);
     } catch (err: any) {
         console.log(err)
         return new NextResponse(JSON.stringify({message: err.message}), {status: 500})

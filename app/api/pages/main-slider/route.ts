@@ -25,7 +25,8 @@ export async function PUT(request: NextRequest) {
                 existing._id,
                 {
                     $set: slider,
-                }
+                },
+                {new: true}
             );
             return NextResponse.json(savedSlider);
         }

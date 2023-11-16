@@ -2,7 +2,7 @@ import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {Brand} from "@/app/admin/main/products/types";
-import {deleteImage, handleImage, handleImages, uploadImage} from "@/backend/imageAPI";
+import {deleteImage, handleImage} from "@/backend/imageAPI";
 
 export const dynamic = "force-dynamic";
 
@@ -36,7 +36,7 @@ export async function PUT(request: NextRequest, context: Params) {
 			{ new: true }
 		);
 		return NextResponse.json(updatedBrand);
-	} catch (err) {
+	} catch (err:any) {
 		return new NextResponse(JSON.stringify({message: err?.message}), {status: 500})
 	}
 }
