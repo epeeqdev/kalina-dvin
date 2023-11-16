@@ -12,17 +12,19 @@ interface Props {
     control: Control<any>;
     name: string;
     className?: string,
+    classNameSecond?: string
     multiple?: boolean
+    classNameThree?: string
 }
 
-export default function ImageGallery({control, name, className, multiple = false}: Props) {
+export default function ImageGallery({control, name, className,classNameSecond,classNameThree, multiple = false}: Props) {
 
     return (
         <Controller render={({field}) => {
             const onImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
                 if (e?.target?.files) {
                     const imgList = Object.values(e.target.files);
-                    const images = await Promise.all<Promise<any>>(imgList.map(item => convertFileToBase64(item)))
+                    const images = await Promise.all<Promise<ImageDTO[]>>(imgList.map(item => convertFileToBase64(item)))
                     field.onChange(multiple ? [...(field.value ?? []), ...images] : images[0]);
                 }
             }
@@ -41,22 +43,17 @@ export default function ImageGallery({control, name, className, multiple = false
                         multiple ? field.value?.map((item: ImageDTO) => {
                             return (
                                 <div key={item?.id} className="relative pt-[100%] w-full">
-                                    <img alt='product image' src={item?.src}
-                                         className="absolute w-full h-full left-0 top-0 object-contain bg-[#dadada]"/>
+                                    // todo change img tag to next.Image
+                                    <img alt='product image' src={item?.src} className="absolute w-full h-full left-0 top-0 object-contain bg-[#dadada]"/>
                                     <DeleteButton
                                         remove={() => onRemove(item.id)}
                                         className={"absolute top-[3%] right-[3%]"}
                                     />
                                 </div>
                             )
-                        }): !!field.value &&  <div key={field.value.id} className="relative pt-[100%] w-full">
-
-                            {
-                                        field.value?.src
-                                            ? <img alt='product image' src={field?.value?.src}
-                                          className="absolute h-full left-0 top-0 object-contain bg-[#dadada] w-full"/>
-                                            : <EmptyImageTemplate />
-                            }
+                        }): !!field.value &&
+                            <div key={field.value.id} className="relative pt-[100%] w-full">
+                            <img alt='product image' src={field?.value?.src} className={clsx("absolute h-full left-0 top-0 object-contain bg-[#dadada] w-full", classNameSecond)}/>
                             <DeleteButton
                                 remove={() => onRemove(field.value.id)}
                                 className={"absolute top-[3%] right-[3%]"}
@@ -64,7 +61,8 @@ export default function ImageGallery({control, name, className, multiple = false
                         </div>
                     }
                     {
-                        (multiple || !field.value) && <div className="text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%] w-full">
+                        (multiple || !field.value) &&
+                        <div className={clsx("text-dark-grey flex bg-[#dadada] hover:bg-[#cfc7c7] transition relative pt-[100%] w-full",classNameThree)}>
                         <label
                             className="w-full h-full cursor-pointer flex justify-center items-center text-[100px] absolute top-0 left-0">
                             <input className="hidden"
