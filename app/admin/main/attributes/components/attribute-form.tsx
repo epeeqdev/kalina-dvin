@@ -5,16 +5,16 @@ import {editAttribute} from "@/app/admin/main/attributes/halpers/editAttribute";
 import {deleteAttribute} from "@/app/admin/main/attributes/halpers/deleteAttribute";
 import {useState} from "react";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {ProductAttributeResponseDTO} from "@/backend/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import DeleteConfirmationModal from "@/app/admin/main/products/helpers/deleteProductModal";
+import Alert from "@/app/admin/main/products/helpers/alert";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
 import {getAttribute} from "@/app/admin/main/attributes/halpers/grtAttributes";
+import {AttributeDTO, TextStructure} from "@/backend/types";
 
 interface Props {
     id?: string
@@ -38,10 +38,11 @@ export const AttributeForm = ({id}:Props) => {
     const {mutate: editAttributeMutate, isLoading: editAttributeLoading } = useMutation(editAttribute);
     const {mutate: deleteAttributeMutate, isLoading: deleteAttributeLoading} = useMutation(deleteAttribute);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: attributeResponse, isLoading: attributeLoading} = useQuery<ProductAttributeResponseDTO[]>(getAttribute,[id], {fetchOnMount: !!id});
+    const {data: attribute, isLoading: attributeLoading} = useQuery<AttributeDTO>(getAttribute,[id], {fetchOnMount: !!id});
 
-    const attribute = attributeResponse
     const loading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading
+
+    console.log(attribute, "attribute")
 
     const {
         handleSubmit,
@@ -86,13 +87,10 @@ export const AttributeForm = ({id}:Props) => {
 
     return (
         <div>
-            <DeleteConfirmationModal
-                isOpen={deleteModalOpen}
-                onDelete={onDelete}
-                onClose={onCancel}
-                title="Вы уверены, что хотите удалить данный атрибут?"
-                message="После удаления атрибут не возможно восстановить!"
-            />
+            <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный атрибут?</p>
+                <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
+            </Alert>
             {loading && <LoadingSpinner />}
             <div className={"flex justify-end mb-5 gap-2"}>
                 {

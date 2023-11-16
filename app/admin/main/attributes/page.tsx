@@ -1,7 +1,7 @@
 "use client"
 
 import {useQuery} from "@/utils/hooks/useQuery";
-import {AttributesResponseDTO, BrandResponseDTO} from "@/backend/types";
+import {AttributeDTO} from "@/backend/types";
 import axios from "@/axios";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
@@ -12,7 +12,7 @@ export default function Attributes() {
     const {
         data: attributes,
         isLoading: attributesLoading
-    } = useQuery<AttributesResponseDTO>(() => axios.get(`/api/attributes`));
+    } = useQuery<AttributeDTO[]>(() => axios.get(`/api/attributes`));
 
     return (
         <div className="xl:w-[60%] mx-auto w-full pb-16">

@@ -19,7 +19,7 @@ const schema = yup.object().shape({
 })
 
 interface Props {
-    onSubmit?: any
+    onSubmit?: () => void
     onCancel?: () => void
 }
 export default function AddAttributes({onSubmit, onCancel}: Props){
