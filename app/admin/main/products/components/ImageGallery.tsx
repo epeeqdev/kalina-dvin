@@ -5,7 +5,6 @@ import {convertFileToBase64} from "@/app/admin/main/products/helpers/convertImag
 import {Control, Controller} from "react-hook-form";
 import clsx from "clsx";
 import {ImageDTO} from "@/backend/types";
-import EmptyImageTemplate from "@/app/admin/main/products/helpers/emptyImageTemplate";
 import DeleteButton from "@/app/admin/main/components/controls/delete-button";
 
 interface Props {
@@ -43,7 +42,6 @@ export default function ImageGallery({control, name, className,classNameSecond,c
                         multiple ? field.value?.map((item: ImageDTO) => {
                             return (
                                 <div key={item?.id} className="relative pt-[100%] w-full">
-                                    // todo change img tag to next.Image
                                     <img alt='product image' src={item?.src} className="absolute w-full h-full left-0 top-0 object-contain bg-[#dadada]"/>
                                     <DeleteButton
                                         remove={() => onRemove(item.id)}
