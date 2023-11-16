@@ -31,19 +31,27 @@ export const uploadImages = (images: ImageDTO[]) => {
 }
 
 export const handleImages = async (oldImages: ImageDTO[] | null, newImages: ImageDTO[] | null) => {
-	const newImagesIds = newImages?.filter(Boolean)?.reduce((acc, image) => ({...acc, [image.id]:image.id }),{});
+	const newImagesIds = newImages?.filter(Boolean)?.reduce((acc, image) => ({...acc, [image.id]:image.id }),{}) ?? {};
 	if(!newImages || !newImagesIds || !Object.keys(newImagesIds)?.length){
-		if(oldImages?.length){
-			console.log('Deleting images', oldImages);
-			await deleteImages(oldImages);
+		try {
+			if(oldImages?.length){
+				console.log('Deleting images', oldImages);
+				await deleteImages(oldImages);
+			}
+		}catch (e){
+			console.log('Remove all old images error', e)
 		}
 		return [];
 	}
 	if(oldImages?.length){
 		const imagesToRemove = oldImages.filter(item => !newImagesIds[item.id as keyof typeof newImagesIds])
-		if(imagesToRemove.length){
-			console.log('Deleting images', imagesToRemove);
-			await deleteImages(imagesToRemove);
+		try {
+			if(imagesToRemove.length){
+				console.log('Deleting images', imagesToRemove);
+				await deleteImages(imagesToRemove);
+			}
+		}catch (e){
+			console.log('Remove old images error', e)
 		}
 	}
 	const imagesToAdd = newImages?.reduce((acc:(ImageDTO & {idx: number})[],item, idx) => {
@@ -69,15 +77,24 @@ export const handleImages = async (oldImages: ImageDTO[] | null, newImages: Imag
 export const handleImage = async (oldImage: ImageDTO | null, newImage: ImageDTO | null) => {
 	if (!newImage) {
 		if (oldImage) {
-			console.log('Deleting image', oldImage);
-			await deleteImage(oldImage.id);
+			try{
+				console.log('Deleting old image', oldImage);
+				await deleteImage(oldImage.id);
+			}catch (e){
+				console.log('Deleting old image error', e)
+			}
+
 		}
 		return null;
 	}
 
 	if (oldImage && oldImage.id !== newImage.id) {
-		console.log('Deleting old image', oldImage);
-		await deleteImage(oldImage.id);
+		try{
+			console.log('Deleting old image', oldImage);
+			await deleteImage(oldImage.id);
+		}catch (e){
+			console.log('Deleting old image error', e)
+		}
 	}
 
 	if (!newImage.src.includes(process.env.IMAGE_KIT_URL!)) {

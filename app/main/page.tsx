@@ -11,7 +11,7 @@ export default async function Home() {
     let [mainPage, categories, brands,_, aboutUs] = await getHomePageData()
 
     return (
-        <main className="">
+        <main>
             <HomePageSlider slides={mainPage?.slides}/>
             <CategoriesBlock categories={categories}/>
             <HomePageSection

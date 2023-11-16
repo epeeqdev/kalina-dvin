@@ -1,7 +1,7 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {deleteImage, handleImage, uploadImage} from "@/backend/imageAPI";
-import {AboutUsDTO} from "@/backend/types";
+import {handleImage} from "@/backend/imageAPI";
+import {AboutUsDTO, ImageDTO} from "@/backend/types";
 
 
 export async function PUT(request: NextRequest) {
@@ -10,7 +10,7 @@ export async function PUT(request: NextRequest) {
         const existing = await DB.AboutUs.findOne() as AboutUsDTO;
         let image = existing?.image;
         try{
-            image = await handleImage(existing?.image, body.image)
+            image = await handleImage(existing?.image, body.image) as ImageDTO;
         }catch (e){
             console.log(e)
         }
@@ -19,17 +19,18 @@ export async function PUT(request: NextRequest) {
             image
         }
         if (existing) {
-            const saved = await DB.AboutUs.findByIdAndUpdate(
+            await DB.AboutUs.findByIdAndUpdate(
                 existing._id,
                 {
                     $set: aboutUs,
                 }
             );
-            return NextResponse.json(saved);
+            return NextResponse.json(aboutUs);
         }
-        const saved = await new DB.AboutUs(aboutUs).save() as AboutUsDTO;
-        return NextResponse.json(saved);
+        await new DB.AboutUs(aboutUs).save();
+        return NextResponse.json(aboutUs);
     } catch (err: any) {
+        console.log(err)
         return new NextResponse(JSON.stringify({message: err.message}), {status: 500})
     }
 }
@@ -65,6 +66,7 @@ export async function GET() {
             return NextResponse.json(initialData);
         }
     } catch (err: any) {
+        console.log(err)
         return new NextResponse(JSON.stringify({message: err.message}), {status: 500})
     }
 }
