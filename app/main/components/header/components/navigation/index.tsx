@@ -12,6 +12,7 @@ import {Typography} from "@/app/main/components/controls/typography";
 import {Dropdown} from "@/app/main/components/controls/dropdown";
 import {Option} from "@/app/main/components/controls/dropdown/components/option";
 import {ContactsPageDTO} from "@/backend/types";
+import {generateGoogleMapsLink} from "@/utils/googleMaps";
 
 interface Props {
     contacts: ContactsPageDTO
@@ -43,23 +44,23 @@ export const Navigation = ({contacts}: Props) => {
                 )
             }
             <div className='border-b-[1px] hover:border-primary transition border-transparent'>
-                <Dropdown title={getLanguage(CONTACTS_TITLE)} dropdownClassName='w-[265px]'>
-                    <a href=''>
+                <Dropdown title={getLanguage(CONTACTS_TITLE)} dropdownClassName='w-[265px] py-[20px]'>
+                    <a href={`tel:${contacts.phone}`}>
                         <Option title={contacts.phone} icon='call' className='gap-x-[5%] pl-[7.5%] flex-1'/>
                     </a>
-                    <a href=''>
+                    <a href={`mailto:${contacts.email}`}>
                         <Option title={contacts.email} icon='email' className='gap-x-[5%] pl-[7.5%] flex-1'/>
                     </a>
-                    <a href=''>
+                    <a href={generateGoogleMapsLink(getLanguage(contacts.address))} target='_blank' rel="noopener noreferrer">
                         <Option title={getLanguage(contacts.address)} icon='location' className='gap-x-[5%] pl-[7.5%] flex-1'/>
                     </a>
                 </Dropdown>
             </div>
 
             <div className='border-b-[1px] hover:border-primary transition border-transparent'>
-                <Dropdown title={language.toUpperCase()} onChange={onChangeLanguage} dropdownClassName='w-127px'>
+                <Dropdown title={language.toUpperCase()} onChange={onChangeLanguage} dropdownClassName='display felx justify-center'>
                     {Object.values(LanguageOptions.options).map((el) => (
-                        <Option title={getLanguage(el.title)} key={el.id} id={el.id} isChanged={el.isChanged} className='pl-2'/>
+                        <Option title={getLanguage(el.title)} key={el.id} id={el.id} isChanged={el.isChanged} className='px-4 cursor-pointer'/>
                     ))}
                 </Dropdown>
             </div>
