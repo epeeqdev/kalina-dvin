@@ -36,7 +36,6 @@ export default function ProductForm({id}: { id: string }) {
         control,
         register,
         handleSubmit,
-        getValues,
         getRequestData
     } = useProductForm(uniqueProductData);
 
@@ -48,7 +47,6 @@ export default function ProductForm({id}: { id: string }) {
         if (id) {
             editProductMutate(id, getRequestData()).then(() => router.push('/admin/main/products'))
         } else {
-            console.log('request dataaa',getRequestData())
             addProductMutate(getRequestData())
         }
     }
@@ -79,8 +77,7 @@ export default function ProductForm({id}: { id: string }) {
     const onDelete = async () => {
         deleteProductMutate(id).then(() => router.push('/admin/main/products'))
     }
-    console.log(errors)
-    console.log(getValues())
+
     return (
         <div className="xl:w-[60%] mx-auto w-full pb-16">
             {isLoading && <LoadingSpinner/>}

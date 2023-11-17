@@ -90,6 +90,7 @@ export interface ProductResponseDTO {
 }
 
 export interface SlideDTO {
+	id?: string;
 	_id?: string;
 	title: TextStructure;
 	description: TextStructure;

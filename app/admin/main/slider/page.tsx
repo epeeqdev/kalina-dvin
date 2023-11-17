@@ -15,7 +15,7 @@ import Alert from "@/app/admin/main/products/helpers/alert";
 export default function Slider() {
     const {data: sliderData, isLoading: isSliderLoading} = useQuery<MainPageSliderDTO>(getSliderData);
     const {mutate: editSlider, isLoading: addSliderLoading} = useMutation(addSlider);
-    const [editingItem , setEditingItem] = useState<SlideDTO | null>(null)
+    const [editingItem , setEditingItem] = useState<SlideDTO>()
 
     const [alertModal, setAlertModal] = useState(false)
 
@@ -31,26 +31,29 @@ export default function Slider() {
         values: sliderData!
     });
 
-
-
-    const onDelete = async (id: string) => {
-        const filteredSlides = getValues().slides.filter((item) => item._id !== id)
-        setValue("slides",filteredSlides , {
+    const onDelete = (id: string) => {
+        const filteredSlides = getValues().slides.filter((item) => (item._id || item.id) !== id)
+        setValue("slides" ,filteredSlides , {
             shouldValidate: true,
             shouldDirty: true
         })
+        setAlertModal(false)
     }
+
+    const [deletingItemId, setDeletingItemId] = useState("")
+
 
     const onAdd = async () => {
         await editSlider(getValues())
     }
 
     const editItem = (id: string) => {
-        const item = getValues().slides.find((item) => item._id === id)
+        const item = getValues().slides.find((item) => (item._id || item.id) === id)
         if(item){
             setEditingItem(item)
         }
     }
+
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     return (
@@ -66,27 +69,24 @@ export default function Slider() {
                                 if(editingItem){
                                     setIsModalOpen(false)
                                     const newData = field.value.map((item) => {
-                                        if(item._id === value?._id){
+                                        if(item._id === value?._id && item.id === value.id){
                                             return value
                                         }else{
                                             return item
                                         }
                                     })
                                     field.onChange(newData)
+                                    setEditingItem(null);
                                 }else{
                                     setIsModalOpen(false)
                                     const oldFieldValue = field.value || [];
                                     field.onChange([...oldFieldValue, value])
                                 }
-                            }} name="slides" editingSlideData={editingItem ?? undefined}/>
+                            }} name="slides" editingSlideData={editingItem}/>
                         </Modal>
                         : <div></div>
                 }
                 <div className="fixed right-4 top-4 flex gap-2 z-30">
-                    <Button variant="primary" onClick={() => {
-                        setEditingItem(null)
-                        setIsModalOpen(true)
-                    } }>Добавить Слайд</Button>
                     <Button variant="secondary" onClick={() => {
                         onAdd()
                         setEditingItem(null)
@@ -98,7 +98,7 @@ export default function Slider() {
                     {
                         getValues()?.slides?.map((item) => {
                             return (
-                                <div  key={item?._id} className="mb-5 border-2 border-gray-300 relative  overflow-hidden">
+                                <div  key={item?._id} className="mb-5 border-2 border-gray-300 relative overflow-hidden">
                                     <div className='justify-center items-start relative'>
                                         <div>
                                             <img src={item?.image?.src} alt='swiper' className=' w-full h-[200px] min-w-[300px] object-cover bg-gray-200'/>
@@ -116,31 +116,49 @@ export default function Slider() {
                                     </div>
                                     <div className="flex justify-end gap-2 m-4">
                                         <Button variant="secondary" onClick={() => {
-                                            editItem(item?._id ?? '')
+                                            editItem(item?._id || item.id || '')
                                             setIsModalOpen(true)
                                         }}>Изменить</Button>
                                         <Button
                                             variant="alert"
-                                            onClick={() => setAlertModal(true)}
+                                            onClick={() => {
+                                                setAlertModal(true)
+                                                setDeletingItemId(item._id ?? item.id ?? "")
+                                            }}
                                         >Удалить</Button>
+                                        <Alert
+                                            isOpen={alertModal}
+                                            onAccept={() => {
+                                                onDelete(deletingItemId)
+                                                setDeletingItemId("")
+                                            }}
+                                            onClose={() => {
+                                                setDeletingItemId("")
+                                                setAlertModal(false)
+                                            }}
+                                            onCancel={() => {
+                                                setDeletingItemId("")
+                                                setAlertModal(false)
+                                            }}
+                                        >
+                                            <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный Слайд?</p>
+                                            <p className="text-gray-700">После удаления Слайд не возможно восстановить!</p>
+                                        </Alert>
                                     </div>
-                                    <Alert
-                                        isOpen={alertModal}
-                                        onAccept={() => {
-                                            setAlertModal(false)
-                                            onDelete(item._id ?? '')
-                                        }}
-                                        onClose={() => setAlertModal(false)}
-                                        onCancel={() => setAlertModal(false)}
-                                    >
-                                        <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный Слайд?</p>
-                                        <p className="text-gray-700">После удаления Слайд не возможно восстановить!</p>
-                                    </Alert>
+
                                 </div>
 
                             )
                         })
                     }
+                <div
+                    onClick={() => {
+                        setEditingItem(null)
+                        setIsModalOpen(true)
+                    } }
+                    className="mb-5 border-2 border-gray-300 overflow-hidden text-5xl cursor-pointer hover:bg-gray-200 text-gray-400 p-[25%] items-center justify-center flex">
+                    <span>+</span>
+                </div>
                 </div>
                 {isLoading && <LoadingSpinner/>}
             </div>

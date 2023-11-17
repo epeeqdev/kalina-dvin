@@ -22,7 +22,6 @@ export default function AttributesForm({control, name}: Props) {
                         removeItem={
                         (id) => {
                             field.onChange(field?.value?.filter((item: ProductAttribute) => {
-                                console.log("is id here", item.id, "||" , id)
                                 return item.id !== id
                             }))
                         }

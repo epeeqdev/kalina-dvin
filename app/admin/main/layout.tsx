@@ -15,8 +15,8 @@ export default function Layout({children}:PropsWithChildren){
 				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/brands'>Бренды</Link>
 				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/products'>Продукты</Link>
 				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/attributes'>Атрибуты</Link>
-				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/products/main-page'>Страница Продуктов</Link>
-				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/categories/main-page'>Страница Категорий</Link>
+				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/pages/products'>Страница Продуктов</Link>
+				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/pages/categories'>Страница Категорий</Link>
 				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/slider'>Слайдер</Link>
 				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/contacts'>Контакты</Link>
 				<Link className="block px-4 py-2 text-[14px] bg-white hover:bg-[#eeeeee] transition" href='/admin/main/about-us'>О нас</Link>
