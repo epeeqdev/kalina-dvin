@@ -1,5 +1,5 @@
 export default function AdminMain() {
-	return <div>
+	return <div className="flex justify-center">
 		Select something from sidebar
 	</div>
 }

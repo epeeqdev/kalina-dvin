@@ -21,7 +21,7 @@ const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле"),}),
     aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
     aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
-    image: yup.object().shape({extension: yup.string(), id: yup.string(), src: yup.string() }).nullable(),
+    image: yup.object().shape({extension: yup.string().required(""), id: yup.string().required(""), src: yup.string().required("") }).nullable(),
     assortmentCount: yup.number().required("Обязательное поле"),
     brandsCount: yup.number().required("Обязательное поле"),
     partnersCount: yup.number().required("Обязательное поле"),
@@ -29,7 +29,6 @@ const validationSchema = yup.object().shape({
 })
 export default function AboutForm() {
     const router = useRouter()
-    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: about, isLoading: getaAboutUsLoading} = useQuery<AboutUsDTO>(() => axios.get(`/api/pages/about-us`));
     const {mutate: editAboutUsMutate, isLoading: editAboutUsLoading} = useMutation(editAbout);
     const isLoading = getaAboutUsLoading || editAboutUsLoading;
@@ -165,7 +164,7 @@ export default function AboutForm() {
                 />
             </div>
             <div className="fixed right-4 top-4 flex gap-2">
-                <Link href="/admin/main">
+                <Link href={"/admin/main"}>
                     <Button variant="secondary">Отмена</Button>
                 </Link>
                 <Button
