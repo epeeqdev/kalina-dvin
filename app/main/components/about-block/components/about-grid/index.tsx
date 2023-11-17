@@ -23,7 +23,7 @@ export const AboutGrid = ({aboutOptions}:Props) => {
         <div className="grid grid-cols-12 gap-x-[5%] gap-y-[40px]">
             <div className="col-span-12 sm:col-span-4">
                 <div className={clsx('relative pt-[100%] select-none')}>
-                    <img src={aboutOptions.image.src} alt={aboutOptions.image.id} className={clsx('absolute top-0 left-0 w-full h-full transition object-cover')}/>
+                    <img src={aboutOptions.image?.src} alt={aboutOptions.image?.id} className={clsx('absolute top-0 left-0 w-full h-full transition object-cover')}/>
                 </div>
             </div>
             <div className='col-span-12 sm:col-span-8'>

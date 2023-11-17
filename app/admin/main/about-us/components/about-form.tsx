@@ -51,11 +51,11 @@ export default function AboutForm() {
                 },
                 aboutUsPageDescriptionTop: {am: about.aboutUsPageDescriptionTop.am, ru: about.aboutUsPageDescriptionTop.ru },
                 aboutUsPageDescriptionBottom: {am: about.aboutUsPageDescriptionBottom.am, ru: about.aboutUsPageDescriptionBottom.ru },
-                image:{
+                image:about.image ? {
                     src: about.image.src,
                     id: about.image.id,
                     extension: about.image.extension,
-                },
+                }: null,
                 assortmentCount: about.assortmentCount,
                 brandsCount: about.brandsCount,
                 partnersCount:about.partnersCount,
@@ -69,7 +69,7 @@ export default function AboutForm() {
 
     const submit = () => {
         handleSubmit((data) => {
-            return onSubmit()
+            return onSubmit().then(() => router.push("/admin/main"))
         })()
     }
 
@@ -78,7 +78,7 @@ export default function AboutForm() {
             {isLoading && <LoadingSpinner/>}
             <h1 className="text-xl mb-5">О нас</h1>
             <div className="mb-5">
-                <ImageGallery control={control} name='image'/>
+                <ImageGallery className='max-w-[600px] mx-auto' imageHeightProportion={100} control={control} name='image'/>
             </div>
             <div className="mb-5">
                 <TextArea
@@ -87,6 +87,8 @@ export default function AboutForm() {
                     placeholder='Введите заголовок'
                     {...register("homePageDescription.am")}
                     error={errors.homePageDescription?.am?.message}
+                    className="min-h-[150px] mb-5"
+
                 />
                 <TextArea
                     required
@@ -94,6 +96,7 @@ export default function AboutForm() {
                     placeholder='Введите описание'
                     {...register("homePageDescription.ru")}
                     error={errors.homePageDescription?.ru?.message}
+                    className="min-h-[150px]"
                 />
             </div>
             <div className="mb-5">
@@ -103,6 +106,7 @@ export default function AboutForm() {
                     placeholder='Введите описание'
                     {...register("aboutUsPageDescriptionTop.am")}
                     error={errors.aboutUsPageDescriptionTop?.am?.message}
+                    className="min-h-[150px] mb-5"
                 />
                 <TextArea
                     required
@@ -110,6 +114,7 @@ export default function AboutForm() {
                     placeholder='Введите описание'
                     {...register("aboutUsPageDescriptionTop.ru")}
                     error={errors.aboutUsPageDescriptionTop?.ru?.message}
+                    className="min-h-[150px]"
                 />
             </div>
             <div className="mb-5">
@@ -119,6 +124,7 @@ export default function AboutForm() {
                     placeholder='Введите описание'
                     {...register("aboutUsPageDescriptionBottom.am")}
                     error={errors.aboutUsPageDescriptionBottom?.am?.message}
+                    className="min-h-[150px] mb-5"
                 />
                 <TextArea
                     required
@@ -126,6 +132,7 @@ export default function AboutForm() {
                     placeholder='Введите описание'
                     {...register("aboutUsPageDescriptionBottom.ru")}
                     error={errors.aboutUsPageDescriptionBottom?.ru?.message}
+                    className="min-h-[150px]"
                 />
             </div>
             <div>
@@ -164,7 +171,6 @@ export default function AboutForm() {
                 <Button
                     variant="primary"
                     onClick={() => {
-                        router.push("/admin/main")
                         submit()
                     }}
                 >

@@ -43,8 +43,6 @@ export  const CategoryForm = ({id} : Prop) => {
         image?: ImageDTO
     }
 
-    console.log(category, "category")
-
 
     const loading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
 
@@ -109,8 +107,8 @@ export  const CategoryForm = ({id} : Prop) => {
             </div>
             <div className="xl:w-[60%] mx-auto w-full col-auto">
                 <div className="text-3xl mb-10">Добавить категорию</div>
-                <div className="flex gap-4">
-                    <ImageGallery control={control} name='image' />
+                <div className="gap-4">
+                    <ImageGallery control={control} name='image' imageHeightProportion={50} className="mb-5" />
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}
@@ -118,7 +116,7 @@ export  const CategoryForm = ({id} : Prop) => {
                             placeholder="Название по АРМ"
                             error={errors.name?.am?.message}
                             required={true}
-                            className='w-full mb-3'
+                            className='w-full mb-5'
                         />
                         <Input
                             {...register("name.ru")}

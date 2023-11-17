@@ -24,9 +24,9 @@ export default function ProductsPage() {
 
     return <div className="mx-auto w-full pb-16">
         {isLoading && <LoadingSpinner/>}
-        <div className={"flex justify-end mb-5"}>
+        <div className="bg-white text-white w-full h-16 flex items-center z-30 fixed top-0">
             <Link href="/admin/main/products/add">
-                <Button variant="primary">Добавить Продукт</Button>
+                <Button variant="primary" className="fixed right-5 top-3">Добавить Продукт</Button>
             </Link>
         </div>
         <Input defaultValue={search} className='w-full mb-5' onChange={(e) => setSearch(e.target.value)}

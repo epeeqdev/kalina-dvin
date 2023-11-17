@@ -5,7 +5,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
-import {CategoryResponseDTO, ImageDTO} from "@/backend/types";
+import {CategoriesPageDTO, CategoryResponseDTO} from "@/backend/types";
 import {getCategoriesPage} from "@/app/admin/helpers/api/getCategoriesPage";
 import {Button} from "@/app/admin/main/components/controls/button";
 import {useRouter} from "next/navigation";
@@ -27,7 +27,7 @@ export default function CategoriesPageForm() {
         control,
         formState: {errors},
         getValues
-    } = useForm<ImageDTO>({
+    } = useForm<CategoriesPageDTO>({
         resolver: yupResolver(validationSchema),
         ...(image ? {
             values: {
@@ -37,7 +37,7 @@ export default function CategoriesPageForm() {
     }) ?? {};
 
     const onEdit = () => {
-        editCategoriesImage(getValues())
+        editCategoriesImage(getValues()).then(() => router.push("/admin/main"))
     }
 
     return (
@@ -46,10 +46,9 @@ export default function CategoriesPageForm() {
             <div className="text-3xl mb-5">Добавить обложку в странице категории</div>
             <Button className="fixed top-4 right-4" variant="primary" onClick={() => {
                 onEdit()
-                router.push("/admin/main")
             }}>Сохранить</Button>
             <div className="flex gap-4 justify-center">
-                <ImageGallery control={control} name='image' className="max-w-[80%] border-none" classNameSecond="w-[100%] max-h-[50%] object-fill" classNameThree="pt-[50%]"/>
+                <ImageGallery imageClassName='object-cover' control={control} name='image' className="border-none justify-stretch" imageHeightProportion={40}/>
             </div>
 
         </div>

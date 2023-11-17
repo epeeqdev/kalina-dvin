@@ -63,7 +63,7 @@ export const Dropdown = ({ title, className, onChange, dropdownClassName, childr
             </div>
             <div
                 className={clsx([
-                    "absolute right-0 z-10 mt-[23px] min-w-[127px] origin-top-right rounded-none bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-[opacity]",
+                    "absolute right-0 z-10 mt-[23px]  origin-top-right rounded-none bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-[opacity]",
                     {
                         "opacity-0 pointer-events-none": !isShow,
                         "opacity-100 pointer-events-all": isShow,
@@ -74,7 +74,7 @@ export const Dropdown = ({ title, className, onChange, dropdownClassName, childr
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
             >
-                <div className="py-[20px] flex flex-col w-full" role="none">
+                <div className="flex flex-col w-full" role="none">
                     {Children.map(children, (child: any) => (
                             cloneElement(child, {
                                 onClick: () => handleChange(child.props.id, child.props.isChanged),
