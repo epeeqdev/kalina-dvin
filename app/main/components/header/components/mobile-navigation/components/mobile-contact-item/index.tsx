@@ -10,8 +10,8 @@ interface Props  {
 export const MobileContactItem = ({icon, title}: Props) => {
     return(
             <div className='flex items-center pl-6 py-2 gap-x-1.5 bg-white group hover:bg-secondary hover:text-white'>
-                <IconComponent name={icon} size='sm'/>
-                <Typography  size='sm' className='group-hover:text-white'>{title}</Typography>
+                <IconComponent name={icon} size='md'/>
+                <Typography  size='md' className='group-hover:text-white'>{title}</Typography>
             </div>
     )
 }
