@@ -16,6 +16,8 @@ export default function Slider() {
     const {data: sliderData, isLoading: isSliderLoading} = useQuery<MainPageSliderDTO>(getSliderData);
     const {mutate: editSlider, isLoading: addSliderLoading} = useMutation(addSlider);
     const [editingItem , setEditingItem] = useState<SlideDTO>()
+    const [deletingItemId, setDeletingItemId] = useState("")
+    const [editingItemId, setEditingItemId] = useState("")
 
     const [alertModal, setAlertModal] = useState(false)
 
@@ -40,7 +42,6 @@ export default function Slider() {
         setAlertModal(false)
     }
 
-    const [deletingItemId, setDeletingItemId] = useState("")
 
 
     const onAdd = async () => {
@@ -69,7 +70,7 @@ export default function Slider() {
                                 if(editingItem){
                                     setIsModalOpen(false)
                                     const newData = field.value.map((item) => {
-                                        if(item._id === value?._id && item.id === value.id){
+                                        if(item._id === editingItemId || item.id === editingItemId){
                                             return value
                                         }else{
                                             return item
@@ -116,7 +117,8 @@ export default function Slider() {
                                     </div>
                                     <div className="flex justify-end gap-2 m-4">
                                         <Button variant="secondary" onClick={() => {
-                                            editItem(item?._id || item.id || '')
+                                            editItem(item?._id ?? item.id ?? '')
+                                            setEditingItemId(item._id ?? item.id ?? "")
                                             setIsModalOpen(true)
                                         }}>Изменить</Button>
                                         <Button

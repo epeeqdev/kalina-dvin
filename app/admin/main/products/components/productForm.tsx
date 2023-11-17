@@ -108,6 +108,7 @@ export default function ProductForm({id}: { id: string }) {
                     placeholder='Введите описание'
                     {...register("description.am", {required: true})}
                     error={errors.description?.am?.message}
+                    className="min-h-[150px] mb-5"
                 />
                 <TextArea
                     required
@@ -115,6 +116,7 @@ export default function ProductForm({id}: { id: string }) {
                     placeholder='Введите описание'
                     {...register("description.ru", {required: true})}
                     error={errors.description?.ru?.message}
+                    className="min-h-[150px] mb-5"
                 />
             </div>
 

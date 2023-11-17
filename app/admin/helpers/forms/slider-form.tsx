@@ -42,8 +42,8 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
 
 
     const submit = () => {
-            handleSubmit((data) => {
-                return onSubmit ? onSubmit({...data, id: editingSlideData?.id || uniqid()}) : null
+            handleSubmit((getValues) => {
+                return onSubmit ? onSubmit({...getValues, id: getValues._id || uniqid()}) : null
             })()
     }
 
