@@ -42,7 +42,6 @@ export const BrandForm = ({id}:Props) => {
 
     const brand = brandResponse
 
-    console.log(brandResponse, "brandResponse")
 
 
     const loading = editBrandLoading || addBrandLoading || deleteBrandLoading || brandLoading
@@ -109,8 +108,8 @@ export const BrandForm = ({id}:Props) => {
             </div>
             <div className="xl:w-[60%] mx-auto w-full col-auto">
                 <div className="text-3xl mb-10">Добавить Бренд</div>
-                <div className="flex gap-4">
-                    <ImageGallery control={control} name='image' />
+                <div className="gap-4">
+                    <ImageGallery control={control} name='image' imageHeightProportion={50} className="mb-5" />
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}
@@ -118,7 +117,7 @@ export const BrandForm = ({id}:Props) => {
                             placeholder="Название по АРМ"
                             error={errors.name?.am?.message}
                             required={true}
-                            className='w-full mb-3'
+                            className='w-full mb-5'
                         />
                         <Input
                             {...register("name.ru")}

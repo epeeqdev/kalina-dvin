@@ -48,7 +48,6 @@ export default function ProductForm({id}: { id: string }) {
         if (id) {
             editProductMutate(id, getRequestData()).then(() => router.push('/admin/main/products'))
         } else {
-            console.log('request dataaa',getRequestData())
             addProductMutate(getRequestData())
         }
     }
@@ -69,18 +68,16 @@ export default function ProductForm({id}: { id: string }) {
         }
     }, [])
 
-
     const submit = () => {
         handleSubmit(() => {
-            onSubmit()
+            onSubmit().then(() => router.push(`/admin/main/products`))
         })()
     }
 
     const onDelete = async () => {
         deleteProductMutate(id).then(() => router.push('/admin/main/products'))
     }
-    console.log(errors)
-    console.log(getValues())
+
     return (
         <div className="xl:w-[60%] mx-auto w-full pb-16">
             {isLoading && <LoadingSpinner/>}
@@ -111,6 +108,7 @@ export default function ProductForm({id}: { id: string }) {
                     placeholder='Введите описание'
                     {...register("description.am", {required: true})}
                     error={errors.description?.am?.message}
+                    className="min-h-[150px] mb-5"
                 />
                 <TextArea
                     required
@@ -118,6 +116,7 @@ export default function ProductForm({id}: { id: string }) {
                     placeholder='Введите описание'
                     {...register("description.ru", {required: true})}
                     error={errors.description?.ru?.message}
+                    className="min-h-[150px] mb-5"
                 />
             </div>
 

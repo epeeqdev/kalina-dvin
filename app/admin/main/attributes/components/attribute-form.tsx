@@ -42,8 +42,6 @@ export const AttributeForm = ({id}:Props) => {
 
     const loading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading
 
-    console.log(attribute, "attribute")
-
     const {
         handleSubmit,
         register,
