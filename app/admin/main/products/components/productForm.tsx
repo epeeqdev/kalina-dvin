@@ -36,6 +36,7 @@ export default function ProductForm({id}: { id: string }) {
         control,
         register,
         handleSubmit,
+        getValues,
         getRequestData
     } = useProductForm(uniqueProductData);
 
@@ -67,10 +68,9 @@ export default function ProductForm({id}: { id: string }) {
         }
     }, [])
 
-
     const submit = () => {
         handleSubmit(() => {
-            onSubmit()
+            onSubmit().then(() => router.push(`/admin/main/products`))
         })()
     }
 

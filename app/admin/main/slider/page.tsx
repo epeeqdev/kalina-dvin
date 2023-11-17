@@ -87,15 +87,15 @@ export default function Slider() {
                         </Modal>
                         : <div></div>
                 }
-                <div className="fixed right-4 top-4 flex gap-2 z-30">
-                    <Button variant="secondary" onClick={() => {
+                <div className="bg-white text-white w-full h-16 flex items-center z-30 fixed top-0">
+                    <Button variant="primary" className="fixed right-5 top-3" onClick={() => {
                         onAdd()
                         setEditingItem(null)
                     }}>
                         Сохранить
                     </Button>
                 </div>
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-[50px]">
                     {
                         getValues()?.slides?.map((item) => {
                             return (
