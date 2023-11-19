@@ -1,5 +1,7 @@
 import ImageKit from "imagekit";
 import {ImageDTO} from "@/backend/types";
+import uniqid from "uniqid";
+import {DB} from "@/backend/db";
 
 export const ImageAPI = new ImageKit({
 	publicKey : process.env.IMAGE_KIT_PUBLIC_KEY!,
@@ -15,22 +17,48 @@ export const uploadImage = async (image: ImageDTO): Promise<ImageDTO | null> => 
 	});
 	return {id: uploaded.fileId, src:uploaded.url, extension: image.extension }
 }
-export const deleteImage = async (id: string) => {
+export const deleteImage = async (id:string) => {
 	if(!id) return;
-	return ImageAPI.deleteFile(id)
+	console.log('Deleting image')
+	const existingImage = await DB.Image.findById(id);
+
+	await DB.Image.findByIdAndDelete(existingImage?._id)
+	if(existingImage){
+		return ImageAPI.deleteFile(existingImage?.id)
+	}
+
 }
 
-export const deleteImages = (images: ImageDTO[]) => {
-	if(!images?.length) return;
-	return Promise.all(images.map(({id}) => id && deleteImage(id)))
+export const uploadFileImage = async (image: Buffer): Promise<ImageDTO | null> => {
+	if(!image) return null;
+	const uploaded = await ImageAPI.upload({
+		file : image,
+		fileName : uniqid(), //required
+	});
+	return {id: uploaded.fileId, src:uploaded.url, extension: '' }
 }
 
+
+export const deleteImages = (ids: string[]) => {
+	if(!ids?.length) return;
+	return Promise.all(ids.map(deleteImage))
+}
+
+/**
+ * @deprecated
+ */
 export const uploadImages = (images: ImageDTO[]) => {
 	if(!images?.length) return;
 	return Promise.all(images.map(uploadImage))
 }
 
-export const handleImages = async (oldImages: ImageDTO[] | null, newImages: ImageDTO[] | null) => {
+export const uploadFileImages = (images: Buffer[]) => {
+	if(!images?.length) return;
+	return Promise.all(images.map(uploadFileImage))
+}
+
+
+export const handleImagesOld = async (oldImages: ImageDTO[] | null, newImages: ImageDTO[] | null) => {
 	const newImagesIds = newImages?.filter(Boolean)?.reduce((acc, image) => ({...acc, [image.id]:image.id }),{}) ?? {};
 	if(!newImages || !newImagesIds || !Object.keys(newImagesIds)?.length){
 		try {
@@ -74,12 +102,16 @@ export const handleImages = async (oldImages: ImageDTO[] | null, newImages: Imag
 	return [...newImages];
 }
 
+export const handleImages = (newImages: ImageDTO[]) => {
+	return newImages.map(image => image?._id);
+}
+
 export const handleImage = async (oldImage: ImageDTO | null, newImage: ImageDTO | null) => {
 	if (!newImage) {
 		if (oldImage) {
 			try{
 				console.log('Deleting old image', oldImage);
-				await deleteImage(oldImage.id);
+				await deleteImage(oldImage);
 			}catch (e){
 				console.log('Deleting old image error', e)
 			}
@@ -91,7 +123,7 @@ export const handleImage = async (oldImage: ImageDTO | null, newImage: ImageDTO 
 	if (oldImage && oldImage.id !== newImage.id) {
 		try{
 			console.log('Deleting old image', oldImage);
-			await deleteImage(oldImage.id);
+			await deleteImage(oldImage);
 		}catch (e){
 			console.log('Deleting old image error', e)
 		}

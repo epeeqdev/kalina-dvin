@@ -19,9 +19,9 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 
 const validationSchema = yup.object().shape({
     phone: yup.string().matches(phoneRegExp,'Номер телефона, должно быть в формате +374(XXX)-XX-XX-XX').min(11).required("Обязательное поле"),
-    email: yup.string().required("Обязательное поле"),
+    email: yup.string().email("Укажите корректную эл. почту").required("Обязательное поле"),
     address: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
-    socialLinks: yup.object().shape({instagram: yup.string().required("Обязательное поле"), facebook: yup.string().required("Обязательное поле")})
+    socialLinks: yup.object().shape({instagram: yup.string().url("Укажите корректную ссылку").required("Обязательное поле"), facebook: yup.string().url("Укажите корректную ссылку").required("Обязательное поле")})
 
 })
 export default function ContactsForm() {
@@ -32,7 +32,6 @@ export default function ContactsForm() {
 
 
     const {
-        control ,
         handleSubmit,
         register,
         getValues,
@@ -73,7 +72,7 @@ export default function ContactsForm() {
             <div className="mb-5">
                 <Input
                     {...register("phone")}
-                    label="телефон"
+                    label="Телефон"
                     placeholder="телефон"
                     error={errors.phone?.message}
                     required={true}
@@ -83,7 +82,7 @@ export default function ContactsForm() {
             <div className="mb-5">
                 <Input
                     {...register("email")}
-                    label="email"
+                    label="Эл. почта"
                     placeholder="email"
                     error={errors.email?.message}
                     required={true}
@@ -93,8 +92,8 @@ export default function ContactsForm() {
             <div className="mb-5">
                 <Input
                     {...register("address.am")}
-                    label="адрес"
-                    placeholder="адрес"
+                    label="Адрес"
+                    placeholder="Адрес"
                     error={errors.address?.am?.message}
                     required={true}
                     className='w-full mb-3'
@@ -102,8 +101,8 @@ export default function ContactsForm() {
                 />
                 <Input
                     {...register("address.ru")}
-                    label="адрес"
-                    placeholder="адрес"
+                    label="Адрес"
+                    placeholder="Адрес"
                     error={errors.address?.ru?.message}
                     required={true}
                     className='w-full mb-3'
@@ -113,8 +112,8 @@ export default function ContactsForm() {
             <div>
                 <Input
                     {...register("socialLinks.facebook")}
-                    label="Facebook"
-                    placeholder="ссылка"
+                    label="Ссылка на Facebook"
+                    placeholder="Ссылка"
                     error={errors.socialLinks?.facebook?.message}
                     required={true}
                     className='w-full mb-3'
@@ -122,8 +121,8 @@ export default function ContactsForm() {
                 />
                 <Input
                     {...register("socialLinks.instagram")}
-                    label="Instgram"
-                    placeholder="ссылка"
+                    label="Ссылка на Instgram"
+                    placeholder="Ссылка"
                     error={errors.socialLinks?.instagram?.message}
                     required={true}
                     className='w-full mb-3'

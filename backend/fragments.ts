@@ -5,6 +5,5 @@ export const TextFragment = {
 
 export const ImageFragment = {
 	id: String,
-	extension: String,
 	src: String,
 }

@@ -6,11 +6,7 @@ const categorySchema = new Schema({
 		ru: String,
 		am: String,
 	},
-	image: {
-		id: String,
-		extension: String,
-		src: String,
-	},
+	image: { type: Schema.Types.ObjectId,ref: 'Image'},
 });
 
 export const Category = models.Category || model('Category', categorySchema, 'Category');

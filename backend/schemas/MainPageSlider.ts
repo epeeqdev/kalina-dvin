@@ -1,5 +1,5 @@
 import {Schema, model, models} from 'mongoose';
-import {ImageFragment, TextFragment} from "@/backend/fragments";
+import {TextFragment} from "@/backend/fragments";
 
 const MainPageSliderSchema = new Schema(
     {
@@ -10,7 +10,7 @@ const MainPageSliderSchema = new Schema(
                     description: {...TextFragment},
                     buttonLink: String,
                     buttonText: {...TextFragment},
-                    image: {...ImageFragment},
+                    image: { type: Schema.Types.ObjectId ,ref: 'Image' },
                 }], required: true
         },
     }

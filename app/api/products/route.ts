@@ -23,12 +23,14 @@ export async function GET(request: Request) {
 				}
 			} : {}),
 			...(searchQuery ? {
-				title: {
-					$regex: searchQuery,
-					$options: 'i'
+				'title.am': {
+					$regex: new RegExp(searchQuery, 'gi',),
+				},
+				'title.ru': {
+					$regex: new RegExp(searchQuery, 'gi',),
 				},
 			} : {}),
-		}).populate('categories').populate('brand').populate('attributes.attribute') as Product[]
+		}).populate('categories').populate('brand').populate('images').populate('attributes.attribute') as Product[]
 
 		return NextResponse.json(products);
 

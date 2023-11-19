@@ -30,13 +30,14 @@ export const Slide = ({data}: Props) => {
                 <Typography
                     size='7xl'
                     color='secondary'
+                    leading='none'
                     fontWeight={500}
-                    className='mb-4'
+                    className='mb-1 sm:mb-4'
                 >{getLanguage(title)}</Typography>
                 <Typography
                     color='white'
                     size='lg'
-                    className='mb-4 lg:max-w-[50%]'
+                    className='mb-1 sm:mb-4 lg:max-w-[50%]'
                 >{getLanguage(description)}</Typography>
                 {!!getLanguage(buttonText) && buttonLink && <Button onClick={handleSeeMore}>
                     {getLanguage(buttonText)}

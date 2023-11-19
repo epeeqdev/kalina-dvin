@@ -1,5 +1,7 @@
+'use client'
+
 export default function AdminMain() {
 	return <div className="flex justify-center">
-		Select something from sidebar
+		Main
 	</div>
 }

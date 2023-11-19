@@ -11,11 +11,11 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
 import Alert from "../../products/helpers/alert";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 interface Props {
     id?: string
@@ -38,7 +38,7 @@ export const BrandForm = ({id}:Props) => {
     const {mutate: editBrandMutate, isLoading: editBrandLoading } = useMutation(editBrand);
     const {mutate: deleteBrandMutate, isLoading: deleteBrandLoading} = useMutation(deleteBrand);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: brandResponse, isLoading: brandLoading} = useQuery<BrandResponseDTO[]>(getBrand,[id], {fetchOnMount: !!id});
+    const {data: brandResponse, isLoading: brandLoading} = useQuery<BrandResponseDTO>(getBrand,[id], {fetchOnMount: !!id});
 
     const brand = brandResponse
 
@@ -109,7 +109,7 @@ export const BrandForm = ({id}:Props) => {
             <div className="xl:w-[60%] mx-auto w-full col-auto">
                 <div className="text-3xl mb-10">Добавить Бренд</div>
                 <div className="gap-4">
-                    <ImageGallery control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                    <ImageUploader control={control} name='image' imageHeightProportion={50} className="mb-5" />
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}

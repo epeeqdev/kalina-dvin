@@ -2,13 +2,13 @@ import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
 import {Params} from "next/dist/shared/lib/router/utils/route-matcher";
 import {Brand} from "@/app/admin/main/products/types";
-import {deleteImage, handleImage, uploadImage} from "@/backend/imageAPI";
+import {deleteImage} from "@/backend/imageAPI";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		const category = await DB.Category.findById(context.params.id);
+		const category = await DB.Category.findById(context.params.id).populate('image');
 		return NextResponse.json(category);
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
@@ -18,13 +18,7 @@ export async function GET(request: NextRequest, context: Params) {
 export async function PUT(request: NextRequest, context: Params) {
 	try {
 		const body = await request.json();
-		const oldCategory = await DB.Category.findById(context.params.id) as Brand;
-		let image = oldCategory.image;
-		try{
-			image = await handleImage(oldCategory.image, body.image)
-		}catch (e){
-			console.log(e)
-		}
+		const image = body.image._id;
 
 		const updatedCategory = await DB.Category.findByIdAndUpdate(
 			context.params.id,

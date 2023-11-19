@@ -11,11 +11,15 @@ import {addSlider} from "@/app/admin/main/slider/api/addSlider";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {MainPageSliderDTO, SlideDTO} from "@/backend/types";
 import Alert from "@/app/admin/main/products/helpers/alert";
+import {Draggable} from "@/app/admin/main/drag-and-drop/draggable";
+import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
+import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
+import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 
 export default function Slider() {
     const {data: sliderData, isLoading: isSliderLoading} = useQuery<MainPageSliderDTO>(getSliderData);
     const {mutate: editSlider, isLoading: addSliderLoading} = useMutation(addSlider);
-    const [editingItem , setEditingItem] = useState<SlideDTO>()
+    const [editingItem, setEditingItem] = useState<SlideDTO>()
     const [deletingItemId, setDeletingItemId] = useState("")
     const [editingItemId, setEditingItemId] = useState("")
 
@@ -35,13 +39,12 @@ export default function Slider() {
 
     const onDelete = (id: string) => {
         const filteredSlides = getValues().slides.filter((item) => (item._id || item.id) !== id)
-        setValue("slides" ,filteredSlides , {
+        setValue("slides", filteredSlides, {
             shouldValidate: true,
             shouldDirty: true
         })
         setAlertModal(false)
     }
-
 
 
     const onAdd = async () => {
@@ -50,9 +53,14 @@ export default function Slider() {
 
     const editItem = (id: string) => {
         const item = getValues().slides.find((item) => (item._id || item.id) === id)
-        if(item){
+        if (item) {
             setEditingItem(item)
         }
+    }
+
+    const handleDrop = (args: DroppableArgs) => {
+
+        setValue("slides", getReorderedItems(getValues().slides as SlideDTO[], args))
     }
 
 
@@ -67,18 +75,18 @@ export default function Slider() {
                             setIsModalOpen(false)
                         }} isOpen={isModalOpen}>
                             <SliderForm className="xl:w-[90%]" onSubmit={(value) => {
-                                if(editingItem){
+                                if (editingItem) {
                                     setIsModalOpen(false)
                                     const newData = field.value.map((item) => {
-                                        if(item._id === editingItemId || item.id === editingItemId){
+                                        if (item._id === editingItemId || item.id === editingItemId) {
                                             return value
-                                        }else{
+                                        } else {
                                             return item
                                         }
                                     })
                                     field.onChange(newData)
                                     setEditingItem(null);
-                                }else{
+                                } else {
                                     setIsModalOpen(false)
                                     const oldFieldValue = field.value || [];
                                     field.onChange([...oldFieldValue, value])
@@ -99,68 +107,82 @@ export default function Slider() {
                     {
                         getValues()?.slides?.map((item) => {
                             return (
-                                <div  key={item?._id} className="mb-5 border-2 border-gray-300 relative overflow-hidden">
-                                    <div className='justify-center items-start relative'>
-                                        <div>
-                                            <img src={item?.image?.src} alt='swiper' className=' w-full h-[200px] min-w-[300px] object-cover bg-gray-200'/>
-                                        </div>
-                                        <div className="absolute top-[30%] left-0 pl-[30px] z-20">
-                                            <div className='text-[15px] text-red-600 mb-[5px] font-bold'>{item?.title?.ru}</div>
-                                            <div className='text-[5px] text-white mb-[5px] w-[60%]'
-                                            >{item?.description?.ru}</div>
-                                            <Button variant="alert" className="p-[2px] z-10 overflow-hidden top-0 h-[15px] text-[5px] flex justify-center items-center" onClick={() => {
-                                            }}>
-                                                {item?.buttonText?.ru}
-                                            </Button>
-                                        </div>
-                                        <div className=" w-full h-full absolute bg-zinc-600 top-0 right-0 left-0 bottom-0 opacity-40"></div>
-                                    </div>
-                                    <div className="flex justify-end gap-2 m-4">
-                                        <Button variant="secondary" onClick={() => {
-                                            editItem(item?._id ?? item.id ?? '')
-                                            setEditingItemId(item._id ?? item.id ?? "")
-                                            setIsModalOpen(true)
-                                        }}>Изменить</Button>
-                                        <Button
-                                            variant="alert"
-                                            onClick={() => {
-                                                setAlertModal(true)
-                                                setDeletingItemId(item._id ?? item.id ?? "")
-                                            }}
-                                        >Удалить</Button>
-                                        <Alert
-                                            isOpen={alertModal}
-                                            onAccept={() => {
-                                                onDelete(deletingItemId)
-                                                setDeletingItemId("")
-                                            }}
-                                            onClose={() => {
-                                                setDeletingItemId("")
-                                                setAlertModal(false)
-                                            }}
-                                            onCancel={() => {
-                                                setDeletingItemId("")
-                                                setAlertModal(false)
-                                            }}
-                                        >
-                                            <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный Слайд?</p>
-                                            <p className="text-gray-700">После удаления Слайд не возможно восстановить!</p>
-                                        </Alert>
-                                    </div>
+                                <Droppable key={item.id || item._id} id={item.id || item._id}
+                                           onDrop={handleDrop}>
+                                    <Draggable id={item.id || item._id}>
+                                        <div key={item?._id}
+                                             className="border-2 border-gray-300 relative overflow-hidden">
+                                            <div className='justify-center items-start relative'>
+                                                <div>
+                                                    <img src={item?.image?.src} alt='swiper'
+                                                         className=' w-full h-[200px] min-w-[300px] object-cover bg-gray-200'/>
+                                                </div>
+                                                <div className="absolute top-[30%] left-0 pl-[30px] z-20">
+                                                    <div
+                                                        className='text-[15px] text-red-600 mb-[5px] font-bold'>{item?.title?.ru}</div>
+                                                    <div className='text-[5px] text-white mb-[5px] w-[60%]'
+                                                    >{item?.description?.ru}</div>
+                                                    {(!!item?.buttonText?.ru || !!item?.buttonText?.am) &&
+                                                        <Button variant="alert"
+                                                                className="p-[2px] z-10 overflow-hidden top-0 h-[15px] text-[5px] flex justify-center items-center"
+                                                                onClick={() => {
+                                                                }}>
+                                                            {item?.buttonText?.ru}
+                                                        </Button>}
+                                                </div>
+                                                <div
+                                                    className=" w-full h-full absolute bg-zinc-600 top-0 right-0 left-0 bottom-0 opacity-40"></div>
+                                            </div>
+                                            <div className="flex justify-end gap-2 m-4">
+                                                <Button variant="secondary" onClick={() => {
+                                                    editItem(item?._id ?? item.id ?? '')
+                                                    setEditingItemId(item._id ?? item.id ?? "")
+                                                    setIsModalOpen(true)
+                                                }}>Изменить</Button>
+                                                <Button
+                                                    variant="alert"
+                                                    onClick={() => {
+                                                        setAlertModal(true)
+                                                        setDeletingItemId(item._id ?? item.id ?? "")
+                                                    }}
+                                                >Удалить</Button>
+                                                <Alert
+                                                    isOpen={alertModal}
+                                                    onAccept={() => {
+                                                        onDelete(deletingItemId)
+                                                        setDeletingItemId("")
+                                                    }}
+                                                    onClose={() => {
+                                                        setDeletingItemId("")
+                                                        setAlertModal(false)
+                                                    }}
+                                                    onCancel={() => {
+                                                        setDeletingItemId("")
+                                                        setAlertModal(false)
+                                                    }}
+                                                >
+                                                    <p className="text-2xl font-bold">Вы уверены, что хотите удалить
+                                                        данный Слайд?</p>
+                                                    <p className="text-gray-700">После удаления Слайд не возможно
+                                                        восстановить!</p>
+                                                </Alert>
+                                            </div>
 
-                                </div>
+                                        </div>
+                                    </Draggable>
+                                </Droppable>
 
                             )
                         })
                     }
-                <div
-                    onClick={() => {
-                        setEditingItem(null)
-                        setIsModalOpen(true)
-                    } }
-                    className="mb-5 border-2 border-gray-300 overflow-hidden text-5xl cursor-pointer hover:bg-gray-200 text-gray-400 p-[25%] items-center justify-center flex">
-                    <span>+</span>
-                </div>
+                    <div
+                        onClick={() => {
+                            setEditingItem(null)
+                            setIsModalOpen(true)
+                        }}
+                        className="mb-5 border-2 border-gray-300 overflow-hidden text-5xl cursor-pointer hover:bg-gray-200 text-gray-400 p-[25%] items-center justify-center flex">
+                        <span>+</span>
+                    </div>
                 </div>
                 {isLoading && <LoadingSpinner/>}
             </div>

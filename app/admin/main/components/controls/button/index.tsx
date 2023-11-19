@@ -1,4 +1,4 @@
-import {ComponentPropsWithoutRef, forwardRef, ReactNode} from "react";
+import {forwardRef, ReactNode} from "react";
 import clsx from "clsx";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 	onClick?: () => void
 }
 
-export const Button = forwardRef<HTMLButtonElement, Props>(({children,className,variant, type, onClick}:Props,) => {
+export const Button = forwardRef<HTMLButtonElement, Props>(({children,className,variant='primary', type, onClick}:Props,) => {
 	return <button
 		onClick={onClick}
 		type={type}

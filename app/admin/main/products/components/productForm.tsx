@@ -1,11 +1,10 @@
 'use client'
 
 import {useRouter} from "next/navigation";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useProductForm} from "@/app/admin/main/products/helpers/useProductForm";
 import {addProduct} from "@/app/admin/main/products/helpers/addProduct";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import {TextArea} from "@/components/controls/text-area";
 import MultiSelectInput from "@/components/controls/autocomplete-input";
@@ -19,6 +18,8 @@ import Alert from "@/app/admin/main/products/helpers/alert";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
 import Link from "next/link";
 import {Button} from "../../components/controls/button";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
+
 
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
@@ -40,7 +41,6 @@ export default function ProductForm({id}: { id: string }) {
         getRequestData
     } = useProductForm(uniqueProductData);
 
-
     const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
     const brands = brandsResponse?.map((item: BrandResponseDTO) => ({value: item._id, label: item.name.ru}))
 
@@ -51,6 +51,7 @@ export default function ProductForm({id}: { id: string }) {
             addProductMutate(getRequestData())
         }
     }
+
 
     const getProductWithId = () => {
         id && axios.get(`/api/product/${id}`)
@@ -83,7 +84,7 @@ export default function ProductForm({id}: { id: string }) {
             {isLoading && <LoadingSpinner/>}
             <h1 className="text-xl mb-5">{id ? "Редактировать продукт" : "Добавить продукт"}</h1>
             <div className="mb-5">
-                <ImageGallery control={control} name='images' multiple/>
+                <ImageUploader control={control} name="images" multiple/>
             </div>
             <div className="mb-5 flex gap-3 w-full">
                 <Input label="Заголовок на армянском"

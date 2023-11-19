@@ -1,5 +1,4 @@
 "use client"
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,6 +10,7 @@ import {Button} from "@/app/admin/main/components/controls/button";
 import {useRouter} from "next/navigation";
 import {editCategoriesPage} from "@/app/admin/helpers/api/editCategoriesPage";
 import LoadingSpinner from "@/components/controls/loading-spinner";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 
 const validationSchema = yup.object().shape({
@@ -19,7 +19,7 @@ const validationSchema = yup.object().shape({
 export default function CategoriesPageForm() {
 
     const router = useRouter()
-    const {data: image, isLoading: imageLoading} = useQuery<CategoryResponseDTO>(getCategoriesPage);
+    const {data, isLoading:dataLoading} = useQuery<CategoryResponseDTO>(getCategoriesPage);
     const {mutate: editCategoriesImage, isLoading: editCategoriesLoading} = useMutation(editCategoriesPage);
 
 
@@ -29,9 +29,9 @@ export default function CategoriesPageForm() {
         getValues
     } = useForm<CategoriesPageDTO>({
         resolver: yupResolver(validationSchema),
-        ...(image ? {
+        ...(data ? {
             values: {
-                image: image.image
+                image: data.image
             }
         } : {})
     }) ?? {};
@@ -48,7 +48,7 @@ export default function CategoriesPageForm() {
                 onEdit()
             }}>Сохранить</Button>
             <div className="flex gap-4 justify-center">
-                <ImageGallery imageClassName='object-cover' control={control} name='image' className="border-none justify-stretch" imageHeightProportion={40}/>
+                <ImageUploader control={control} name='image' className="border-none justify-stretch" imageHeightProportion={40}/>
             </div>
 
         </div>

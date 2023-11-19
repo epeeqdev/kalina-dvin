@@ -1,5 +1,4 @@
 'use client'
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {TextArea} from "@/components/controls/text-area";
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
@@ -10,11 +9,12 @@ import {SlideDTO} from "@/backend/types";
 import {ObjectSchema} from "yup";
 import clsx from "clsx";
 import uniqid from "uniqid";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 const validationSchema:ObjectSchema<SlideDTO> = yup.object().shape({
     title: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(),
-    description: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(),
-    image: yup.object().shape({extension: yup.string().required("Обязательно добавить картинку"), id: yup.string().required("Обязательно добавить картинку"), src: yup.string().required("Обязательно добавить картинку")}).required(""),
+    description: yup.object().shape({am: yup.string(), ru: yup.string()}),
+    image: yup.object().shape({id: yup.string().required("Обязательно добавить картинку"), src: yup.string().required("Обязательно добавить картинку")}).required(""),
     buttonLink: yup.string(),
     buttonText: yup.object().shape({am: yup.string(), ru: yup.string()})
 })
@@ -42,8 +42,8 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
 
 
     const submit = () => {
-            handleSubmit((getValues) => {
-                return onSubmit ? onSubmit({...getValues, id: getValues._id || uniqid()}) : null
+            handleSubmit((value: SlideDTO) => {
+                return onSubmit ? onSubmit({...value, id: value._id || value.id || uniqid()}) : null
             })()
     }
 
@@ -51,7 +51,7 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
             <div className={clsx("xl:w-[60%] mx-auto w-full pb-16", className)}>
                 <h1 className="text-xl mb-5">{id ? "Редактировать Слайд" : "Добавить Слайд"}</h1>
                 <div className="mb-5">
-                    <ImageGallery control={control} name='image' imageHeightProportion={50} imageClassName='object-cover' className={`mb-5 ${errors.image?.src?.message && "border-2 border-red-600"}`}/>
+                    <ImageUploader control={control} name='image' imageHeightProportion={50} className={`mb-5 ${errors.image?.src?.message && "border-2 border-red-600"}`}/>
                     {errors.image?.src?.message && <span className="text-red-600 text-sm">{errors.image?.src?.message}</span>}
                 </div>
                 <div className="mb-2">

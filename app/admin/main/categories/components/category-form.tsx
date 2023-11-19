@@ -12,11 +12,11 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {log} from "util";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import Link from "next/link";
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
 import Alert from "@/app/admin/main/products/helpers/alert";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 
 interface Prop {
@@ -28,21 +28,15 @@ export  const CategoryForm = ({id} : Prop) => {
     const {mutate: editCategoryMutate, isLoading: editCategoryLoading } = useMutation(editCategory);
     const {mutate: deleteCategoryMutate, isLoading: deleteCategoryLoading} = useMutation(deleteCategory);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: category, isLoading: categoryLoading} = useQuery<CategoryResponseDTO[]>(() => getCategory(id), [], {fetchOnMount: !!id});
+    const {data: category, isLoading: categoryLoading} = useQuery<CategoryResponseDTO>(() => getCategory(id), [], {fetchOnMount: !!id});
 
     const validationSchema = yup.object().shape({
         name: yup.object().shape({
             am: yup.string().required("Обязательное поле"),
             ru: yup.string().required("Обязательное поле"),
         }),
-        image: yup.object().shape({extension: yup.string(), id: yup.string(), src: yup.string() }).nullable(),
+        image: yup.object().shape({id: yup.string(), src: yup.string() }).nullable(),
     })
-
-    interface Category {
-        name: TextStructure;
-        image?: ImageDTO
-    }
-
 
     const loading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
 
@@ -108,7 +102,7 @@ export  const CategoryForm = ({id} : Prop) => {
             <div className="xl:w-[60%] mx-auto w-full col-auto">
                 <div className="text-3xl mb-10">Добавить категорию</div>
                 <div className="gap-4">
-                    <ImageGallery control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                    <ImageUploader control={control} name='image' imageHeightProportion={50} className="mb-5" />
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}

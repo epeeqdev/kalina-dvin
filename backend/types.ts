@@ -64,9 +64,13 @@ export type AttributeDTO = {
 }
 
 export interface ImageDTO {
+	_id?: string;
 	src: string;
 	id: string;
-	extension: string;
+	/**
+	 * @deprecated Field will be removed
+	 */
+	extension?: string;
 }
 
 
@@ -93,7 +97,7 @@ export interface SlideDTO {
 	id?: string;
 	_id?: string;
 	title: TextStructure;
-	description: TextStructure;
+	description?: TextStructure;
 	image: ImageDTO;
 	buttonLink?: string;
 	buttonText?: TextStructure;

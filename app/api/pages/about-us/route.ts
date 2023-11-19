@@ -1,19 +1,13 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {handleImage} from "@/backend/imageAPI";
-import {AboutUsDTO, ImageDTO} from "@/backend/types";
+import {AboutUsDTO} from "@/backend/types";
 
 
 export async function PUT(request: NextRequest) {
     try {
         const body = await request.json() as AboutUsDTO;
         const existing = await DB.AboutUs.findOne() as AboutUsDTO;
-        let image = existing?.image;
-        try{
-            image = await handleImage(existing?.image, body.image) as ImageDTO;
-        }catch (e){
-            console.log(e)
-        }
+        const image = body.image._id;
         const aboutUs = {
             ...body,
             image
@@ -37,11 +31,7 @@ export async function PUT(request: NextRequest) {
 }
 
 const initialData:AboutUsDTO = {
-    image: {
-        src: "",
-        id: "",
-        extension: ""
-    },
+    image: null,
     homePageDescription: {
         ru: "",
         am: ""
@@ -60,7 +50,7 @@ const initialData:AboutUsDTO = {
 }
 export async function GET() {
     try {
-        const existing = await DB.AboutUs.findOne() as AboutUsDTO;
+        const existing = await DB.AboutUs.findOne().populate('image') as AboutUsDTO;
         if (existing) {
             return NextResponse.json(existing);
         } else {

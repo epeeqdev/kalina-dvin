@@ -1,9 +1,7 @@
 'use client'
 
 import {useRouter} from "next/navigation";
-import {useState} from "react";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {TextArea} from "@/components/controls/text-area";
 import axios from "@/axios";
 import {useQuery} from "@/utils/hooks/useQuery";
@@ -16,12 +14,13 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {editAbout} from "@/app/admin/main/about-us/helpers/editAboutUsContent";
 import {AboutUsDTO} from "@/backend/types";
 import {Input} from "@/components/controls/input";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле"),}),
     aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
     aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
-    image: yup.object().shape({extension: yup.string().required(""), id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    image: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
     assortmentCount: yup.number().required("Обязательное поле"),
     brandsCount: yup.number().required("Обязательное поле"),
     partnersCount: yup.number().required("Обязательное поле"),
@@ -50,11 +49,7 @@ export default function AboutForm() {
                 },
                 aboutUsPageDescriptionTop: {am: about.aboutUsPageDescriptionTop.am, ru: about.aboutUsPageDescriptionTop.ru },
                 aboutUsPageDescriptionBottom: {am: about.aboutUsPageDescriptionBottom.am, ru: about.aboutUsPageDescriptionBottom.ru },
-                image:about.image ? {
-                    src: about.image.src,
-                    id: about.image.id,
-                    extension: about.image.extension,
-                }: null,
+                image:about.image || null,
                 assortmentCount: about.assortmentCount,
                 brandsCount: about.brandsCount,
                 partnersCount:about.partnersCount,
@@ -77,7 +72,7 @@ export default function AboutForm() {
             {isLoading && <LoadingSpinner/>}
             <h1 className="text-xl mb-5">О нас</h1>
             <div className="mb-5">
-                <ImageGallery className='max-w-[600px] mx-auto' imageHeightProportion={100} control={control} name='image'/>
+                <ImageUploader className='max-w-[600px] mx-auto' imageHeightProportion={100} control={control} name='image'/>
             </div>
             <div className="mb-5">
                 <TextArea

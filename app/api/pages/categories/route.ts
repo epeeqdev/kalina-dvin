@@ -1,19 +1,13 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {handleImage} from "@/backend/imageAPI";
-import {CategoriesPageDTO, ImageDTO} from "@/backend/types";
+import {CategoriesPageDTO} from "@/backend/types";
 
 
 export async function PUT(request: NextRequest) {
     try {
         const body = await request.json() as CategoriesPageDTO;
         const existing = await DB.CategoriesPage.findOne() as CategoriesPageDTO;
-        let image = existing?.image;
-        try{
-            image = await handleImage(existing?.image, body.image) as ImageDTO;
-        }catch (e){
-            console.log(e)
-        }
+        const image = body.image._id;
         const pageData = {
             ...body,
             image
@@ -36,15 +30,11 @@ export async function PUT(request: NextRequest) {
 }
 
 const initialData:CategoriesPageDTO = {
-    image: {
-        src: "",
-        id: "",
-        extension: ""
-    },
+    image: null,
 }
 export async function GET() {
     try {
-        const existing = await DB.CategoriesPage.findOne() as CategoriesPageDTO;
+        const existing = await DB.CategoriesPage.findOne().populate('image') as CategoriesPageDTO;
         if (existing) {
             return NextResponse.json(existing);
         } else {

@@ -9,6 +9,7 @@ import AboutUs from "@/backend/schemas/AboutUsPage";
 import {ProductsPage} from "@/backend/schemas/ProductsPage";
 import {CategoriesPage} from "@/backend/schemas/CategoriesPage";
 import {ContactsPage} from "@/backend/schemas/ContactsPage";
+import {Image} from "@/backend/schemas/Image";
 
 mongoose.connect(process.env.MONGODB_URI!);
 mongoose.Promise = Promise;
@@ -24,4 +25,5 @@ export const DB = {
 	ProductsPage,
 	CategoriesPage,
 	ContactsPage,
+	Image
 };

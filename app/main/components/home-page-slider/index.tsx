@@ -13,7 +13,7 @@ export const HomePageSlider = ({slides}:Props) => {
     return (
         <div className='flex'>
         <Swiper
-            className={clsx(['sm:h-[400px]', 'md:h-[calc(100vh-68px)]','bg-white !pb-4'])}
+            className={clsx(['h-[300px]', 'md:h-[calc(100vh-68px)] md:max-h-[1080px]','bg-white !pb-4'])}
             modules={[Pagination, A11y, Autoplay]}
             spaceBetween={50}
             slidesPerView={1}

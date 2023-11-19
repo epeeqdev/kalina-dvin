@@ -1,5 +1,4 @@
 "use client"
-import ImageGallery from "@/app/admin/main/products/components/ImageGallery";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,6 +10,7 @@ import {editProductsPage} from "@/app/admin/helpers/api/editProductsPage";
 import {useMutation} from "@/utils/hooks/useMutation";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {getProductsPage} from "@/app/admin/helpers/api/getProductsPage";
+import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 
 const validationSchema = yup.object().shape({
@@ -51,7 +51,7 @@ export default function ProductsPageForm(){
                 onEdit()
             }}>Сохранить</Button>
             <div className="flex gap-4 justify-center">
-                <ImageGallery control={control} name='image' imageClassName='object-cover' imageHeightProportion={40} className="border-none"/>
+                <ImageUploader control={control} name='image' imageClassName='object-cover' imageHeightProportion={40} className="border-none"/>
             </div>
 
         </div>

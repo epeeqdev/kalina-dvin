@@ -1,9 +1,9 @@
 import {Schema, model, models} from 'mongoose';
-import {ImageFragment, TextFragment} from "@/backend/fragments";
+import {TextFragment} from "@/backend/fragments";
 
 const AboutUsPage = new Schema(
     {
-        image: {...ImageFragment},
+        image: { type: Schema.Types.ObjectId,ref: 'Image'},
         homePageDescription: {...TextFragment},
         aboutUsPageDescriptionTop: {...TextFragment},
         aboutUsPageDescriptionBottom: {...TextFragment},
