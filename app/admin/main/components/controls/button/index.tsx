@@ -20,7 +20,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>(({children,className,
 				'bg-blue-800 hover:bg-blue-900 active:text-blue-600 active:bg-white active:border active:border-blue-600': variant === "secondary" ,
 				'bg-red-800 hover:bg-red-900 active:text-red-600 active:bg-white active:border active:border-red-600': variant === "alert"
 			},
-			'border border-transparent px-4 text-white py-1.5 md:py-2 rounded',
+			'border border-transparent px-4 text-white py-1.5 md:py-2 rounded whitespace-nowrap',
 			className)}>
 		{children}
 	</button>

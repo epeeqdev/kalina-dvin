@@ -1,4 +1,5 @@
 'use client'
+
 import {CategoryResponseDTO, ContactsPageDTO} from "@/backend/types";
 import {LngProvider} from "@/app/main/lng-provaider";
 import {Header} from "@/app/main/components/header";

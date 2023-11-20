@@ -1,5 +1,5 @@
 export interface ListItemBase {
-    id: string;
+    id?: string;
     [key: string]: any;
 }
 

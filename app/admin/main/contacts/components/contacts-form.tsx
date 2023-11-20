@@ -5,7 +5,6 @@ import LoadingSpinner from "@/components/controls/loading-spinner";
 import axios from "@/axios";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
-import Link from "next/link";
 import {Button} from "../../components/controls/button";
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
@@ -13,6 +12,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {ContactsPageDTO} from "@/backend/types";
 import {Input} from "@/components/controls/input";
 import {editContacts} from "@/app/admin/main/contacts/helpers/edit-contacts";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -66,83 +66,87 @@ export default function ContactsForm() {
     }
 
     return (
-        <div className="xl:w-[60%] mx-auto w-full pb-16">
+        <div className="mx-auto w-full pb-16">
             {isLoading && <LoadingSpinner/>}
-            <h1 className="text-xl mb-5">Контактная информация</h1>
-            <div className="mb-5">
-                <Input
-                    {...register("phone")}
-                    label="Телефон"
-                    placeholder="телефон"
-                    error={errors.phone?.message}
-                    required={true}
-                    className='w-full mb-3'
-                />
-            </div>
-            <div className="mb-5">
-                <Input
-                    {...register("email")}
-                    label="Эл. почта"
-                    placeholder="email"
-                    error={errors.email?.message}
-                    required={true}
-                    className='w-full mb-3'
-                />
-            </div>
-            <div className="mb-5">
-                <Input
-                    {...register("address.am")}
-                    label="Адрес"
-                    placeholder="Адрес"
-                    error={errors.address?.am?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="string"
-                />
-                <Input
-                    {...register("address.ru")}
-                    label="Адрес"
-                    placeholder="Адрес"
-                    error={errors.address?.ru?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="string"
-                />
-            </div>
-            <div>
-                <Input
-                    {...register("socialLinks.facebook")}
-                    label="Ссылка на Facebook"
-                    placeholder="Ссылка"
-                    error={errors.socialLinks?.facebook?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="string"
-                />
-                <Input
-                    {...register("socialLinks.instagram")}
-                    label="Ссылка на Instgram"
-                    placeholder="Ссылка"
-                    error={errors.socialLinks?.instagram?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="string"
-                />
-            </div>
-            <div className="fixed right-4 top-4 flex gap-2">
-                <Link href="/admin/main">
-                    <Button variant="secondary">Отмена</Button>
-                </Link>
-                <Button
-                    variant="primary"
-                    onClick={() => {
-                        submit()
-                    }}
-                >
-                    Сохранить
-                </Button>
 
-            </div>
+            <PageLayout headerButtons={
+                <>
+                    <Button className="h-[40px]" onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            submit()
+                        }}
+                        className="h-[40px]"
+                    >
+                        Сохранить
+                    </Button>
+                </>
+            } headerTitle={"Контактная информация"}
+            >
+                <div className="px-5">
+                    <div className="mb-5">
+                        <Input
+                            {...register("phone")}
+                            label="Телефон"
+                            placeholder="телефон"
+                            error={errors.phone?.message}
+                            required={true}
+                            className='w-full mb-3'
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <Input
+                            {...register("email")}
+                            label="Эл. почта"
+                            placeholder="email"
+                            error={errors.email?.message}
+                            required={true}
+                            className='w-full mb-3'
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <Input
+                            {...register("address.am")}
+                            label="Адрес"
+                            placeholder="Адрес"
+                            error={errors.address?.am?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="string"
+                        />
+                        <Input
+                            {...register("address.ru")}
+                            label="Адрес"
+                            placeholder="Адрес"
+                            error={errors.address?.ru?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="string"
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            {...register("socialLinks.facebook")}
+                            label="Ссылка на Facebook"
+                            placeholder="Ссылка"
+                            error={errors.socialLinks?.facebook?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="string"
+                        />
+                        <Input
+                            {...register("socialLinks.instagram")}
+                            label="Ссылка на Instgram"
+                            placeholder="Ссылка"
+                            error={errors.socialLinks?.instagram?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="string"
+                        />
+                    </div>
+                </div>
+            </PageLayout>
         </div>
     )
 }

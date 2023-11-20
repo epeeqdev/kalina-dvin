@@ -4,10 +4,16 @@ import {useQuery} from "@/utils/hooks/useQuery";
 import {AttributeDTO} from "@/backend/types";
 import axios from "@/axios";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import Link from "next/link";
 import {Button} from "@/app/admin/main/components/controls/button";
 import AttributeTemplate from "@/app/admin/main/attributes/halpers/attributeTemplate";
+import {useRouter} from "next/navigation";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
+
+
+
 export default function Attributes() {
+
+    const router = useRouter()
 
     const {
         data: attributes,
@@ -15,23 +21,25 @@ export default function Attributes() {
     } = useQuery<AttributeDTO[]>(() => axios.get(`/api/attributes`));
 
     return (
-        <div className="xl:w-[60%] mx-auto w-full pb-16">
-            <div className="text-3xl">Атрибуты</div>
-            <div className={"flex justify-end mb-5"}>
-                <Link href="/admin/main/attributes/add">
-                    <Button variant="primary">Добавить Атрибуты</Button>
-                </Link>
-            </div>
-            {attributes?.map((item) => {
-                return (
-                    <AttributeTemplate
-                        item={item}
-                        key={item._id}
-                    />
-                )
-            })
-            }
-            {attributesLoading && <LoadingSpinner/>}
+        <div className="mx-auto w-full pb-16">
+            <PageLayout headerButtons={
+                <>
+                    <Button onClick={() => router.push("/admin/main/attributes/add")} variant="primary">Добавить Атрибуты</Button>
+                </>
+            } headerTitle={"Атрибуты"} >
+                <div className="px-5">
+                    {attributes?.map((item) => {
+                        return (
+                            <AttributeTemplate
+                                item={item}
+                                key={item._id}
+                            />
+                        )
+                    })
+                    }
+                </div>
+                {attributesLoading && <LoadingSpinner/>}
+            </PageLayout>
         </div>
     )
 }

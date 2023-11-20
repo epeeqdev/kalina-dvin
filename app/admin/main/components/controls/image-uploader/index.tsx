@@ -45,7 +45,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className, multiple
     return <div className={
         clsx('w-full grid gap-4', {
             'grid-cols-1': !multiple,
-            'grid-cols-5': multiple
+            'grid-cols-2 md:grid-cols-5 ': multiple
         }, className)}>
         <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
                          isLoading={loading && !multiple}>

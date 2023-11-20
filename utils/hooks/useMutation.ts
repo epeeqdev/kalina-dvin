@@ -1,4 +1,5 @@
 import {useState} from "react";
+import toast from 'react-hot-toast';
 
 export const useMutation = <MutationFunction extends (...args: any[]) => any, ArgTypes>(mutation: MutationFunction, args?:ArgTypes[]) => {
 	const [data, setData] = useState(null);
@@ -11,8 +12,11 @@ export const useMutation = <MutationFunction extends (...args: any[]) => any, Ar
 			setLoading(true)
 			const result = await mutation(...currentArgs);
 			setData(result?.data);
+			toast('success')
 		} catch (err) {
 			setError(err);
+			toast(err.message);
+			throw err;
 		} finally {
 			setLoading(false);
 		}

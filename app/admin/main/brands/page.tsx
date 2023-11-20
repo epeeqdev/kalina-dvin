@@ -5,9 +5,13 @@ import {useQuery} from "@/utils/hooks/useQuery";
 import {BrandResponseDTO} from "@/backend/types";
 import axios from "@/axios";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import Link from "next/link";
 import {Button} from "@/app/admin/main/components/controls/button";
+import {useRouter} from "next/navigation";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 export default function Brands() {
+
+
+    const router = useRouter()
 
     const {
         data: brands,
@@ -15,23 +19,27 @@ export default function Brands() {
     } = useQuery<BrandResponseDTO>(() => axios.get(`/api/brands`));
 
     return (
-        <div className="xl:w-[60%] mx-auto w-full pb-16">
-            <div className="text-3xl">Бренды</div>
-            <div className={"flex justify-end mb-5"}>
-                <Link href="/admin/main/brands/add">
-                    <Button variant="primary">Добавить Бренд</Button>
-                </Link>
-            </div>
-            {brands?.map((item) => {
-                return (
-                    <BrandTemplate
-                        item={item}
-                        key={item._id}
-                    />
-                )
-            })
-            }
-            {BrandsLoading && <LoadingSpinner/>}
+        <div className="mx-auto w-full pb-16">
+
+            <PageLayout headerButtons={
+                <>
+                    <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить Бренд</Button>
+                </>
+            } headerTitle={"Бренды"}
+            >
+                <div className="px-5">
+                    {brands?.map((item) => {
+                        return (
+                            <BrandTemplate
+                                item={item}
+                                key={item._id}
+                            />
+                        )
+                    })
+                    }
+                    {BrandsLoading && <LoadingSpinner/>}
+                </div>
+            </PageLayout>
         </div>
     )
 }
