@@ -12,12 +12,12 @@ type PaginationComponentProps = {
 };
 
 const PaginationComponent: React.FC<PaginationComponentProps> = ({
-                                                                     totalItems,
-                                                                     itemsPerPage,
-                                                                     currentPage,
-                                                                     onPageChange,
-                                                                     className
-                                                                 }) => {
+     totalItems,
+     itemsPerPage,
+     currentPage,
+     onPageChange,
+     className
+ }) => {
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
 
