@@ -17,7 +17,7 @@ export const ProductCard = ({data, className}:Props) => {
 
         <div className='px-2 sm:px-3 pb-2 sm:pb-3'>
             <Typography size='sm' className='text-primary-lighter mt-2'>
-                {getLanguage(data.brand?.name ?? '')}
+                {getLanguage(data.brand?.name ?? null)}
             </Typography>
             <Typography size='lg'>
                 <span className='break-words' style={{textWrap:'pretty'} as any}>{getLanguage(data.title)}</span>

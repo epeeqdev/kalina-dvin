@@ -22,7 +22,7 @@ export const Slide = ({data}: Props) => {
     return (
         <>
             <div className='w-full h-full'>
-                <img src={image.src} alt='Main page slide image' className='w-full h-full object-cover'/>
+                <img src={image?.src} alt='Main page slide image' className='w-full h-full object-cover'/>
             </div>
             <div
                 className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-30 px-[5%] flex flex-col justify-center items-start'

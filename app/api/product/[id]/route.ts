@@ -10,8 +10,6 @@ export async function GET(request: NextRequest, context: Params) {
 	try {
 		const product = await DB.Product.findById(context.params.id).populate('categories')
 			.populate('brand').populate('images').populate('attributes.attribute') as Product;
-		const image = await DB.Image.findById(product.images[0]?._id)
-		console.log('found image', image)
 		return NextResponse.json(product);
 	} catch (err) {
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})

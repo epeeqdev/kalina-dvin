@@ -32,7 +32,6 @@ export const CategoriesSlider = ({categories}: Props) => {
     const pathname = usePathname();
     const onCategoryClick = (id: string) => {
         const params = new URLSearchParams(searchParams.toString());
-        console.log('search', params.toString());
         params.set('category', id);
         router.push(`${pathname}/?${params.toString()}`);
     }

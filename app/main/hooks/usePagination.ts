@@ -22,7 +22,6 @@ export const usePagination = <T>(items: T[], itemsPerPage: number) => {
 
     useEffect(() => {
         if(currentPage !== 1){
-            console.log('set page')
             setCurrentPage(1);
         }
     }, [items?.length]);
