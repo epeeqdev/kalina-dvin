@@ -15,7 +15,7 @@ export const NavigationItems:  NavigationItemsType[] = [
     },
     {
         id: 'products',
-        title: {am: 'Պրոդուկտներ', ru: 'Продукты'},
+        title: {am: 'Ապրանքներ', ru: 'Продукты'},
         link: '/main/products',
     },
      {

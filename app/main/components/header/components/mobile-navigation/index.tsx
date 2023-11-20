@@ -6,6 +6,7 @@ import {
     MobileContactItem
 } from "@/app/main/components/header/components/mobile-navigation/components/mobile-contact-item";
 import {generateGoogleMapsLink} from "@/utils/googleMaps";
+import {useRouter} from "next/navigation";
 
 interface Props {
     contacts: ContactsPageDTO
@@ -13,11 +14,15 @@ interface Props {
 
 export const MobileNavigation = ({contacts}: Props) => {
     const {getLanguage} = useLanguage()
+    const router = useRouter()
+    const handleNavigate = (link:string) => {
+        router.push(link)
+    }
     return(
         <div>
             <div className='py-3 border-b border-secondary cursor-pointer select-none' >
                 {Object.values(NavigationItems).map((el) => (
-                    <div key={el.id} className='flex flex-col pl-6 py-2 bg-white group hover:bg-secondary hover:text-white'>
+                    <div key={el.id} className='flex flex-col pl-6 py-2 bg-white group hover:bg-secondary hover:text-white' onClick={()=>handleNavigate(el.link)}>
                         <Typography  size='lg' className='group-hover:text-white'>{getLanguage(el.title)}</Typography>
                     </div>
                 ))}
