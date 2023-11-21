@@ -18,9 +18,10 @@ export interface ImageUploaderProps {
     imageHeightProportion?: number;
     defaultUploadedImages?: ImageDTO[];
     className?: string;
+    imageFit?: 'contain' | 'cover'
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({className, multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100}) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = ({className,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100}) => {
     const [isUploadingFromUrl, setUploadingFromUrl] = useState(false);
     const {
         handleUploadFiles,
@@ -68,6 +69,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className, multiple
                         <span>Файл</span>
                     </ImageVariantButton>
                 </div> : <ImageBlock
+                    imageFit={imageFit}
                     isLoading={loadingImagesIds.includes(uploadedImages[0].id)}
                     proportionalBlockStyle={proportionalBlockStyle} image={uploadedImages[0]} onRemove={removeImage}/>}
         </ProportionBlock>
@@ -75,6 +77,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className, multiple
             <Droppable key={image._id} id={image._id} onDrop={handleDrop}>
                 <Draggable id={image._id}>
                     <ImageBlock
+                        imageFit={imageFit}
                         isLoading={loadingImagesIds.includes(image._id)}
                         proportionalBlockStyle={proportionalBlockStyle}
                         image={image}
@@ -97,14 +100,15 @@ interface ImageBlockProps {
         paddingTop: string;
     },
     image: ImageDTO;
-    onRemove: (id: string) => void
+    onRemove: (id: string) => void;
+    imageFit: ImageUploaderProps['imageFit']
 }
 
-const ImageBlock = ({isLoading, image, proportionalBlockStyle, onRemove}: ImageBlockProps) => {
+const ImageBlock = ({isLoading, image, proportionalBlockStyle,imageFit, onRemove}: ImageBlockProps) => {
     return (
         <ProportionBlock isLoading={isLoading} draggable proportionalBlockStyle={proportionalBlockStyle}>
             <div className={clsx('relative w-full h-full')}>
-                <img src={image.src} alt='uploaded image' className='w-full h-full object-cover'/>
+                <img src={image.src} alt='uploaded image' className={`w-full h-full object-${imageFit}`}/>
                 <div className='absolute top-0 right-0 p-1 cursor-pointer transition hover:bg-secondary bg-secondary-lighter'
                      onClick={() => onRemove(image._id)}>
                     <IconComponent name='deleteBin' color='white'/>
