@@ -11,10 +11,11 @@ import {useRouter} from "next/navigation";
 import {editCategoriesPage} from "@/app/admin/helpers/api/editCategoriesPage";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 
 const validationSchema = yup.object().shape({
-    image: yup.object().shape({extension: yup.string(), id: yup.string(), src: yup.string()}).nullable(),
+    image: yup.object().shape({extension: yup.string().required(""), id: yup.string().required(""), src: yup.string().required("")}).required(""),
 })
 export default function CategoriesPageForm() {
 
@@ -41,16 +42,26 @@ export default function CategoriesPageForm() {
     }
 
     return (
-        <div className="mx-auto w-full col-auto ">
+        <div className="mx-auto w-full col-auto">
             {editCategoriesLoading && <LoadingSpinner />}
-            <div className="text-3xl mb-5">Добавить обложку в странице категории</div>
-            <Button className="fixed top-4 right-4" variant="primary" onClick={() => {
-                onEdit()
-            }}>Сохранить</Button>
-            <div className="flex gap-4 justify-center">
-                <ImageUploader control={control} name='image' className="border-none justify-stretch" imageHeightProportion={40}/>
-            </div>
 
+            <PageLayout headerButtons={
+                    <Button
+                        className="h-[40px]"
+                        variant="primary"
+                        onClick={() => {
+                            onEdit()
+                        }}>Сохранить</Button>
+            } headerTitle={"Добавить обложку в странице категории"}>
+                <div className="flex gap-4 justify-center px-5">
+                    <ImageUploader
+                        control={control}
+                        name='image'
+                        className="border-none justify-stretch"
+                        imageHeightProportion={40}
+                    />
+                </div>
+            </PageLayout>
         </div>
     )
 }

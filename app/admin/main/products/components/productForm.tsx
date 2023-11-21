@@ -16,9 +16,9 @@ import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
 import AttributesForm from "@/app/admin/main/products/components/attributesForm";
 import Alert from "@/app/admin/main/products/helpers/alert";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
-import Link from "next/link";
 import {Button} from "../../components/controls/button";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 
 export default function ProductForm({id}: { id: string }) {
@@ -80,94 +80,90 @@ export default function ProductForm({id}: { id: string }) {
     }
 
     return (
-        <div className="xl:w-[60%] mx-auto w-full pb-16">
+        <div className="mx-auto w-full pb-16">
             {isLoading && <LoadingSpinner/>}
-            <h1 className="text-xl mb-5">{id ? "Редактировать продукт" : "Добавить продукт"}</h1>
-            <div className="mb-5">
-                <ImageUploader control={control} name="images" multiple/>
-            </div>
-            <div className="mb-5 flex gap-3 w-full">
-                <Input label="Заголовок на армянском"
-                       placeholder='Введите заголовок'
-                       {...register("title.am")}
-                       className='flex-1'
-                       error={errors.title?.ru?.message}
-                       required
-                />
-                <Input label="Заголовок на русском"
-                       placeholder='Введите заголовок'
-                       {...register("title.ru")}
-                       className='flex-1'
-                       error={errors.title?.am?.message}
-                       required
-                />
-            </div>
-            <div className="mb-5">
-                <TextArea
-                    required
-                    label="Описание на армянском"
-                    placeholder='Введите описание'
-                    {...register("description.am", {required: true})}
-                    error={errors.description?.am?.message}
-                    className="min-h-[150px] mb-5"
-                />
-                <TextArea
-                    required
-                    label="Описание на русском"
-                    placeholder='Введите описание'
-                    {...register("description.ru", {required: true})}
-                    error={errors.description?.ru?.message}
-                    className="min-h-[150px] mb-5"
-                />
-            </div>
-
-            <div className="mb-5">
-                <MultiSelectInput
-                    control={control}
-                    required
-                    name='categories'
-                    multiselect
-                    options={categories}
-                    error={errors.categories?.message}
-                    placeholder='Выберите категории'
-                    label="Категории"
-                />
-            </div>
-            <div className="mb-5">
-                <MultiSelectInput
-                    control={control}
-                    required
-                    name='brand'
-                    options={brands}
-                    error={errors.brand?.message}
-                    label="Выберите бренд"
-                />
-            </div>
-            {/*-----------------------------  ATTRIBUTES  -------------------------*/}
-
-            <AttributesForm control={control} name='attributes'/>
-            <div className="fixed right-4 top-4 flex gap-2">
+            <PageLayout headerTitle={id ?'Редактировать продукт': "Добавить продукт"} headerButtons={  <>
                 {
                     id
                         ?
                         <Button
                             variant="alert"
                             onClick={() => {
-                            setDeleteModalOpen(true)
-                        }}>Удалить</Button>
+                                setDeleteModalOpen(true)
+                            }}>Удалить</Button>
                         : <></>
                 }
-                <Link href="/admin/main/products">
-                    <Button variant="secondary">Отмена</Button>
-                </Link>
+                <Button onClick={() => router.push("/admin/main/products")} variant="secondary">Отмена</Button>
                 <Button
                     variant="primary"
                     onClick={submit}
                 >
                     Сохранить
                 </Button>
-
+            </>}>
+            <div className="mx-5 mb-[200px]">
+                <div className="mb-5">
+                    <ImageUploader control={control} name="images" multiple/>
+                </div>
+                <div className="mb-2 sm:flex gap-3 w-full">
+                    <Input label="Заголовок на армянском"
+                           placeholder='Введите заголовок'
+                           {...register("title.am")}
+                           className='flex-1 mb-2'
+                           error={errors.title?.ru?.message}
+                           required
+                    />
+                    <Input label="Заголовок на русском"
+                           placeholder='Введите заголовок'
+                           {...register("title.ru")}
+                           className='flex-1'
+                           error={errors.title?.am?.message}
+                           required
+                    />
+                </div>
+                <div className="mb-2">
+                    <TextArea
+                        required
+                        label="Описание на армянском"
+                        placeholder='Введите описание'
+                        {...register("description.am", {required: true})}
+                        error={errors.description?.am?.message}
+                        className="min-h-[150px] mb-2"
+                    />
+                    <TextArea
+                        required
+                        label="Описание на русском"
+                        placeholder='Введите описание'
+                        {...register("description.ru", {required: true})}
+                        error={errors.description?.ru?.message}
+                        className="min-h-[150px]"
+                    />
+                </div>
+                <div className="mb-2">
+                    <MultiSelectInput
+                        control={control}
+                        required
+                        name='categories'
+                        multiselect
+                        options={categories}
+                        error={errors.categories?.message}
+                        placeholder='Выберите категории'
+                        label="Категории"
+                    />
+                </div>
+                <div className="mb-2">
+                    <MultiSelectInput
+                        control={control}
+                        required
+                        name='brand'
+                        options={brands}
+                        error={errors.brand?.message}
+                        label="Выберите бренд"
+                    />
+                </div>
+                <AttributesForm control={control} name='attributes'/>
             </div>
+            </PageLayout>
             <Alert onCancel={() => setDeleteModalOpen(false)} onClose={() => setDeleteModalOpen(false)} onAccept={onDelete} isOpen={deleteModalOpen}>
                 <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный продукт</p>
                 <p className="text-gray-700">После удаления продукт не возможно восстановить!</p>

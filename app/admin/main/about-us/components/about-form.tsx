@@ -15,12 +15,13 @@ import {editAbout} from "@/app/admin/main/about-us/helpers/editAboutUsContent";
 import {AboutUsDTO} from "@/backend/types";
 import {Input} from "@/components/controls/input";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 const validationSchema = yup.object().shape({
-    homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле"),}),
-    aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
-    aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
-    image: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
+    aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
+    aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
+    image: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required("").nullable(),
     assortmentCount: yup.number().required("Обязательное поле"),
     brandsCount: yup.number().required("Обязательное поле"),
     partnersCount: yup.number().required("Обязательное поле"),
@@ -58,120 +59,124 @@ export default function AboutForm() {
     });
 
     const onSubmit = async () => {
-        editAboutUsMutate(getValues())
+        editAboutUsMutate(getValues()).then(() => router.push("/admin/main"))
     }
 
     const submit = () => {
         handleSubmit((data) => {
-            return onSubmit().then(() => router.push("/admin/main"))
+            return onSubmit()
         })()
     }
 
     return (
-        <div className="xl:w-[60%] mx-auto w-full pb-16">
+        <div>
             {isLoading && <LoadingSpinner/>}
-            <h1 className="text-xl mb-5">О нас</h1>
-            <div className="mb-5">
-                <ImageUploader className='max-w-[600px] mx-auto' imageHeightProportion={100} control={control} name='image'/>
-            </div>
-            <div className="mb-5">
-                <TextArea
-                    required
-                    label="Главный текст на армянском"
-                    placeholder='Введите заголовок'
-                    {...register("homePageDescription.am")}
-                    error={errors.homePageDescription?.am?.message}
-                    className="min-h-[150px] mb-5"
+            <PageLayout headerButtons={
+                <>
+                    <Button className="h-[40px]" onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
+                    <Button
+                        variant="primary"
+                        onClick={() => {
+                            submit()
+                        }}
+                        className="h-[40px]"
+                    >
+                        Сохранить
+                    </Button>
+                </>
+            } headerTitle={"О нас"}
+            >
+                <div className="w-full pb-16 pl-5 pr-8">
+                    <div className="my-5 flex justify-start">
+                        <ImageUploader className='max-w-[600px]' imageHeightProportion={100} control={control} name='image'/>
+                    </div>
+                    <div className="mb-5">
+                        <TextArea
+                            required
+                            label="Главный текст на армянском"
+                            placeholder='Введите заголовок'
+                            {...register("homePageDescription.am")}
+                            error={errors.homePageDescription?.am?.message}
+                            className="min-h-[150px] mb-5"
 
-                />
-                <TextArea
-                    required
-                    label="Главный текст на русском"
-                    placeholder='Введите описание'
-                    {...register("homePageDescription.ru")}
-                    error={errors.homePageDescription?.ru?.message}
-                    className="min-h-[150px]"
-                />
+                        />
+                        <TextArea
+                            required
+                            label="Главный текст на русском"
+                            placeholder='Введите описание'
+                            {...register("homePageDescription.ru")}
+                            error={errors.homePageDescription?.ru?.message}
+                            className="min-h-[150px]"
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <TextArea
+                            required
+                            label="Второй текст на армянском"
+                            placeholder='Введите описание'
+                            {...register("aboutUsPageDescriptionTop.am")}
+                            error={errors.aboutUsPageDescriptionTop?.am?.message}
+                            className="min-h-[150px] mb-5"
+                        />
+                        <TextArea
+                            required
+                            label="Второй текст на русском"
+                            placeholder='Введите описание'
+                            {...register("aboutUsPageDescriptionTop.ru")}
+                            error={errors.aboutUsPageDescriptionTop?.ru?.message}
+                            className="min-h-[150px]"
+                        />
+                    </div>
+                    <div className="mb-5">
+                        <TextArea
+                            required
+                            label="Третий текст на армянском"
+                            placeholder='Введите описание'
+                            {...register("aboutUsPageDescriptionBottom.am")}
+                            error={errors.aboutUsPageDescriptionBottom?.am?.message}
+                            className="min-h-[150px] mb-5"
+                        />
+                        <TextArea
+                            required
+                            label="Третий текст на русском"
+                            placeholder='Введите описание'
+                            {...register("aboutUsPageDescriptionBottom.ru")}
+                            error={errors.aboutUsPageDescriptionBottom?.ru?.message}
+                            className="min-h-[150px]"
+                        />
+                    </div>
+                    <div>
+                        <Input
+                            {...register("assortmentCount")}
+                            label="Количество ассортимента"
+                            placeholder="количество ассортимента"
+                            error={errors.assortmentCount?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="number"
+                        />
+                        <Input
+                            {...register("brandsCount")}
+                            label="Количество брендов"
+                            placeholder="количество брендов"
+                            error={errors.brandsCount?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="number"
+                        />
+                        <Input
+                            {...register("partnersCount")}
+                            label="Количество Партнеров"
+                            placeholder="количество партнеров"
+                            error={errors.partnersCount?.message}
+                            required={true}
+                            className='w-full mb-3'
+                            type="number"
+                        />
+                    </div>
+                </div>
+            </PageLayout>
             </div>
-            <div className="mb-5">
-                <TextArea
-                    required
-                    label="Второй текст на армянском"
-                    placeholder='Введите описание'
-                    {...register("aboutUsPageDescriptionTop.am")}
-                    error={errors.aboutUsPageDescriptionTop?.am?.message}
-                    className="min-h-[150px] mb-5"
-                />
-                <TextArea
-                    required
-                    label="Второй текст на русском"
-                    placeholder='Введите описание'
-                    {...register("aboutUsPageDescriptionTop.ru")}
-                    error={errors.aboutUsPageDescriptionTop?.ru?.message}
-                    className="min-h-[150px]"
-                />
-            </div>
-            <div className="mb-5">
-                <TextArea
-                    required
-                    label="Третий текст на армянском"
-                    placeholder='Введите описание'
-                    {...register("aboutUsPageDescriptionBottom.am")}
-                    error={errors.aboutUsPageDescriptionBottom?.am?.message}
-                    className="min-h-[150px] mb-5"
-                />
-                <TextArea
-                    required
-                    label="Третий текст на русском"
-                    placeholder='Введите описание'
-                    {...register("aboutUsPageDescriptionBottom.ru")}
-                    error={errors.aboutUsPageDescriptionBottom?.ru?.message}
-                    className="min-h-[150px]"
-                />
-            </div>
-            <div>
-                <Input
-                    {...register("assortmentCount")}
-                    label="Количество ассортимента"
-                    placeholder="количество ассортимента"
-                    error={errors.assortmentCount?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="number"
-                />
-                <Input
-                    {...register("brandsCount")}
-                    label="Количество брендов"
-                    placeholder="количество брендов"
-                    error={errors.brandsCount?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="number"
-                />
-                <Input
-                    {...register("partnersCount")}
-                    label="Количество Партнеров"
-                    placeholder="количество партнеров"
-                    error={errors.partnersCount?.message}
-                    required={true}
-                    className='w-full mb-3'
-                    type="number"
-                />
-            </div>
-            <div className="fixed right-4 top-4 flex gap-2">
-                <Link href={"/admin/main"}>
-                    <Button variant="secondary">Отмена</Button>
-                </Link>
-                <Button
-                    variant="primary"
-                    onClick={() => {
-                        submit()
-                    }}
-                >
-                    Сохранить
-                </Button>
 
-            </div>
-        </div>
     )
 }

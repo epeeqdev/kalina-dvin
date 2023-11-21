@@ -9,12 +9,12 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import Alert from "@/app/admin/main/products/helpers/alert";
 import LoadingSpinner from "@/components/controls/loading-spinner";
-import Link from "next/link";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
 import {getAttribute} from "@/app/admin/main/attributes/halpers/grtAttributes";
-import {AttributeDTO, TextStructure} from "@/backend/types";
+import {AttributeDTO} from "@/backend/types";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 interface Props {
     id?: string
@@ -90,23 +90,21 @@ export const AttributeForm = ({id}:Props) => {
                 <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
             </Alert>
             {loading && <LoadingSpinner />}
-            <div className={"flex justify-end mb-5 gap-2"}>
-                {
-                    id
-                        ?
-                        <Button variant="alert" onClick={() => {
-                            setDeleteModalOpen(true)
-                        }}>Удалить</Button>
-                        : <></>
-                }
-                <Link href="/admin/main/attributes">
-                    <Button variant="secondary">Отмена</Button>
-                </Link>
-                <Button variant="primary" onClick={submit}>Сохранить</Button>
-            </div>
-            <div className="xl:w-[60%] mx-auto w-full col-auto">
-                <div className="text-3xl mb-10">Добавить Атрибуты</div>
-                <div className="flex gap-4">
+            <PageLayout headerButtons={
+                <>
+                    {
+                        id
+                            ?
+                            <Button variant="alert" onClick={() => {
+                                setDeleteModalOpen(true)
+                            }}>Удалить</Button>
+                            : <></>
+                    }
+                    <Button onClick={() => router.push("/admin/main/attributes")} variant="secondary">Отмена</Button>
+                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                </>
+            } headerTitle={"Добавить Атрибуты"} >
+                <div className="flex gap-4 px-5">
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}
@@ -114,7 +112,7 @@ export const AttributeForm = ({id}:Props) => {
                             placeholder="Название по АРМ"
                             error={errors.name?.am?.message}
                             required={true}
-                            className='w-full mb-3'
+                            className='w-full mt-5'
                         />
                         <Input
                             {...register("name.ru")}
@@ -122,12 +120,11 @@ export const AttributeForm = ({id}:Props) => {
                             placeholder="Название по РУС"
                             error={errors.name?.ru?.message}
                             required={true}
-                            className='w-full'
+                            className='w-full mt-5'
                         />
                     </div>
                 </div>
-
-            </div>
+            </PageLayout>
         </div>
 
     )

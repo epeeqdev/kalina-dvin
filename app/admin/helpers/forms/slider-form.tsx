@@ -48,8 +48,7 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
     }
 
     return (
-            <div className={clsx("xl:w-[60%] mx-auto w-full pb-16", className)}>
-                <h1 className="text-xl mb-5">{id ? "Редактировать Слайд" : "Добавить Слайд"}</h1>
+            <div className={clsx(" mx-auto w-full pb-16", className)}>
                 <div className="mb-5">
                     <ImageUploader control={control} name='image' imageHeightProportion={50} className={`mb-5 ${errors.image?.src?.message && "border-2 border-red-600"}`}/>
                     {errors.image?.src?.message && <span className="text-red-600 text-sm">{errors.image?.src?.message}</span>}
@@ -61,6 +60,7 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
                         placeholder='Введите заголовок'
                         {...register("title.am")}
                         error={errors.title?.am?.message}
+                        className="mb-2"
                     />
                     <Input
                         required
@@ -93,6 +93,7 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
                         placeholder='Введите заголовок'
                         {...register("buttonLink")}
                         error={errors.buttonLink?.message}
+                        className="mb-2"
                     />
                     <Input
                         required
@@ -100,6 +101,7 @@ export default function SliderForm({id, onSubmit, editingSlideData, className}: 
                         placeholder='Введите Текст Ам'
                         {...register("buttonText.am")}
                         error={errors.buttonText?.am?.message}
+                        className="mb-2"
                     />
                     <Input
                         required

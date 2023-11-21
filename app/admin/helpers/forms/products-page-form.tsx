@@ -11,12 +11,13 @@ import {useMutation} from "@/utils/hooks/useMutation";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {getProductsPage} from "@/app/admin/helpers/api/getProductsPage";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
+import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 
 const validationSchema = yup.object().shape({
     image: yup.object().shape({extension: yup.string().required(""), id: yup.string().required(""), src: yup.string()}),
 })
-export default function ProductsPageForm(){
+export default function ProductsPageForm() {
 
     const {data: image, isLoading: imageLoading} = useQuery<ProductsPageDTO>(getProductsPage);
     const {mutate: editProductPage, isLoading: editProductLoading} = useMutation(editProductsPage)
@@ -26,7 +27,7 @@ export default function ProductsPageForm(){
     const isLoading = imageLoading || editProductLoading
 
     const {
-        control ,
+        control,
         formState: {errors},
         getValues
     } = useForm<ImageDTO>({
@@ -35,7 +36,7 @@ export default function ProductsPageForm(){
             values: {
                 image: image?.image
             }
-        }: {})
+        } : {})
     });
 
     const onEdit = () => {
@@ -45,15 +46,24 @@ export default function ProductsPageForm(){
     return (
 
         <div className="mx-auto w-full col-auto">
-            {isLoading && <LoadingSpinner />}
-            <div className="text-3xl mb-5">Добавить обложку главной страницы</div>
-            <Button className="fixed top-4 right-4" variant="primary" onClick={() => {
-                onEdit()
-            }}>Сохранить</Button>
-            <div className="flex gap-4 justify-center">
-                <ImageUploader control={control} name='image' imageClassName='object-cover' imageHeightProportion={40} className="border-none"/>
-            </div>
-
+            {isLoading && <LoadingSpinner/>}
+            <PageLayout headerButtons={
+                <Button
+                className="h-[40px]"
+                variant="primary"
+                onClick={() => {
+                    onEdit()
+                }}>Сохранить</Button>
+            } headerTitle={"Добавить обложку главной страницы"}>
+                <div className="flex gap-4 justify-center mx-5">
+                    <ImageUploader
+                        control={control}
+                        name='image'
+                        imageClassName='object-cover'
+                        imageHeightProportion={40}
+                        className="border-none"/>
+                </div>
+            </PageLayout>
         </div>
     )
 }

@@ -13,7 +13,7 @@ interface Props extends ComponentPropsWithoutRef<'input'> {
 export const Input = forwardRef<HTMLInputElement, Props>(({label, className, required, error, ...props}: Props, ref) => {
     return <div className={className}>
             <div className="flex">
-                {label && <span className='text-[16px] mb-1 block text-dark-grey'>{label}</span>}
+                {label && <span className='text-[16px] mb-1 block text-dark-grey whitespace-nowrap'>{label}</span>}
                 {required && <span className="text-red-600">*</span>}
             </div>
             <input className={clsx('block border px-4 py-2 w-full', {
