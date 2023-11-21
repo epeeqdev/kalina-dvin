@@ -63,7 +63,7 @@ export const BrandForm = ({id}:Props) => {
         setDeleteModalOpen(false)
     }
     const onDelete = async () => {
-        deleteBrandMutate(id).then(() => router.push('/admin/main/brands')).catch((e) => console.log("cqatch error" , e));
+        deleteBrandMutate(id).then(() => router.push('/admin/main/brands'));
     }
 
     const onSubmit = async () => {
@@ -87,8 +87,6 @@ export const BrandForm = ({id}:Props) => {
                 <p className="text-gray-700">После удаления бренд не возможно восстановить!</p>
             </Alert>
             {loading && <LoadingSpinner />}
-
-
             <PageLayout headerButtons={
                 <>
                     {

@@ -12,6 +12,7 @@ import LoadingSpinner from "@/components/controls/loading-spinner";
 import {getProductsPage} from "@/app/admin/helpers/api/getProductsPage";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import React from "react";
 
 
 const validationSchema = yup.object().shape({
@@ -54,9 +55,10 @@ export default function ProductsPageForm() {
                 onClick={() => {
                     onEdit()
                 }}>Сохранить</Button>
-            } headerTitle={"Добавить обложку главной страницы"}>
-                <div className="flex gap-4 justify-center mx-5">
+            } headerTitle={"Страница продуктов"}>
+                <div className="gap-4 justify-center mx-5">
                     <ImageUploader
+                        label="Обложка"
                         control={control}
                         name='image'
                         imageClassName='object-cover'

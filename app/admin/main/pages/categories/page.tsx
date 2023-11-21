@@ -1,4 +1,4 @@
-import CategoriesPageForm from "@/app/admin/helpers/forms/categories-page-form";
+import CategoriesPageForm from "@/app/admin/main/components/forms/categories-page-form";
 
 export default function CategoriesPage(){
     return (

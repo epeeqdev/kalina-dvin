@@ -13,7 +13,7 @@ export default function Layout({children}:PropsWithChildren){
 	const isMobile = useMatchMedia('(max-width: 639.1px)');
 	const isLaptop = useMatchMedia('(min-width: 1024px)');
 
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const styles = "block px-4 py-2 text-[14px] hover:font-bold hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
 
 	const toggleSidebar = () => {
@@ -88,7 +88,7 @@ export default function Layout({children}:PropsWithChildren){
 						<Link className={styles} href={'/admin/main/contacts'} onClick={() => !isLaptop ? setIsOpen(false) : null}>Контакты</Link>
 						<div>
 							<div className={`${styles} cursor-pointer flex justify-between sidebar-overlay`} onClick={() => toggleAccordion()}>
-							 	<div>Страници</div>
+							 	<div>Страницы</div>
 								<IconComponent name={accordionIsOpen ? "chevronUp" : "chevronDown"}/>
 							</div>
 							<Accordion isOpen={accordionIsOpen} items={pages} onBurgerClose={() => {
@@ -99,7 +99,7 @@ export default function Layout({children}:PropsWithChildren){
 
 					</div>
 				</div>
-				<div className='w-full mb-[100px]' ref={burgerRef}>
+				<div className='w-full' ref={burgerRef}>
 					{children}
 				</div>
 			</div>

@@ -12,6 +12,7 @@ import {editCategoriesPage} from "@/app/admin/helpers/api/editCategoriesPage";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import React from "react";
 
 
 const validationSchema = yup.object().shape({
@@ -52,14 +53,15 @@ export default function CategoriesPageForm() {
                         onClick={() => {
                             onEdit()
                         }}>Сохранить</Button>
-            } headerTitle={"Добавить обложку в странице категории"}>
-                <div className="flex gap-4 justify-center px-5">
-                    <ImageUploader
-                        control={control}
-                        name='image'
-                        className="border-none justify-stretch"
-                        imageHeightProportion={40}
-                    />
+            } headerTitle={"Страница категорий"}>
+                <div className="gap-4 justify-center px-5">
+                        <ImageUploader
+                            label="Обложка"
+                            control={control}
+                            name='image'
+                            className="border-none justify-stretch"
+                            imageHeightProportion={40}
+                        />
                 </div>
             </PageLayout>
         </div>

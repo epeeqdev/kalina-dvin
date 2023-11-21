@@ -26,7 +26,7 @@ interface Prop {
     editingSlideData?: SlideDTO
     className?: string
 }
-export default function SliderForm({id, onSubmit, editingSlideData, className}: Prop) {
+export default function SliderForm({onSubmit, editingSlideData, className}: Prop) {
 
     const {
         control,

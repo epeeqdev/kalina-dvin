@@ -97,7 +97,7 @@ export default function AboutForm() {
                             placeholder='Введите заголовок'
                             {...register("homePageDescription.am")}
                             error={errors.homePageDescription?.am?.message}
-                            className="min-h-[150px] mb-5"
+                            className="mb-5"
 
                         />
                         <TextArea
@@ -106,7 +106,6 @@ export default function AboutForm() {
                             placeholder='Введите описание'
                             {...register("homePageDescription.ru")}
                             error={errors.homePageDescription?.ru?.message}
-                            className="min-h-[150px]"
                         />
                     </div>
                     <div className="mb-5">
@@ -116,7 +115,7 @@ export default function AboutForm() {
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionTop.am")}
                             error={errors.aboutUsPageDescriptionTop?.am?.message}
-                            className="min-h-[150px] mb-5"
+                            className="mb-5"
                         />
                         <TextArea
                             required
@@ -124,7 +123,6 @@ export default function AboutForm() {
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionTop.ru")}
                             error={errors.aboutUsPageDescriptionTop?.ru?.message}
-                            className="min-h-[150px]"
                         />
                     </div>
                     <div className="mb-5">
@@ -134,7 +132,7 @@ export default function AboutForm() {
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionBottom.am")}
                             error={errors.aboutUsPageDescriptionBottom?.am?.message}
-                            className="min-h-[150px] mb-5"
+                            className="mb-5"
                         />
                         <TextArea
                             required
@@ -142,7 +140,6 @@ export default function AboutForm() {
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionBottom.ru")}
                             error={errors.aboutUsPageDescriptionBottom?.ru?.message}
-                            className="min-h-[150px]"
                         />
                     </div>
                     <div>
