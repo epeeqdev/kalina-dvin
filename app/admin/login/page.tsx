@@ -28,7 +28,7 @@ export default function Login(){
 	},[userContext.data])
 
 
-	return <div className='flex justify-center items-center min-h-screen'>
+	return <div className='flex justify-center items-center min-h-screen px-5'>
 		<form onSubmit={handleSubmit(login)} className='w-full max-w-[500px] flex flex-col justify-center items-stretch gap-y-[10px]'>
 		<div>
 			<Input label='Username' placeholder='Enter username' {...register('username')} className='w-full'/>
