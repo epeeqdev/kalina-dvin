@@ -34,7 +34,7 @@ export default function Login(){
 			<Input label='Username' placeholder='Enter username' {...register('username')} className='w-full'/>
 		</div>
 		<div>
-			<Input label='Password' placeholder='Enter password' {...register('password')} className='w-full'/>
+			<Input label='Password' type='password' placeholder='Enter password' {...register('password')} className='w-full'/>
 		</div>
 		<Button type='submit' className='mt-2' variant="primary">Login</Button>
 	</form>
