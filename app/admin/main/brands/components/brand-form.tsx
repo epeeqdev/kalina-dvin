@@ -38,9 +38,7 @@ export const BrandForm = ({id}:Props) => {
     const {mutate: editBrandMutate, isLoading: editBrandLoading } = useMutation(editBrand);
     const {mutate: deleteBrandMutate, isLoading: deleteBrandLoading} = useMutation(deleteBrand);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const {data: brandResponse, isLoading: brandLoading} = useQuery<BrandResponseDTO>(getBrand,[id], {fetchOnMount: !!id});
-
-    const brand = brandResponse
+    const {data: brand, isLoading: brandLoading} = useQuery<BrandResponseDTO>(getBrand,[id], {fetchOnMount: !!id});
 
     const loading = editBrandLoading || addBrandLoading || deleteBrandLoading || brandLoading
 
@@ -107,7 +105,7 @@ export const BrandForm = ({id}:Props) => {
             } headerTitle={"Добавить Бренд"}>
                 <div className=" w-[100%] pl-5 pr-5 pr-5 mb-20">
                     <div className="gap-4">
-                        <ImageUploader control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                        <ImageUploader imageFit='contain' control={control} name='image' imageHeightProportion={50} className="mb-5" />
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}

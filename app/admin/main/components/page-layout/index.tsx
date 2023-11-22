@@ -6,11 +6,11 @@ interface Props extends React.PropsWithChildren{
     headerButtons: ReactNode;
 }
 export const PageLayout = ({headerButtons, headerTitle, children}:Props) => {
-    return <div className='flex flex-col h-screen'>
+    return <div className='flex flex-col h-screen mb-[100px]'>
         <Header title={headerTitle}>
             {headerButtons}
         </Header>
-        <div className='overflow-y-auto h-full flex-1 pt-10'>
+        <div className='overflow-y-auto max-h-[87%] flex-1 pt-5 pb-[100px]'>
             {children}
         </div>
     </div>

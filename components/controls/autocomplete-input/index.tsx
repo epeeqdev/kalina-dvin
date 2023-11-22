@@ -27,6 +27,7 @@ export default function AutocompleteInput({control, name, options, error, label,
                     {required && <span className="text-red-600">*</span>}
                 </div>
                 <Select
+                    menuPlacement="top"
                     value={field.value}
                     isMulti={multiselect}
                     placeholder={placeholder}
