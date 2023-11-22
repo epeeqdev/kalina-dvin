@@ -1,5 +1,4 @@
 import {Typography} from "@/app/main/components/controls/typography";
-import Image from "next/image";
 import IconComponent from "@/components/icon";
 import {CATEGORIES, CONTACTS, MAP} from "@/app/main/components/footer/constanst";
 import { useLanguage } from "@/app/main/hooks/useLanguage";
@@ -11,6 +10,7 @@ import {
 import {FooterBlock} from "@/app/main/components/footer/components/footer-block";
 import {FooterBlockItem} from "@/app/main/components/footer/components/footer-block/components/footer-block-item";
 import {generateGoogleMapsLink} from "@/utils/googleMaps";
+import {LogoIcon} from "@/app/main/components/logoIcon";
 
 interface Props {
     categories: CategoryResponseDTO[];
@@ -27,7 +27,7 @@ export const Footer = ({categories, contacts}:Props) => {
                 <div className='flex flex-col lg:flex-row h-full'>
                     <div className='flex justify-start gap-x-[10%] lg:gap-x-0 pr-[48px] items-center lg:items-baseline lg:justify-between flex-row lg:flex-col border-r-[0] border-b-[1px] lg:border-r-[1px] lg:border-b-[0] border-secondary w-full max-w-full lg:max-w-[230px] xl:max-w-[383px] h-full'>
                         <div>
-                            <Image src='/footerLogo.png' alt='footerLogo' width={152} height={60} className='w-[100px] lg:w-[152px] mb-4'/>
+                            <LogoIcon color='white' className='w-[100px] lg:w-[152px] mb-4'/>
                         </div>
                         <div className='flex gap-x-3 mb-4'>
                             <a href={contacts.socialLinks.facebook} target='_blank' className='group hover:text-secondary'>

@@ -1,5 +1,4 @@
 import {Navigation} from "@/app/main/components/header/components/navigation";
-import Image from "next/image";
 import IconComponent from "@/components/icon";
 import {useEffect, useState} from "react";
 import clsx from "clsx";
@@ -7,6 +6,7 @@ import {MobileNavigation} from "@/app/main/components/header/components/mobile-n
 import Link from "next/link";
 import {ContactsPageDTO} from "@/backend/types";
 import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
+import {LogoIcon} from "../logoIcon";
 
 interface Props {
     contacts: ContactsPageDTO
@@ -38,7 +38,7 @@ export const Header = ({contacts}: Props) => {
                 'fixed z-[999]': isNavOpen
             })}>
                 <Link href='/main'>
-                    <Image src='/logo.png' alt='logo' width={100} height={44} className='w-auto h-[36px] lg:w-auto lg:h-[46px] '/>
+                    <LogoIcon color='primary' width='100' height='44' className='w-auto h-[36px] lg:w-auto lg:h-[46px]'/>
                 </Link>
                 <div className='flex-1'>
                     <div className={clsx('flex justify-end lg:hidden', {

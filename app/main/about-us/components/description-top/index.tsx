@@ -1,4 +1,5 @@
 import {Typography} from "@/app/main/components/controls/typography";
+import {LogoIcon} from "@/app/main/components/logoIcon";
 
 interface Props {
     aboutUsPageDescriptionTop: string
@@ -10,7 +11,7 @@ export const DescriptionTop = ({aboutUsPageDescriptionTop}:Props) => {
         <div>
             <div className='bg-primary w-full h-auto relative pr-[14%] py-[5%] box-border'>
                 <div className='flex justify-end'>
-                    <img src='/footerLogo.png' alt='footerLogo' width={152} className=''/>
+                    <LogoIcon color='white'/>
                     <div className='absolute left-0 bottom-0 transform translate-y-1/2 w-full'>
                         <div className='relative'>
                             <img src='/cargo-track.png' alt='footerLogo' className='w-[40%] max-w-[500px]'/>
