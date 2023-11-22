@@ -1,18 +1,17 @@
 'use client'
 
 import {useRouter} from "next/navigation";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useProductForm} from "@/app/admin/main/products/helpers/useProductForm";
 import {addProduct} from "@/app/admin/main/products/helpers/addProduct";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {Input} from "@/components/controls/input";
 import {TextArea} from "@/components/controls/text-area";
 import MultiSelectInput from "@/components/controls/autocomplete-input";
-import axios from "@/axios";
 import {editProduct} from "@/app/admin/main/products/helpers/editProduct";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
-import {BrandResponseDTO, CategoryResponseDTO} from "@/backend/types";
+import {BrandResponseDTO, CategoryResponseDTO, ProductResponseDTO} from "@/backend/types";
 import AttributesForm from "@/app/admin/main/products/components/attributesForm";
 import Alert from "@/app/admin/main/products/helpers/alert";
 import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
@@ -21,6 +20,7 @@ import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/i
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {getBrands} from "@/app/admin/main/brands/helpers/getBrands";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
+import {getProduct} from "@/app/admin/main/categories/halpers/getProduct";
 
 
 
@@ -28,14 +28,13 @@ import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
-    const [uniqueProductData, setUniqueProductData] = useState();
     const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(getCategories);
+    const {data: productData, isLoading: productLoading} = useQuery<ProductResponseDTO>(getProduct, [id], {fetchOnMount: !!id});
     const {data: brandsResponse, isLoading: brandsLoading} = useQuery<BrandResponseDTO[]>(getBrands);
     const {mutate: deleteProductMutate, isLoading: deleteLoading} = useMutation(deleteProduct);
     const {mutate: editProductMutate, isLoading: editProductLoading} = useMutation(editProduct);
     const {mutate: addProductMutate, isLoading: addProductLoading} = useMutation(addProduct);
-    const isLoading = categoriesLoading || brandsLoading || deleteLoading || editProductLoading || addProductLoading;
-    const [currItem, setCurrItem] = useState(null)
+    const isLoading = categoriesLoading || brandsLoading || deleteLoading || editProductLoading || addProductLoading || productLoading;
 
     const {
         errors,
@@ -43,7 +42,7 @@ export default function ProductForm({id}: { id: string }) {
         register,
         handleSubmit,
         getRequestData
-    } = useProductForm(uniqueProductData);
+    } = useProductForm(productData);
 
     const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
     const brands = brandsResponse?.map((item: BrandResponseDTO) => ({value: item._id, label: item.name.ru}))
@@ -52,31 +51,14 @@ export default function ProductForm({id}: { id: string }) {
         if (id) {
             editProductMutate(id, getRequestData()).then(() => router.push('/admin/main/products'))
         } else {
-            await addProductMutate(getRequestData())
+            await addProductMutate(getRequestData()).then(data => {
+                router.push(`/admin/main/products/edit/${data._id}`)
+            })
         }
     }
-
-
-    const getProductWithId = () => {
-        id && axios.get(`/api/product/${id}`)
-            .then(response => {
-                setUniqueProductData(response.data)
-            })
-            .catch((e) => {
-                console.log("error", e)
-            })
-    }
-
-    useEffect(() => {
-        if (id) {
-            getProductWithId()
-        }
-    },)
 
     const submit = () => {
-        handleSubmit(() => {
-            onSubmit().then(() => router.push(`/admin/main/products/edit/${currItem?._id}`))
-        })()
+        handleSubmit(onSubmit)()
     }
 
     const onDelete = async () => {

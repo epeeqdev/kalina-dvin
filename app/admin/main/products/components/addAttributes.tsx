@@ -1,10 +1,10 @@
-import MultiSelectInput from "@/components/controls/autocomplete-input";
+import MultiSelectInput, {Option} from "@/components/controls/autocomplete-input";
 import {Input} from "@/components/controls/input";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {AttributesResponseDTO} from "@/backend/types";
+import {AttributesResponseDTO, ProductRequestDTO} from "@/backend/types";
 import axios from "@/axios";
 import {Button} from "../../components/controls/button";
 import uniqid from "uniqid";
@@ -19,15 +19,17 @@ const schema = yup.object().shape({
 })
 
 interface Props {
-    onSubmit?: () => void
+    onSubmit?: (value: Option & {attribute: Option}) => void
     onCancel?: () => void
+    data?: Option & {attribute: Option}[]
 }
-export default function AddAttributes({onSubmit, onCancel}: Props){
+export default function AddAttributes({onSubmit, onCancel, data}: Props){
+    const chosenValues = data?.map(item => item.attribute?.value)
 
     const {data: attributesResponse} = useQuery<AttributesResponseDTO[]>(() => axios.get(`/api/attributes`), [], )
-    const attributesOptions = attributesResponse?.map(item => ({label: item?.name?.ru, value: item?._id}));
+    const attributesOptions = attributesResponse?.filter(item => !chosenValues?.find(option => option === item._id))?.map(item => ({label: item?.name?.ru, value: item?._id}));
     const attrOnSubmit = () => {
-        handleSubmit((data) => {
+        handleSubmit((data: ProductRequestDTO) => {
             onSubmit({...data, id: uniqid()});
         })()
     }
