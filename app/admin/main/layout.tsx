@@ -49,7 +49,6 @@ export default function Layout({children}:PropsWithChildren){
 			const handleOutsideClick = (e:any) => {
 				if(!isLaptop){
 					if (burgerRef.current && burgerRef.current.contains(e.target as Node)) {
-						console.log("outside click")
 						setIsOpen(false);
 					}
 				}

@@ -3,7 +3,7 @@ import AddAttributes from "@/app/admin/main/products/components/addAttributes";
 import ShowAttributes from "@/app/admin/main/products/components/showAttributes";
 import {useState} from "react";
 import {ProductAttribute} from "@/app/admin/main/products/types";
-import uniqid from "uniqid";
+import {Option} from "@/components/controls/autocomplete-input";
 
 interface Props {
     control: Control<any>;
@@ -27,12 +27,14 @@ export default function AttributesForm({control, name}: Props) {
                         }
                     }
                     />
-                    {isAdding && <AddAttributes onSubmit={(value: ProductAttribute) => {
+                    {isAdding && <AddAttributes
+                        onSubmit={(value: Option) => {
                         const oldFieldValue = field.value || [];
                         setAdding(false);
                         field.onChange([...oldFieldValue, value])
                     }}
                     onCancel={() => setAdding(false)}
+                    data={field.value}
                     />}
                 </div>
             )}/>
