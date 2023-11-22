@@ -25,23 +25,24 @@ export const Slide = ({data}: Props) => {
                 <img src={image?.src} alt='Main page slide image' className='w-full h-full object-cover'/>
             </div>
             <div
-                className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-30 px-[5%] flex flex-col justify-center items-start'
+                className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-40 flex flex-col justify-center items-start'
             >
-                <Typography
-                    size='7xl'
-                    color='secondary'
-                    leading='none'
-                    fontWeight={500}
-                    className='mb-1 sm:mb-4'
-                >{getLanguage(title)}</Typography>
-                <Typography
-                    color='white'
-                    size='lg'
-                    className='mb-1 sm:mb-4 lg:max-w-[50%]'
-                >{getLanguage(description)}</Typography>
-                {!!getLanguage(buttonText) && buttonLink && <Button onClick={handleSeeMore}>
-                    {getLanguage(buttonText)}
-                </Button>}
+                <div className='w-full h-full sm:leading-md sm:h-auto px-[5%] backdrop-blur-sm py-4 sm:pr-[35%]' style={{textWrap:'balance'}}>
+                    <Typography
+                        size='5xl'
+                        color='secondary'
+                        fontWeight={500}
+                        className='mb-1 sm:mb-4'
+                    >{getLanguage(title)}</Typography>
+                    <Typography
+                        color='white'
+                        size='lg'
+                        className='mb-2 sm:mb-6'
+                    >{getLanguage(description)}</Typography>
+                    {!!getLanguage(buttonText) && buttonLink && <Button onClick={handleSeeMore}>
+                        {getLanguage(buttonText)}
+                    </Button>}
+                </div>
             </div>
         </>
     )

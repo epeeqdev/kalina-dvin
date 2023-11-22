@@ -1,6 +1,5 @@
 import {DB} from "@/backend/db";
 import {NextRequest, NextResponse} from "next/server";
-import {deleteImages} from "@/backend/imageAPI";
 import {MainPageSliderDTO} from "@/backend/types";
 
 
@@ -9,11 +8,6 @@ export async function PUT(request: NextRequest) {
         const body = await request.json() as MainPageSliderDTO;
         const existing = await DB.MainPageSlider.findOne() as MainPageSliderDTO;
         const images = body?.slides?.map(slide => slide.image?._id)?.filter(Boolean)
-        const deletingImages = existing.slides.map(slide => slide.image?._id?.toString()).filter(id => !images.find(item => item === id)).filter(Boolean);
-        console.log('images for deletion', deletingImages)
-        if(deletingImages.length){
-            await deleteImages(deletingImages)
-        }
 
         const slider = {
             ...body,
