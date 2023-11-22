@@ -7,13 +7,13 @@ export const dynamic = "force-dynamic";
 export async function GET() {
 	try{
 		const hashedPassword = CryptoJS.AES.encrypt(
-			'1234',
+			'iok3BI4J22uf4SF',
 			process.env.PASS_SEC!
 		);
 		console.log('hashedPassword',hashedPassword)
 		await new DB.User(
 			{
-				username: 'admin',
+				username: 'kalina-admin',
 				password: hashedPassword
 			}
 		).save()
