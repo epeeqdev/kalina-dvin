@@ -27,7 +27,7 @@ export const Slide = ({data}: Props) => {
             <div
                 className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-40 flex flex-col justify-center items-start'
             >
-                <div className='w-full h-full sm:leading-md sm:h-auto px-[5%] backdrop-blur-sm py-4 sm:pr-[35%]' style={{textWrap:'balance'}}>
+                <div className='w-full h-full sm:leading-md backdrop-blur-xs sm:h-auto px-[5%] py-4 sm:pr-[35%]' style={{textWrap:'balance'}}>
                     <Typography
                         size='5xl'
                         color='secondary'

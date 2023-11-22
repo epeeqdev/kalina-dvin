@@ -8,6 +8,9 @@ const config: Config = {
         ],
         theme: {
             extend: {
+                backdropBlur: {
+                    'xs': '3px',
+                },
                 colors: {
                     primary: {
                         DEFAULT: '#2D2A26', // Original secondary color
