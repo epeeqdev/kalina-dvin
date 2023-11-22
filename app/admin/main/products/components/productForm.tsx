@@ -19,25 +19,29 @@ import {deleteProduct} from "@/app/admin/main/products/helpers/deleteProduct";
 import {Button} from "../../components/controls/button";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import {getBrands} from "@/app/admin/main/brands/helpers/getBrands";
+import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
+
+
 
 
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const [uniqueProductData, setUniqueProductData] = useState();
-    const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
-    const {data: brandsResponse, isLoading: brandsLoading} = useQuery<BrandResponseDTO[]>(() => axios.get(`/api/brands`));
+    const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(getCategories);
+    const {data: brandsResponse, isLoading: brandsLoading} = useQuery<BrandResponseDTO[]>(getBrands);
     const {mutate: deleteProductMutate, isLoading: deleteLoading} = useMutation(deleteProduct);
     const {mutate: editProductMutate, isLoading: editProductLoading} = useMutation(editProduct);
     const {mutate: addProductMutate, isLoading: addProductLoading} = useMutation(addProduct);
     const isLoading = categoriesLoading || brandsLoading || deleteLoading || editProductLoading || addProductLoading;
+    const [currItem, setCurrItem] = useState(null)
 
     const {
         errors,
         control,
         register,
         handleSubmit,
-        getValues,
         getRequestData
     } = useProductForm(uniqueProductData);
 
@@ -48,7 +52,7 @@ export default function ProductForm({id}: { id: string }) {
         if (id) {
             editProductMutate(id, getRequestData()).then(() => router.push('/admin/main/products'))
         } else {
-            addProductMutate(getRequestData())
+            await addProductMutate(getRequestData())
         }
     }
 
@@ -67,11 +71,11 @@ export default function ProductForm({id}: { id: string }) {
         if (id) {
             getProductWithId()
         }
-    }, [])
+    },)
 
     const submit = () => {
         handleSubmit(() => {
-            onSubmit().then(() => router.push(`/admin/main/products`))
+            onSubmit().then(() => router.push(`/admin/main/products/edit/${currItem?._id}`))
         })()
     }
 

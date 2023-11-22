@@ -18,10 +18,11 @@ export interface ImageUploaderProps {
     imageHeightProportion?: number;
     defaultUploadedImages?: ImageDTO[];
     className?: string;
-    imageFit?: 'contain' | 'cover'
+    imageFit?: 'contain' | 'cover';
+    label?: string
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({className,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100}) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100}) => {
     const [isUploadingFromUrl, setUploadingFromUrl] = useState(false);
     const {
         handleUploadFiles,
@@ -48,6 +49,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,imageFit 
             'grid-cols-1': !multiple,
             'grid-cols-2 md:grid-cols-5 ': multiple
         }, className)}>
+        {label && <label>{label}</label>}
         <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
                          isLoading={loading && !multiple}>
             {((multiple) || (!multiple && !uploadedImages.length)) ?

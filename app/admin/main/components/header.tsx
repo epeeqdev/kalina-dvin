@@ -6,12 +6,12 @@ interface Props {
 }
 export default function Header({children, title}: Props){
     return (
-        <div className="flex flex-0 items-center justify-between z-[30] bg-white pt-5 shadow-sm relative">
-            <div className="sm:flex items-center justify-between w-[100%] px-5">
-                <div>
-                    <h1 className="text-3xl flex justify-center mb-5">{title}</h1>
+        <div className="flex flex-0 flex-wrap items-center justify-between z-[30] bg-white py-5 shadow-sm relative">
+            <div className="flex gap-4 flex-wrap-reverse justify-between w-full px-5">
+                <div className='mx-auto flex-1 whitespace-nowrap flex items-center'>
+                    <h1 className="text-xl">{title}</h1>
                 </div>
-                <div className="flex justify-center items-center mb-5 gap-2">
+                <div className="flex ml-auto justify-center items-center gap-2 flex-0">
                     {children}
                 </div>
             </div>
