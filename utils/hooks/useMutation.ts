@@ -12,11 +12,11 @@ export const useMutation = <MutationFunction extends (...args: any[]) => any, Ar
 			setLoading(true)
 			const result = await mutation(...currentArgs);
 			setData(result?.data);
-			toast('success')
+			toast.success('Успешно')
 			return result.data;
 		} catch (err) {
 			setError(err);
-			toast(err.message);
+			toast.error(err?.response?.data?.error || err?.message || 'Что то пошло не так.');
 			throw err;
 		} finally {
 			setLoading(false);

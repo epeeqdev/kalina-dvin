@@ -11,7 +11,10 @@ export async function POST(request: Request) {
 		});
 
 		if (!user) {
-			return new NextResponse("Wrong User Name", { status: 401 });
+			console.log('wrong username')
+			return new Response(JSON.stringify({"error": "Неправильный логин или пароль."}), {
+				status: 401,
+			});
 		}
 
 		const hashedPassword = CryptoJS.AES.decrypt(
@@ -21,7 +24,9 @@ export async function POST(request: Request) {
 		const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
 		if (originalPassword !== requestBody.password) {
-			return new NextResponse(`Wrong Password`, { status: 401 });
+			return new Response(JSON.stringify({"error": "Неправильный логин или пароль."}), {
+				status: 401,
+			});
 		}
 
 		// Create JWT using jose

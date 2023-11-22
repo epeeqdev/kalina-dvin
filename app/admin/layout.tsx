@@ -5,6 +5,7 @@ import {User} from "@/app/admin/types";
 import axios from "@/axios";
 import {useRouter} from 'next/navigation'
 import LoadingSpinner from "../../components/controls/loading-spinner";
+import {Toaster} from "react-hot-toast";
 
 export default function AdminLayout({children}: PropsWithChildren) {
 	const [userData, setUserData] = useState<User | null>(null);
@@ -40,5 +41,6 @@ export default function AdminLayout({children}: PropsWithChildren) {
 				<LoadingSpinner/>
 			</div>}
 			{isInitialized && children}
+		<Toaster/>
 		</userContext.Provider>
 }

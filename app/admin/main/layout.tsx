@@ -4,7 +4,6 @@ import Link from "next/link";
 import {useAuth} from "@/app/admin/hooks";
 import {RouteGuard} from "@/app/admin/RouteGuard";
 import Hamburger from 'hamburger-react'
-import { Toaster } from 'react-hot-toast';
 import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
 import IconComponent from "@/app/admin/main/components/icon";
 import Accordion from "@/app/admin/main/components/accordion";
@@ -103,7 +102,6 @@ export default function Layout({children}:PropsWithChildren){
 					{children}
 				</div>
 			</div>
-		<Toaster/>
 		</div>
 
 	</RouteGuard>
