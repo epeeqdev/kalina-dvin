@@ -25,7 +25,7 @@ export const BrandsSlider = ({brands}: Props) => {
                     disableOnInteraction: false,
                 }}
                 breakpoints={Breakpoints}
-                className="breakpoint h-[58px] lg:h-[80px] xl:h-[120px]"
+                className="breakpoint h-[80px] xl:h-[120px]"
             >
                 {brandsDoubled.map((item, index) => {
                     return (

@@ -30,8 +30,8 @@ export const Navigation = ({contacts}: Props) => {
         <>
             {
                 NavigationItems.map((item) => (
-                    <Link href={item.link ? item.link : '#'} key={item.id} className={clsx('border-b-[1px] hover:border-primary transition', {
-                        'border-primary': item.link && isLinkActive(item.link),
+                    <Link href={item.link ? item.link : '#'} key={item.id} className={clsx('border-b pb-1 hover:border-secondary transition', {
+                        'border-secondary font-medium': item.link && isLinkActive(item.link),
                         'border-transparent': !item.link || !isLinkActive(item.link)
                     })}>
                         <Typography

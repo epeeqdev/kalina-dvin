@@ -32,7 +32,7 @@ export const Header = ({contacts}: Props) => {
     },[isLG])
     return (
         <div>
-            <div className={clsx('w-full flex px-[5%] py-[8px] lg:py-[12px] items-center shadow-md bg-white',
+            <div style={{boxShadow: '0px -2px 4px #2c2a26'}} className={clsx('w-full flex px-[5%] py-[8px] lg:py-[12px] items-center bg-white',
                 {
                 'relative' : !isNavOpen,
                 'fixed z-[999]': isNavOpen

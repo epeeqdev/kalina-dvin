@@ -21,14 +21,13 @@ export default function Login(){
 	});
 	const userContext = useUserContext();
 	const router = useRouter();
-	const {login, isLoading, isInitialized} = useAuth();
+	const {login, isLoading} = useAuth();
 	useEffect(() => {
 		if(userContext.data){
 			router.replace("/admin/main");
 		}
 	},[userContext.data, isLoading])
 
-	if(!isInitialized) return null;
 	return <div className='flex justify-center items-center min-h-screen px-5'>
 		{isLoading && <LoadingSpinner/>}
 		<form onSubmit={handleSubmit(login)} className='w-full max-w-[500px] flex flex-col justify-center items-stretch gap-y-[10px]'>

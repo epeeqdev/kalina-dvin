@@ -12,7 +12,7 @@ export const CategoriesBlock = ({categories}: Props) => {
         <HomePageSection
             header={BLOCK_TITLE}
             childrenClassName='px-[5%]'
-            className='pt-[45px] pb-0 lg:pt-[60px] lg:pb-[45px]'
+            className='pt-[25px] pb-0 lg:pt-[45px]'
         >
             <CategoriesGrid categories={categories}/>
         </HomePageSection>
