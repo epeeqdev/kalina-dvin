@@ -39,9 +39,6 @@ export default function Layout({children}:PropsWithChildren){
 
 	const burgerRef = useRef<HTMLDivElement>(null);
 
-
-	console.log(isClicked, "isClicked")
-
 	useEffect(() => {
 		if(isMobile){
 			setAccordionIsOpen(false)

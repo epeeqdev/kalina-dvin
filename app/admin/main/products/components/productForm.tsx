@@ -22,9 +22,6 @@ import {getBrands} from "@/app/admin/main/brands/helpers/getBrands";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 import {getProduct} from "@/app/admin/main/categories/halpers/getProduct";
 
-
-
-
 export default function ProductForm({id}: { id: string }) {
     const router = useRouter()
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
