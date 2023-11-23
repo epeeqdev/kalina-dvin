@@ -1,31 +1,16 @@
 'use client'
-import { Pagination, Autoplay, A11y } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import clsx from "clsx";
+import { SwiperSlide } from 'swiper/react';
 import '@/app/main/components/home-page-slider/components/slide/style.css'
 import {SlideDTO} from "@/backend/types";
 import {Slide} from "@/app/main/components/home-page-slider/components/slide";
+import {ReusableSlider} from "@/app/main/components/controls/reusable-slider ";
 
 interface Props {
     slides?: SlideDTO[]
 }
 export const HomePageSlider = ({slides}:Props) => {
     return (
-        <div className='flex'>
-        <Swiper
-            className={clsx(['h-[300px]', 'md:h-[calc(100vh-68px)] md:max-h-[1080px]','bg-white !pb-4'])}
-            modules={[Pagination, A11y, Autoplay]}
-            spaceBetween={50}
-            slidesPerView={1}
-            autoplay={{delay: 3000, disableOnInteraction: true}}
-            pagination={{
-                horizontalClass: 'hor-pagination',
-                clickable: true,
-                bulletClass: 'hor-pagination-bullet',
-                bulletActiveClass: 'hor-pagination-bullet-active',
-                bulletElement: 'div'
-            }}
-        >
+        <ReusableSlider className='md:h-[calc(100vh-68px)] md:max-h-[1080px]'>
             {
                 slides?.map((item) => (
                     <SwiperSlide className='w-full' key={item._id} >
@@ -33,8 +18,6 @@ export const HomePageSlider = ({slides}:Props) => {
                     </SwiperSlide>
                 ))
             }
-
-        </Swiper>
-        </div>
+        </ReusableSlider>
     );
 };

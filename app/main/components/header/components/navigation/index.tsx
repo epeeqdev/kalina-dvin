@@ -15,16 +15,14 @@ import {ContactsPageDTO} from "@/backend/types";
 import {generateGoogleMapsLink} from "@/utils/googleMaps";
 
 interface Props {
-    contacts: ContactsPageDTO
+    contacts: ContactsPageDTO,
+    language: 'am' | 'ru',
+    onChangeLng: (language:string) => void
+
 }
-export const Navigation = ({contacts}: Props) => {
+export const Navigation = ({contacts, language, onChangeLng}: Props) => {
     const { getLanguage } = useLanguage();
     const pathName = usePathname();
-    const [language, [setMainContextState]] = useMainContext()
-    const onChangeLanguage = (language: string) => {
-        setMainContextState(language)
-        localStorage.setItem('lng', language)
-    }
     const isLinkActive = (link: string) => pathName === link
     return(
         <>
@@ -58,7 +56,7 @@ export const Navigation = ({contacts}: Props) => {
             </div>
 
             <div className='border-b-[1px] hover:border-primary transition border-transparent'>
-                <Dropdown title={language.toUpperCase()} onChange={onChangeLanguage} dropdownClassName='display felx justify-center'>
+                <Dropdown title={language.toUpperCase()} onChange={onChangeLng} dropdownClassName='display felx justify-center'>
                     {Object.values(LanguageOptions.options).map((el) => (
                         <Option title={getLanguage(el.title)} key={el.id} id={el.id} isChanged={el.isChanged} className='px-4 cursor-pointer'/>
                     ))}

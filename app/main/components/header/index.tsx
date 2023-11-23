@@ -8,6 +8,8 @@ import {ContactsPageDTO} from "@/backend/types";
 import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
 import {LogoIcon} from "../logoIcon";
 import {useRouter} from "next/navigation";
+import './style.css'
+import {useMainContext} from "@/app/main/hooks/useMainContext";
 
 interface Props {
     contacts: ContactsPageDTO
@@ -16,7 +18,12 @@ interface Props {
 export const Header = ({contacts}: Props) => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const isLG = useMatchMedia('(min-width:1024px)');
-    const router = useRouter()
+    const router = useRouter();
+    const [language, [setMainContextState]] = useMainContext()
+    const onChangeLanguage = (language: string) => {
+        setMainContextState(language)
+        localStorage.setItem('lng', language)
+    }
     const handleNavigate = (link:string) => {
         router.push(link)
         setIsNavOpen(false)
@@ -48,14 +55,14 @@ export const Header = ({contacts}: Props) => {
                 <div className='flex-1'>
                     <div className={clsx('flex justify-end lg:hidden', {
                         'pr-0' : !isNavOpen,
-                        'pr-[11px]': isNavOpen
+                        'pr-[13px] close-button': isNavOpen
                     })}>
                         <div  onClick={() => setIsNavOpen((prev) => !prev)} className='cursor-pointer px-2'>
                             <IconComponent color='primary' name={isNavOpen ? 'close': 'menu'}/>
                         </div>
                     </div>
                     <div className='hidden lg:flex gap-x-[4%] justify-end items-center'>
-                        <Navigation contacts={contacts}/>
+                        <Navigation contacts={contacts} language={language} onChangeLng={onChangeLanguage}/>
                     </div>
                 </div>
             </div>
@@ -64,7 +71,7 @@ export const Header = ({contacts}: Props) => {
                 'hidden': !isNavOpen
             })}>
                 <div className='flex flex-col w-full justify-between'>
-                    <MobileNavigation contacts={contacts} onClick={handleNavigate}/>
+                    <MobileNavigation contacts={contacts} onClick={handleNavigate} onChangeLng={onChangeLanguage} language={language}/>
                 </div>
             </div>
         </div>
