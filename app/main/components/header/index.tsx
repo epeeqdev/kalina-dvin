@@ -7,6 +7,7 @@ import Link from "next/link";
 import {ContactsPageDTO} from "@/backend/types";
 import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
 import {LogoIcon} from "../logoIcon";
+import {useRouter} from "next/navigation";
 
 interface Props {
     contacts: ContactsPageDTO
@@ -15,7 +16,11 @@ interface Props {
 export const Header = ({contacts}: Props) => {
     const [isNavOpen, setIsNavOpen] = useState(false);
     const isLG = useMatchMedia('(min-width:1024px)');
-
+    const router = useRouter()
+    const handleNavigate = (link:string) => {
+        router.push(link)
+        setIsNavOpen(false)
+    }
     useEffect(() => {
         if(isNavOpen) {
             document.documentElement.style.overflow = 'hidden'
@@ -59,7 +64,7 @@ export const Header = ({contacts}: Props) => {
                 'hidden': !isNavOpen
             })}>
                 <div className='flex flex-col w-full justify-between'>
-                    <MobileNavigation contacts={contacts}/>
+                    <MobileNavigation contacts={contacts} onClick={handleNavigate}/>
                 </div>
             </div>
         </div>
