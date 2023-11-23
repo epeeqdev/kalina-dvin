@@ -46,7 +46,7 @@ export const Navigation = ({contacts}: Props) => {
             <div className='border-b-[1px] hover:border-primary transition border-transparent'>
                 <Dropdown title={getLanguage(CONTACTS_TITLE)} dropdownClassName='w-[265px] py-[20px]'>
                     <a href={`tel:${contacts.phone}`}>
-                        <Option title={contacts.phone} icon='call' className='gap-x-[5%] pl-[7.5%] flex-1'/>
+                        <Option title={`+${contacts.phone}`} icon='call' className='gap-x-[5%] pl-[7.5%] flex-1'/>
                     </a>
                     <a href={`mailto:${contacts.email}`}>
                         <Option title={contacts.email} icon='email' className='gap-x-[5%] pl-[7.5%] flex-1'/>

@@ -5,15 +5,16 @@ import {ProductsSection} from "@/app/main/products/[id]/components/products-sect
 
 interface Props {
     data: ProductResponseDTO;
-    products: ProductResponseDTO[]
+    products: ProductResponseDTO[];
+    selectedProductId:string
 
 }
 
-export const ProductContent = ({data, products}:Props) =>{
+export const ProductContent = ({data, products, selectedProductId}:Props) =>{
     return (
-        <div>
+        <div className='mb-[50px] lg:mb-[134px] mt-[4%]'>
             <ProductInfo data={data}/>
-            <ProductsSection products={products}/>
+            <ProductsSection products={products} id={selectedProductId}/>
         </div>
     )
 }

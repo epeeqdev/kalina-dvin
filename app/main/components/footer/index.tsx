@@ -55,7 +55,7 @@ export const Footer = ({categories, contacts}:Props) => {
                             </div>
                             <div  className='col-span-2'>
                                 <FooterBlock title={getLanguage(CONTACTS)}>
-                                    <FooterContactsBlock title={contacts.phone} icon='call' link={`tel:${contacts.phone}`}/>
+                                    <FooterContactsBlock title={`+${contacts.phone}`} icon='call' link={`tel:${contacts.phone}`}/>
                                     <FooterContactsBlock title={contacts.email} icon='email' link={`mailto:${contacts.email}`}/>
                                     <FooterContactsBlock title={getLanguage(contacts.address)} icon='location' link={generateGoogleMapsLink(getLanguage(contacts.address))} blankType/>
                                 </FooterBlock>

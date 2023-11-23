@@ -8,7 +8,7 @@ interface Props {
 export const ProductDescription = ({product}:Props) => {
     const {getLanguage} = useLanguage()
     return (
-        <div className='flex gap-y-[34px] flex-col'>
+        <div className='flex gap-y-[10px] md:gap-y-[16px] lg:gap-y-[24px] xl:gap-y-[30px] flex-col'>
             <Typography size='lg' fontWeight={700}>{getLanguage(product?.title)}</Typography>
             <Typography >{getLanguage(product?.brand.name)}</Typography>
             {product.attributes.map((el) => (
