@@ -47,11 +47,10 @@ export const Filter = ({categories, brands, isOpen, onOpen = () => null, onClose
         }
     }, [isXL]);
 
-    const isOpenInside = isOpen || isXL;
     const {getLanguage} = useLanguage()
     return <div className={clsx('bg-white transition-[width] overflow-x-hidden', {
-        'md:w-[270px] md:h-auto md:pointer-all fixed md:static top-0 left-0 w-full h-screen overflow-y-auto md:h-auto z-50 md:static mr-5': isOpenInside,
-        'md:w-0 hidden md:block pointer-none': !isOpenInside,
+        'md:w-[270px] md:h-auto md:pointer-all fixed md:static top-0 left-0 w-full h-screen overflow-y-auto md:h-auto z-50 md:static mr-5': isOpen,
+        'md:w-0 hidden md:block pointer-none': !isOpen,
     })}>
         <div className='flex pl-4 items-center bg-white md:hidden sticky z-40 top-0 left-0 w-full mb-2 shadow'>
             <Typography size='2xl' className='bg-white flex-1'>

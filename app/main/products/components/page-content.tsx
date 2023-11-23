@@ -28,13 +28,13 @@ export const ProductsPageContent = ({categories, products, brands}: Props) => {
     const filtersCount = searchParams?.toString()?.split('&')?.filter(Boolean)?.length ?? 0;
     return <div className='md:min-h-screen px-[5%]'>
         <div onClick={() => setFilterOpened(v => !v)}
-             className='inline-flex md:w-[270px] justify-center items-center my-4 py-2 md:px-4 px-2 items-center md:gap-3 gap-1 bg-primary text-white hover:bg-primary-darker cursor-pointer'>
+             className='inline-flex md:w-[270px] justify-center items-center my-4 py-2 md:px-4 px-1 items-center md:gap-3 gap-1 bg-primary text-white hover:bg-primary-darker cursor-pointer'>
             <IconComponent name='filter' size='md'/>
-            <Typography color='inherit' className='hidden md:flex mr-1'>
+            <Typography color='inherit' className='hidden md:flex'>
                 <span>{isFilterOpened ? getLanguage(translates.filter.closeButton) : getLanguage(translates.filter.openButton)}</span>
             </Typography>
             <Typography color='inherit'>
-                <span className='mt-1'>({filtersCount})</span>
+                <span className='md:mt-1 block'>({filtersCount})</span>
             </Typography>
 
         </div>
