@@ -38,13 +38,13 @@ export const MobileNavigation = ({contacts, onClick, language, onChangeLng}: Pro
                 </a>
             </div>
             <div className='flex pl-6 py-3 gap-x-[8px]'>
-                <Typography size='2xl'  className={clsx({
+                <Typography size='2xl'  className={clsx('transition',{
                     'text-primary border border-primary': language === 'am',
-                    'text-gray-darker ': language !== 'am'
+                    'text-gray-darker  border border-transparent': language !== 'am'
                 },'cursor-pointer px-[3px]')} onClick={()=> onChangeLng('am')}>AM</Typography>
-                <Typography size='2xl' className={clsx({
+                <Typography size='2xl' className={clsx('transition', {
                     'text-primary border border-primary': language === 'ru',
-                    'text-gray-darker': language !== 'ru'
+                    'text-gray-darker border border-transparent': language !== 'ru'
                 },'cursor-pointer px-[6px]')} onClick={()=> onChangeLng('ru')}>RU</Typography>
             </div>
         </div>

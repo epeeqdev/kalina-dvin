@@ -13,9 +13,8 @@ interface Props {
 }
 export const ReusableSlider = ({ children, className }:Props) => {
     return (
-        <div className='flex'>
             <Swiper
-                className={clsx(['h-[300px]', className,'bg-white !pb-4'])}
+                className={clsx([className])}
                 modules={[Pagination, A11y, Autoplay]}
                 spaceBetween={50}
                 slidesPerView={1}
@@ -30,6 +29,5 @@ export const ReusableSlider = ({ children, className }:Props) => {
             >
                 {children}
             </Swiper>
-        </div>
     );
 };

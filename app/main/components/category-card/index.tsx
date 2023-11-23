@@ -16,7 +16,7 @@ export const  CategoryCard = ({data, className }: Props) => {
             <div className={clsx('relative pt-[60%] mb-1.5 md:mb-2 lg:mb-3 select-none ', className)}>
                 <CustomImage src={data?.image?.src} className='absolute top-0 left-0 w-full h-full group-hover:opacity-75 transition object-cover'/>
             </div>
-            <Typography fontWeight={500} size='lg'>{getLanguage(data.name)}</Typography>
+            <Typography className='pl-3' fontWeight={500} size='lg'>{getLanguage(data.name)}</Typography>
         </Link>
     )
 }

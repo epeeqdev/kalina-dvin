@@ -10,7 +10,7 @@ interface Props {
 }
 export const HomePageSlider = ({slides}:Props) => {
     return (
-        <ReusableSlider className='md:h-[calc(100vh-68px)] md:max-h-[1080px]'>
+        <ReusableSlider className='md:h-[calc(100vh-68px)] md:max-h-[1080px] h-[300px] !pb-4'>
             {
                 slides?.map((item) => (
                     <SwiperSlide className='w-full' key={item._id} >

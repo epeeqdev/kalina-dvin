@@ -8,11 +8,11 @@ interface Props {
 export const ProductDescription = ({product}:Props) => {
     const {getLanguage} = useLanguage()
     return (
-        <div className='flex gap-y-[10px] md:gap-y-[16px] lg:gap-y-[24px] xl:gap-y-[30px] flex-col'>
-            <Typography size='lg' fontWeight={700}>{getLanguage(product?.title)}</Typography>
-            <Typography >{getLanguage(product?.brand.name)}</Typography>
+        <div>
+            <Typography className='text-[#6a6767]'>{getLanguage(product?.brand.name)}</Typography>
+            <Typography size='2xl' className='mb-3' fontWeight={700}>{getLanguage(product?.title)}</Typography>
             {product.attributes.map((el) => (
-                <div key={el._id} className='flex gap-x-1'>
+                <div key={el._id} className='flex gap-x-1 mb-2'>
                     <Typography size='md' fontWeight={600}>{`${getLanguage(el.attribute.name)}:`}</Typography>
                     <Typography size='md'>{getLanguage(el.value)}</Typography>
                 </div>

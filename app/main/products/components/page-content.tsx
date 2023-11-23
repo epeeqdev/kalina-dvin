@@ -26,17 +26,20 @@ export const ProductsPageContent = ({categories, products, brands}: Props) => {
     const {getLanguage} = useLanguage();
     const searchParams = useSearchParams();
     const filtersCount = searchParams?.toString()?.split('&')?.filter(Boolean)?.length ?? 0;
-    return <div className='min-h-screen'>
+    return <div className='md:min-h-screen px-[5%]'>
         <div onClick={() => setFilterOpened(v => !v)}
-             className='flex md:w-[270px] justify-center items-center my-4 py-2 px-4 border border-gray-lighter items-center gap-3 bg-white hover:bg-gray-lighter cursor-pointer'>
-            <IconComponent name='filter' size='lg'/>
-            <Typography className='gap-1 items-center hidden md:flex'>
+             className='inline-flex md:w-[270px] justify-center items-center my-4 py-2 md:px-4 px-2 items-center md:gap-3 gap-1 bg-primary text-white hover:bg-primary-darker cursor-pointer'>
+            <IconComponent name='filter' size='md'/>
+            <Typography color='inherit' className='hidden md:flex mr-1'>
                 <span>{isFilterOpened ? getLanguage(translates.filter.closeButton) : getLanguage(translates.filter.openButton)}</span>
+            </Typography>
+            <Typography color='inherit'>
                 <span className='mt-1'>({filtersCount})</span>
             </Typography>
+
         </div>
         <div className='pb-10 flex w-full'>
-            <Filter onClose={() => setFilterOpened(false)} categories={categories} brands={brands}
+            <Filter onOpen={() => setFilterOpened(true)} onClose={() => setFilterOpened(false)} categories={categories} brands={brands}
                     isOpen={isFilterOpened}/>
             <ProductsGrid products={products}/>
         </div>

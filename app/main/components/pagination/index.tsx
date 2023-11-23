@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import ReactPaginate from 'react-paginate';
 import clsx from "clsx";
@@ -42,6 +43,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
             breakLinkClassName={''}
             activeLinkClassName={'bg-secondary hover:bg-secondary-darker'}
             disabledLinkClassName={'bg-primary-lighter'}
+            className='mt-12 flex justify-center'
         />
     );
 };

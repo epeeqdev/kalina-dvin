@@ -5,28 +5,61 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {Accordion} from "@/components/accordion";
 import IconComponent from "@/components/icon";
 import {Typography} from "@/app/main/components/controls/typography";
+import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
+import {useEffect} from "react";
 
 interface Props {
     categories: CategoryResponseDTO[];
     brands: BrandResponseDTO[];
     isOpen?: boolean;
     onClose?: () => void
+    onOpen?: () => void
 }
 
 const translates = {
     titles: {
         categories: {am: 'Կատեգորիաներ', ru: 'Категории'},
-        brands: {am: 'Բրենդեր', ru: 'Бренды'}
-    }
+        brands: {am: 'Բրենդեր', ru: 'Бренды'},
+        header: {am: 'Ֆիլտր', ru: 'Фильтр'}
+    },
+
 }
-export const Filter = ({categories, brands, isOpen, onClose= () => null}: Props) => {
+export const Filter = ({categories, brands, isOpen, onOpen = () => null, onClose= () => null}: Props) => {
+    const isTablet = useMatchMedia('(max-width:767.98px)');
+    const isXL = useMatchMedia('(min-width:1440px)');
+    const searchParams = useSearchParams();
+    const filtersCount = searchParams?.toString()?.split('&')?.filter(Boolean)?.length ?? 0;
+
+    useEffect(() => {
+        if(isTablet && isOpen) {
+            document.documentElement.style.overflow = 'hidden';
+        }
+        return () => {
+            document.documentElement.style.overflow = 'unset';
+        }
+    }, [isTablet, isOpen]);
+
+    useEffect(() => {
+        if(isXL){
+            onOpen();
+        }else if(isOpen) {
+            onClose()
+        }
+    }, [isXL]);
+
+    const isOpenInside = isOpen || isXL;
     const {getLanguage} = useLanguage()
     return <div className={clsx('bg-white transition-[width] overflow-x-hidden', {
-        'md:w-[270px] md:h-auto md:pointer-all fixed md:static top-0 left-0 w-full h-screen md:h-auto z-30 pt-12 md:pt-0 md:static': isOpen,
-        'md:w-0 hidden md:block pointer-none': !isOpen,
+        'md:w-[270px] md:h-auto md:pointer-all fixed md:static top-0 left-0 w-full h-screen overflow-y-auto md:h-auto z-50 md:static mr-5': isOpenInside,
+        'md:w-0 hidden md:block pointer-none': !isOpenInside,
     })}>
-        <div className='absolute right-0 top-0 block md:hidden p-2 bg-white hover:bg-gray-lighter transition cursor-pointer' onClick={onClose}>
-            <IconComponent name='close'/>
+        <div className='flex pl-4 items-center bg-white md:hidden sticky z-40 top-0 left-0 w-full mb-2 shadow'>
+            <Typography size='2xl' className='bg-white flex-1'>
+                {getLanguage(translates.titles.header)} ({filtersCount})
+            </Typography>
+            <div className='p-2 bg-white hover:bg-gray-lighter transition cursor-pointer flex-0' onClick={onClose}>
+                <IconComponent name='close'/>
+            </div>
         </div>
         <Accordion isDefaultOpen title={getLanguage(translates.titles.categories)}>
             {categories.map(item => <FilterToggle key={item._id} text={getLanguage(item.name)} destination='category' id={item._id}/>)}
