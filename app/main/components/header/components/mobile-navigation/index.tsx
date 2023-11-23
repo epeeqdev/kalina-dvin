@@ -6,13 +6,16 @@ import {
     MobileContactItem
 } from "@/app/main/components/header/components/mobile-navigation/components/mobile-contact-item";
 import {generateGoogleMapsLink} from "@/utils/googleMaps";
+import clsx from "clsx";
 
 interface Props {
     contacts: ContactsPageDTO;
-    onClick: (link: string) => void
+    onClick: (link: string) => void;
+    language: 'am' | 'ru',
+    onChangeLng: (language:string) => void
 }
 
-export const MobileNavigation = ({contacts, onClick}: Props) => {
+export const MobileNavigation = ({contacts, onClick, language, onChangeLng}: Props) => {
     const {getLanguage} = useLanguage()
     return(
         <div>
@@ -33,6 +36,16 @@ export const MobileNavigation = ({contacts, onClick}: Props) => {
                 <a href={generateGoogleMapsLink(getLanguage(contacts.address))} target='_blank' rel='noopener noreferrer'>
                     <MobileContactItem title={getLanguage(contacts.address)} icon='location'/>
                 </a>
+            </div>
+            <div className='flex pl-6 py-3 gap-x-[8px]'>
+                <Typography size='2xl'  className={clsx({
+                    'text-primary border border-primary': language === 'am',
+                    'text-gray-darker ': language !== 'am'
+                },'cursor-pointer px-[3px]')} onClick={()=> onChangeLng('am')}>AM</Typography>
+                <Typography size='2xl' className={clsx({
+                    'text-primary border border-primary': language === 'ru',
+                    'text-gray-darker': language !== 'ru'
+                },'cursor-pointer px-[6px]')} onClick={()=> onChangeLng('ru')}>RU</Typography>
             </div>
         </div>
     )

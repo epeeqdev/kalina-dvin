@@ -1,0 +1,8 @@
+.close-button{
+    padding-right: 13px;
+}
+@media (pointer:coarse) {
+    .close-button{
+        padding-right: 0;
+    }
+}

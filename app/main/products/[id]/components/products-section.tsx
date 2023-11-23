@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ProductsSection = ({products, id}:Props) => {
-    const productsData = products.filter((item) => item._id !== id).slice(0,10)
+    const productsData = products.filter((item) => item._id !== id).slice(0,5)
     return (
         <>
             {productsData.length ? <div className='mt-[87px] relative mx-[5%]'>
