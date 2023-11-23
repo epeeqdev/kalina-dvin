@@ -18,7 +18,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 
 
 const validationSchema = yup.object().shape({
-    phone: yup.string().matches(phoneRegExp,'Номер телефона, должно быть в формате +374(XXX)-XX-XX-XX').min(11).required("Обязательное поле"),
+    phone: yup.string().matches(phoneRegExp,'Номер телефона, должно быть в формате +374(XX)-XX-XX-XX').min(11).required("Обязательное поле"),
     email: yup.string().email("Укажите корректную эл. почту").required("Обязательное поле"),
     address: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
     socialLinks: yup.object().shape({instagram: yup.string().url("Укажите корректную ссылку").required("Обязательное поле"), facebook: yup.string().url("Укажите корректную ссылку").required("Обязательное поле")})
@@ -89,7 +89,7 @@ export default function ContactsForm() {
                         <Input
                             {...register("phone")}
                             label="Телефон"
-                            placeholder="телефон"
+                            placeholder="374(XX)XXXXXX"
                             error={errors.phone?.message}
                             required={true}
                             className='w-full mb-3'
