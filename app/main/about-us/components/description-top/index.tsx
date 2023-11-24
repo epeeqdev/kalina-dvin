@@ -1,4 +1,5 @@
 import {Typography} from "@/app/main/components/controls/typography";
+import {LogoIcon} from "@/app/main/components/logoIcon";
 
 interface Props {
     aboutUsPageDescriptionTop: string
@@ -8,13 +9,11 @@ interface Props {
 export const DescriptionTop = ({aboutUsPageDescriptionTop}:Props) => {
     return(
         <div>
-            <div className='bg-primary w-full h-auto relative pr-[14%] py-[5%] box-border'>
+            <div className='bg-primary w-full relative pr-[14%] py-[5%] box-border h-[200px] sm:h-auto'>
                 <div className='flex justify-end'>
-                    <img src='/footerLogo.png' alt='footerLogo' width={152} className=''/>
-                    <div className='absolute left-0 bottom-0 transform translate-y-1/2 w-full'>
-                        <div className='relative'>
-                            <img src='/cargo-track.png' alt='footerLogo' className='w-[40%] max-w-[500px]'/>
-                        </div>
+                    <LogoIcon color='white' className='hidden sm:block'/>
+                    <div className='absolute left-0 top-14 sm:-bottom-4 sm:top-[unset] transform sm:translate-y-1/2 w-full'>
+                            <img src='/cargo.png' alt='footerLogo' className='w-[414px] sm:w-[50%]'/>
                     </div>
                 </div>
             </div>

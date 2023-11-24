@@ -6,7 +6,5 @@ import {getCategoriesPage} from "@/app/main/api-helpers/getCategoriesPage";
 export default async function Categories() {
 	const categoriesData = await getCategories();
 	const categoriesPage=await getCategoriesPage();
-	return <div>
-		<PageContent data={categoriesData} imageData={categoriesPage}/>
-	</div>
+	return <PageContent data={categoriesData} imageData={categoriesPage}/>
 }

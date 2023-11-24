@@ -11,7 +11,7 @@ export const AboutBlock = ({data}: Props) => {
         <HomePageSection
             header={BLOCK_TITLE}
             childrenClassName='px-[5%]'
-            className='pt-[45px] lg:pt-[60px] pb-[45px]'
+            className='pt-[25px] lg:pt-[45px] pb-[45px]'
         >
             <AboutGrid aboutOptions={data}/>
         </HomePageSection>

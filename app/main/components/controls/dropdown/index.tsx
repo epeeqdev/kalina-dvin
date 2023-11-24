@@ -35,10 +35,8 @@ export const Dropdown = ({ title, className, onChange, dropdownClassName, childr
         setIsShow((prevState) => !prevState);
     };
 
-    const handleChange = (lng?: string, isChanged?: boolean) => {
-        if (isChanged) {
-            onChange(lng);
-        }
+    const handleChange = (lng?: string) => {
+        onChange(lng);
         setIsShow(false);
     };
 
@@ -63,7 +61,7 @@ export const Dropdown = ({ title, className, onChange, dropdownClassName, childr
             </div>
             <div
                 className={clsx([
-                    "absolute right-0 z-10 mt-[23px]  origin-top-right rounded-none bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-[opacity]",
+                    "absolute right-0 z-10 mt-[25px]  origin-top-right rounded-none bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-[opacity]",
                     {
                         "opacity-0 pointer-events-none": !isShow,
                         "opacity-100 pointer-events-all": isShow,
@@ -77,7 +75,7 @@ export const Dropdown = ({ title, className, onChange, dropdownClassName, childr
                 <div className="flex flex-col w-full" role="none">
                     {Children.map(children, (child: any) => (
                             cloneElement(child, {
-                                onClick: () => handleChange(child.props.id, child.props.isChanged),
+                                onClick: () => handleChange(child.props.id),
                             })
                     ))}
                 </div>

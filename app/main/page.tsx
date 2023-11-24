@@ -17,7 +17,7 @@ export default async function Home() {
             <HomePageSection
                 header={{am: 'Բրենդեր', ru: 'Бренды'}}
                 childrenClassName='pl-[5%]'
-                className='pt-[45px] lg:pt-[120px] pb-[45px]'
+                className='pt-[25px] lg:pt-[45px]'
             >
                 <BrandsSlider brands={brands}/>
             </HomePageSection>

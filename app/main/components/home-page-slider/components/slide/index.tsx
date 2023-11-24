@@ -4,11 +4,14 @@ import {useRouter} from "next/navigation";
 import {Typography} from "@/app/main/components/controls/typography";
 import {Button} from "@/app/main/components/controls/button";
 import {SlideDTO} from "@/backend/types";
+import clsx from "clsx";
 
 interface Props {
-    data: SlideDTO
+    data: SlideDTO;
+    className?: string;
+    imageClassName?: string;
 }
-export const Slide = ({data}: Props) => {
+export const Slide = ({data, className, imageClassName}: Props) => {
     const {image, title, description, buttonLink, buttonText} = data;
     const {getLanguage} = useLanguage();
     const router = useRouter()
@@ -21,27 +24,30 @@ export const Slide = ({data}: Props) => {
 
     return (
         <>
-            <div className='w-full h-full'>
-                <img src={image?.src} alt='Main page slide image' className='w-full h-full object-cover'/>
+            <div className={clsx('w-full h-full', className)}>
+                <img src={image?.src} alt='Main page slide image' className={clsx('w-full h-full object-cover', imageClassName)}/>
             </div>
             <div
-                className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-30 px-[5%] flex flex-col justify-center items-start'
+                className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-40 flex flex-col justify-center items-start'
             >
-                <Typography
-                    size='7xl'
-                    color='secondary'
-                    leading='none'
-                    fontWeight={500}
-                    className='mb-1 sm:mb-4'
-                >{getLanguage(title)}</Typography>
-                <Typography
-                    color='white'
-                    size='lg'
-                    className='mb-1 sm:mb-4 lg:max-w-[50%]'
-                >{getLanguage(description)}</Typography>
-                {!!getLanguage(buttonText) && buttonLink && <Button onClick={handleSeeMore}>
-                    {getLanguage(buttonText)}
-                </Button>}
+                <div className='w-full h-full sm:leading-md backdrop-blur-xs sm:h-auto px-[5%] py-4 sm:pr-[35%]' style={{textWrap:'balance'} as any}>
+                    <Typography
+                        size='5xl'
+                        color='secondary'
+                        fontWeight={500}
+                        as='h2'
+                        className='mb-1 sm:mb-4'
+                    >{getLanguage(title)}</Typography>
+                    <Typography
+                        color='white'
+                        size='lg'
+                        as='p'
+                        className='mb-2 sm:mb-6'
+                    >{getLanguage(description)}</Typography>
+                    {!!getLanguage(buttonText) && buttonLink && <Button onClick={handleSeeMore}>
+                        {getLanguage(buttonText)}
+                    </Button>}
+                </div>
             </div>
         </>
     )

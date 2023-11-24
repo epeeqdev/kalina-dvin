@@ -52,7 +52,7 @@ export const CategoriesPageGrid = ({categories}: Props) => {
                             currentPage={currentPage}
                             onPageChange={setPage}
                         />}
-                </>: <Typography size='4xl' className='mt-20'>{getLanguage(SEARCH_ERROR)}</Typography>
+                </>: <Typography size='2xl' className='mt-20'>{getLanguage(SEARCH_ERROR)}</Typography>
             }
         </div>
     )

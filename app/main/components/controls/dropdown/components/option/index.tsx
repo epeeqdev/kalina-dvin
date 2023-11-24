@@ -9,10 +9,9 @@ type Props = {
     icon?: IconNameOptions;
     onClick?: () => void;
     id?:string;
-    isChanged?: boolean;
 }
 
-export const Option = ({icon, className, title, onClick,isChanged,id, }: Props) => {
+export const Option = ({icon, className, title, onClick}: Props) => {
     return(
         <div className="group hover:bg-secondary hover:text-white transition" onClick={onClick}>
             <div className={clsx(['flex h-[46px] items-center',className])} >
@@ -21,7 +20,7 @@ export const Option = ({icon, className, title, onClick,isChanged,id, }: Props) 
                         <IconComponent name={icon} className="group-hover:text-white text-primary transition" />
                     </div>
                 )}
-                <Typography className='group-hover:text-white transition'>{title}</Typography>
+                <Typography className='group-hover:text-white transition truncate'>{title}</Typography>
             </div>
         </div>
 
