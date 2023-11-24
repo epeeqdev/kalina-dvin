@@ -1,6 +1,6 @@
 'use client'
 import React, {useEffect, useState} from 'react';
-import {MainContextProvider} from "@/app/main/provaider";
+import {MainContextProvider} from "../provider";
 
 const DEFAULT_STATE = 'am'
 
