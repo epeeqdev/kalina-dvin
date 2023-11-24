@@ -7,10 +7,19 @@ import Hamburger from 'hamburger-react'
 import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
 import IconComponent from "@/app/admin/main/components/icon";
 import Accordion from "@/app/admin/main/components/accordion";
+import {usePathname} from "next/navigation";
 
 export default function Layout({children}:PropsWithChildren){
 	const isMobile = useMatchMedia('(max-width: 639.1px)');
 	const isLaptop = useMatchMedia('(min-width: 1024px)');
+	const [isClicked, setIsClicked] = useState("")
+
+	const path = usePathname()
+	const pathName = path.split("/").slice(-2).join("/")
+
+	useEffect(() => {
+		setIsClicked(pathName)
+	},[path])
 
 	const [isOpen, setIsOpen] = useState(false);
 	const styles = "block px-4 py-2 text-[14px] hover:font-bold hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
@@ -61,12 +70,17 @@ export default function Layout({children}:PropsWithChildren){
 		}
 	}, [isOpen, isLaptop]);
 
+	const handleClick = () => {
+		!isLaptop ? setIsOpen(false) : null
+		setAccordionIsOpen(false)
+	}
+
 
 
 	const {logout} = useAuth()
 	return <RouteGuard>
-		<div className="mt-10">
-			<div className="fixed bg-gray-800 w-full top-0 z-50 text-white flex justify-between items-center">
+		<div className="mt-10 ">
+			<div className="fixed bg-gray-800 w-full top-0 z-50 text-white flex justify-between items-center ">
 				<button
 					onClick={() => toggleSidebar()}
 					className={`toggle-btn`}>
@@ -79,25 +93,44 @@ export default function Layout({children}:PropsWithChildren){
 			<div className='flex min-h-screen overflow-hidden'>
 				<div className={`fixed z-[40] sm:relative sm:mt-0  sm inset-y-0 left-0 bg-gray-800 text-white ${isOpen ? "w-[200px] sm:w-[350px]" : "w-0 sm:w-0"} transition-all duration-300`}>
 					<div className={`mt-20 sm:mt-5 overflow-hidden ${isOpen ? "opacity-1 transition-all duration-300" : "opacity-0 transition-all duration-300"} `}>
-						<Link className={styles} href={'/admin/main/categories'} onClick={() => !isLaptop ? setIsOpen(false) : null}>Категории</Link>
-						<Link className={styles} href={'/admin/main/brands'} onClick={() => !isLaptop ? setIsOpen(false) : null}>Бренды</Link>
-						<Link className={styles} href={'/admin/main/products'} onClick={() => !isLaptop ? setIsOpen(false) : null}>Продукты</Link>
-						<Link className={styles} href={'/admin/main/attributes'} onClick={() => !isLaptop ? setIsOpen(false) : null}>Атрибуты</Link>
-						<Link className={styles} href={'/admin/main/contacts'} onClick={() => !isLaptop ? setIsOpen(false) : null}>Контакты</Link>
+						<Link
+							className={`${styles} ${isClicked === "main/categories" && "bg-white text-black font-bold"}`}
+							href={'/admin/main/categories'}
+							onClick={handleClick}>Категории</Link>
+						<Link
+							className={`${styles} ${isClicked === "main/brands" && "bg-white text-black font-bold"}`}
+							href={'/admin/main/brands'}
+							onClick={handleClick}>Бренды</Link>
+						<Link
+							className={`${styles} ${isClicked === "main/products" && "bg-white text-black font-bold"}`}
+							href={'/admin/main/products'}
+							onClick={handleClick}>Продукты</Link>
+						<Link
+							className={`${styles} ${isClicked === "main/attributes" && "bg-white text-black font-bold"}`}
+							href={'/admin/main/attributes'}
+							onClick={handleClick}>Атрибуты</Link>
+						<Link
+							className={`${styles} ${isClicked === "main/contacts" && "bg-white text-black font-bold"}`}
+							href={'/admin/main/contacts'}
+							onClick={handleClick}>Контакты</Link>
 						<div>
 							<div className={`${styles} cursor-pointer flex justify-between sidebar-overlay`} onClick={() => toggleAccordion()}>
 							 	<div>Страницы</div>
 								<IconComponent name={accordionIsOpen ? "chevronUp" : "chevronDown"}/>
 							</div>
-							<Accordion isOpen={accordionIsOpen} items={pages} onBurgerClose={() => {
-								!isLaptop ? setAccordionIsOpen(false) : null
-								!isLaptop ? setIsOpen(false) : null
+							<Accordion
+								isClicked={isClicked}
+								isSidebarOpen={isOpen}
+								isOpen={accordionIsOpen}
+								items={pages}
+								onBurgerClose={() => {
+									!isLaptop ? setIsOpen(false) : null
 							}}/>
 						</div>
 
 					</div>
 				</div>
-				<div className='w-full' ref={burgerRef}>
+				<div className='w-full ' ref={burgerRef}>
 					{children}
 				</div>
 			</div>

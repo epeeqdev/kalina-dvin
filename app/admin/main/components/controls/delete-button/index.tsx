@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import IconComponent from "@/app/admin/main/components/icon";
 
 interface Props {
     className?: string
@@ -10,8 +11,8 @@ export default function DeleteButton({remove, className}: Props) {
         <button onClick={(e) => {
             remove()
         }}
-                className={clsx(className , "bg-red-700 text-white w-[25px] h-[25px] m-2 rounded-3xl flex justify-center items-center active:text-red-600 active:bg-white")}>
-            X
+                className={clsx(className , "text-red-600 w-[25px] m-2 active:text-red-600 active:bg-white")}>
+            <IconComponent name={"trash"}/>
         </button>
     )
 }
