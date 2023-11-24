@@ -33,7 +33,7 @@ export default function ProductsPage() {
         } headerTitle={"Продукты"}>
             <>
                 <div className="mx-5">
-                    <Input defaultValue={search} className='w-full' onChange={(e) => setSearch(e.target.value)}
+                    <Input defaultValue={search} className='w-full mb-5' onChange={(e) => setSearch(e.target.value)}
                            placeholder='Search'/>
                 </div>
                 {!data?.length && !isLoading && <div className='flex justify-center text-lg'>Продукты не найдены.</div>}

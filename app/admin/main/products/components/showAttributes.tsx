@@ -25,7 +25,7 @@ export default function ShowAttributes({attributes, removeItem, onAddClick} : Pr
                 <div>
                     {
                         attributes?.map(({id, value, attribute}) => {
-                            return <div className="my-5 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-[400px] bg-white rounded pl-[10px]" key={id}>
+                            return <div className="my-5 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-full bg-white whitespace-normal rounded pl-[10px]" key={id}>
                                 {`${attribute.label} : AM - ${value.am} | RU - ${value.ru}`}
                                 <DeleteButton remove={() => removeItem(id!)}/>
                             </div>

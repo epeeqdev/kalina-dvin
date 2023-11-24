@@ -12,6 +12,7 @@ export default function AdminLayout({children}: PropsWithChildren) {
 	const [isInitialized, setInitialized] = useState(false);
 	const [isLoading, setLoading] = useState(false);
 	const router = useRouter();
+
 	useEffect(() => {
 		if (window.localStorage.getItem('accessToken')) {
 			setLoading(true);
@@ -40,10 +41,9 @@ export default function AdminLayout({children}: PropsWithChildren) {
 				className='fixed w-full h-full bg-black bg-opacity-50 text-white flex justify-center items-center text-lg'>
 				<LoadingSpinner/>
 			</div>}
-		<div className='h-screen overflow-hidden'>
+		<div className="overflow-hidden h-[100vh]">
 			{isInitialized && children}
 		</div>
-
 		<Toaster/>
 		</userContext.Provider>
 }
