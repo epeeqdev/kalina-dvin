@@ -1,6 +1,5 @@
 import {HomePageSlider} from "@/app/main/components//home-page-slider";
 import {BrandsSlider} from "@/app/main/components/brands-slider";
-import {HomePageSection} from "@/app/main/components//home-page-section";
 import {CategoriesBlock} from "@/app/main/components/categories-block";
 import React from "react";
 import {AboutBlock} from "@/app/main/components/about-block";
@@ -14,13 +13,7 @@ export default async function Home() {
         <main>
             <HomePageSlider slides={mainPage?.slides}/>
             <CategoriesBlock categories={categories}/>
-            <HomePageSection
-                header={{am: 'Բրենդեր', ru: 'Бренды'}}
-                childrenClassName='pl-[5%]'
-                className='pt-[25px] lg:pt-[45px]'
-            >
-                <BrandsSlider brands={brands}/>
-            </HomePageSection>
+            <BrandsSlider brands={brands}/>
             <AboutBlock data={aboutUs}/>
         </main>
     )

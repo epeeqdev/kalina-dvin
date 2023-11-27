@@ -16,9 +16,7 @@ export const HomePageSection = ({children, className, header,childrenClassName}:
     return(
         <div className={clsx('flex flex-col items-start', className)}>
             <div className='px-[5%] mb-4 md:mb-8'>
-            <div>
                 <Typography size='4xl'>{getLanguage(header)}</Typography>
-            </div>
             </div>
             <div className={clsx('w-full', childrenClassName)} >
                 {children}
