@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
+import clsx from "clsx";
 
 interface Props extends React.PropsWithChildren {
     /** Required field, should be as item ID as in the list */
@@ -18,7 +19,7 @@ export const Droppable = ({id, onDrop, children}: Props) => {
     const handleDragLeave = () => {
         setOverTargetId(null);
     };
-    const overStyles = "border-2 border-dashed border-gray-400 transition ease-out duration-200";
+    const overStyles = "opacity-50 border border-dashed border-gray-400 transition ease-out duration-200";
 
     const handleDrop = (e) => {
         e.preventDefault();
@@ -28,7 +29,10 @@ export const Droppable = ({id, onDrop, children}: Props) => {
         onDrop?.({draggedItemId, targetId})
     };
 
-    return <div className={overTargetId === id ? overStyles : ""} key={id} id={id.toString()}
+    return <div className={clsx({
+        'border border-transparent': overTargetId !== id,
+        [overStyles]: overTargetId === id
+    })} key={id} id={id.toString()}
                 onDragOver={handleDragOver} onDrop={handleDrop} onDragLeave={handleDragLeave}>
         {children}
     </div>

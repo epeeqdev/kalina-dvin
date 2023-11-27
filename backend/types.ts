@@ -111,6 +111,8 @@ export interface MainPageSliderDTO {
 export interface AboutUsDTO {
 	_id?: string;
 	image: ImageDTO,
+	aboutUsFirstImage: ImageDTO,
+	aboutUsSecondImage: ImageDTO,
 	homePageDescription: TextStructure,
 	aboutUsPageDescriptionTop: TextStructure,
 	aboutUsPageDescriptionBottom: TextStructure,
