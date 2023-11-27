@@ -13,7 +13,6 @@ export const useQueryString = () => {
 			}else {
 				params.delete(name)
 			}
-
 			history.pushState({}, '', `${pathName}${params.toString() ? '?': ''}${params}`);
 			return params as ReadonlyURLSearchParams
 		},
