@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Kalina Dvin',
-  description: '',
+  description: '«СВОБОДА»,«BIG»,«Авангард»,«BUMFA GROUP»,\n' +
+      '«BIO WORLD» և «Терпак» պաշտոնական ներկայացուցիչը ՀՀ-ում:',
 }
 
 export default function RootLayout({
@@ -30,11 +31,11 @@ export default function RootLayout({
       <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
       <meta
           name="description"
-          content="Kalina Dvin import company"
+          content="«СВОБОДА»,«BIG»,«Авангард»,«BUMFA GROUP»,«BIO WORLD» և «Терпак» պաշտոնական ներկայացուցիչը ՀՀ-ում:"
       />
       <meta
           name="title"
-          content="Kalina Dvin"
+          content="Kalina Dvin/ Կալինա Դվին"
       />
       <title>
         Kalina Dvin

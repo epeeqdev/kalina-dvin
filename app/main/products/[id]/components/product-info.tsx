@@ -2,7 +2,7 @@ import {ProductResponseDTO} from "@/backend/types";
 import clsx from "clsx";
 import {CustomImage} from "@/app/main/components/image";
 import {ProductDescription} from "@/app/main/products/[id]/components/product-description";
-import {ReusableSlider} from "@/app/main/components/controls/reusable-slider ";
+import {ReusableSlider} from "../../../components/controls/reusable-slider";
 
 export const ProductInfo = ({data}: Props) => {
     const imageCount = Boolean(data.images.length > 1)

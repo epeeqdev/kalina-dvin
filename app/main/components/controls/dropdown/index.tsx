@@ -36,7 +36,7 @@ export const Dropdown = ({ title, className, onChange, dropdownClassName, childr
     };
 
     const handleChange = (lng?: string) => {
-        onChange(lng);
+        onChange?.(lng);
         setIsShow(false);
     };
 
