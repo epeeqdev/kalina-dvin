@@ -1,10 +1,11 @@
 'use client'
-import {memo, useMemo, useState} from "react";
+import {memo, ReactNode, useMemo, useState} from "react";
 import {MainActionsContext, MainStateContext} from "@/app/main/context";
-export type Language = string
+
+type Language = 'am' | 'ru';
 
 type Props = {
-    children: any,
+    children: ReactNode,
     defaultValue: Language
 }
 

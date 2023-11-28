@@ -1,4 +1,4 @@
-
+export const BLOCK_TITLE = {am:'Բրենդեր', ru:'Бренды'};
 export const Breakpoints = {
     0: {
         spaceBetween: 6,

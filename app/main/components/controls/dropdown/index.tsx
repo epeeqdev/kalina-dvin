@@ -6,7 +6,7 @@ interface Props {
     title: string;
     size?: { width: string | number; height: string | number };
     className?: string;
-    onChange?: any;
+    onChange?: (lng:string) => void;
     dropdownClassName?: string;
     children?: React.ReactNode;
 }
