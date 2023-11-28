@@ -27,15 +27,18 @@ export default function ProductsPage() {
 
     return <div className="mx-auto w-full pb-16">
         {isLoading && <LoadingSpinner/>}
-
         <PageLayout headerButtons={
-            <Button onClick={() => router.push("/admin/main/products/add")} variant="primary">Добавить </Button>
+            <div className="flex items-center">
+                <Input
+                    defaultValue={search}
+                    className='mx-2 w-[60vw]'
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder='Search'
+                />
+                <Button onClick={() => router.push("/admin/main/products/add")} variant="primary">Добавить </Button>
+            </div>
         } headerTitle={"Продукты"}>
             <>
-                <div className="mx-5">
-                    <Input defaultValue={search} className='w-full mb-5' onChange={(e) => setSearch(e.target.value)}
-                           placeholder='Search'/>
-                </div>
                 {!data?.length && !isLoading && <div className='flex justify-center text-lg'>Продукты не найдены.</div>}
                 {!!data?.length && <div className='grid grid-cols-12 mx-5'>
                     {

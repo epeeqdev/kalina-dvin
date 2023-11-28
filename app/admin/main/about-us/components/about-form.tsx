@@ -6,7 +6,6 @@ import {TextArea} from "@/components/controls/text-area";
 import axios from "@/axios";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
-import Link from "next/link";
 import {Button} from "../../components/controls/button";
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
@@ -21,7 +20,9 @@ const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
     aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
     aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
-    image: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required("").nullable(),
+    image: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    aboutUsFirstImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    aboutUsSecondImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
     assortmentCount: yup.number().required("Обязательное поле"),
     brandsCount: yup.number().required("Обязательное поле"),
     partnersCount: yup.number().required("Обязательное поле"),
@@ -51,6 +52,8 @@ export default function AboutForm() {
                 aboutUsPageDescriptionTop: {am: about.aboutUsPageDescriptionTop.am, ru: about.aboutUsPageDescriptionTop.ru },
                 aboutUsPageDescriptionBottom: {am: about.aboutUsPageDescriptionBottom.am, ru: about.aboutUsPageDescriptionBottom.ru },
                 image:about.image || null,
+                aboutUsFirstImage: about.aboutUsFirstImage,
+                aboutUsSecondImage: about.aboutUsSecondImage,
                 assortmentCount: about.assortmentCount,
                 brandsCount: about.brandsCount,
                 partnersCount:about.partnersCount,
@@ -87,9 +90,9 @@ export default function AboutForm() {
             } headerTitle={"О нас"}
             >
                 <div className="w-full pb-16 pl-5 pr-8">
-                    <div className="my-5 flex justify-start">
-                        <ImageUploader className='max-w-[600px]' imageHeightProportion={100} control={control} name='image'/>
-                    </div>
+                        <div className="my-5 flex justify-start">
+                            <ImageUploader label="Фото Главной страницы" className='max-w-[600px]' imageHeightProportion={100} control={control} name='image'/>
+                        </div>
                     <div className="mb-5">
                         <TextArea
                             required
@@ -108,10 +111,13 @@ export default function AboutForm() {
                             error={errors.homePageDescription?.ru?.message}
                         />
                     </div>
+                    <div className="my-5 flex justify-start">
+                        <ImageUploader label="Верхнее фото страницы О нас" className='max-w-[600px]' imageHeightProportion={100} control={control} name='aboutUsFirstImage'/>
+                    </div>
                     <div className="mb-5">
                         <TextArea
                             required
-                            label="Второй текст на армянском"
+                            label="Верхний текст на армянском"
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionTop.am")}
                             error={errors.aboutUsPageDescriptionTop?.am?.message}
@@ -119,16 +125,19 @@ export default function AboutForm() {
                         />
                         <TextArea
                             required
-                            label="Второй текст на русском"
+                            label="Верхний текст на русском"
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionTop.ru")}
                             error={errors.aboutUsPageDescriptionTop?.ru?.message}
                         />
                     </div>
+                    <div className="my-5 flex justify-start">
+                        <ImageUploader label="Нижнее фото страницы О нас" className='max-w-[600px]' imageHeightProportion={100} control={control} name='aboutUsSecondImage'/>
+                    </div>
                     <div className="mb-5">
                         <TextArea
                             required
-                            label="Третий текст на армянском"
+                            label="Нижний текст на армянском"
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionBottom.am")}
                             error={errors.aboutUsPageDescriptionBottom?.am?.message}
@@ -136,7 +145,7 @@ export default function AboutForm() {
                         />
                         <TextArea
                             required
-                            label="Третий текст на русском"
+                            label="Нижний текст на русском"
                             placeholder='Введите описание'
                             {...register("aboutUsPageDescriptionBottom.ru")}
                             error={errors.aboutUsPageDescriptionBottom?.ru?.message}
