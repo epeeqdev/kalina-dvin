@@ -3,7 +3,7 @@ import { SwiperSlide } from 'swiper/react';
 import '@/app/main/components/home-page-slider/components/slide/style.css'
 import {SlideDTO} from "@/backend/types";
 import {Slide} from "@/app/main/components/home-page-slider/components/slide";
-import {ReusableSlider} from "@/app/main/components/controls/reusable-slider ";
+import {ReusableSlider} from "../controls/reusable-slider";
 
 interface Props {
     slides?: SlideDTO[]
