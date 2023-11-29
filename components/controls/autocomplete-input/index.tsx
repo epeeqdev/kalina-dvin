@@ -16,14 +16,15 @@ export interface Props {
     required?: boolean;
     multiselect?: boolean;
     placeholder?: string;
+    className?: string
 }
 
-export default function AutocompleteInput({control, name, options, error, label,placeholder, required, multiselect}: Props) {
+export default function AutocompleteInput({control, name, options, error, label,placeholder, required, multiselect, className}: Props) {
     return <Controller control={control} name={name} render={({field}) => {
         return (
-            <div>
-                <div className="flex">
-                    <label className='text-[16px] mb-1 text-dark-grey'>{label}</label>
+            <div className={className}>
+                <div className="flex items-center">
+                    <label className='text-[16px] mb-1 text-dark-grey whitespace-nowrap'>{label}</label>
                     {required && <span className="text-red-600">*</span>}
                 </div>
                 <Select
@@ -32,7 +33,7 @@ export default function AutocompleteInput({control, name, options, error, label,
                     isMulti={multiselect}
                     placeholder={placeholder}
                     options={options}
-                    className={`mt-1 outline-none border ${!!error && "border-2 border-red-600"}`}
+                    className={`mt-1 outline-none border w-full ${!!error && "border-2 border-red-600"}`}
                     onChange={(v) => {field.onChange(v)}}
                     theme={(theme) => ({
                         ...theme,

@@ -46,30 +46,31 @@ export default function AddAttributes({onSubmit, onCancel, data}: Props){
 
 
     return (
-        <div>
-            <MultiSelectInput
-                control={localFormControl}
-                options={attributesOptions}
-                name='attribute'
-                label={"Select Attributes"}
-                error={errors.attribute?.message}
-            />
-            <div className="flex gap-2 mt-2 w-full">
-                <div>
-                    <Input className={errors?.value?.am && "border-2 border-red-600 rounded outline-red-600"}
-                           placeholder="Значение на армянском" {...register("value.am", {required: true})}/>
-                    <span className="m-0 text-red-600 text-sm">{errors.value?.am?.message}</span>
+            <div className="gap-2 mt-2 w-full">
+                <MultiSelectInput
+                    className="w-full gap-4 mb-2"
+                    control={localFormControl}
+                    options={attributesOptions}
+                    name='attribute'
+                    label={"Select Attributes"}
+                    error={errors.attribute?.message}
+                />
+                <div className='mb-2'>
+                    <Input
+                        placeholder="Значение на армянском" {...register("value.am")}
+                        error={errors.value?.am?.message}
+                    />
                 </div>
-                <div>
-                    <Input className={errors?.value?.ru && "border-2 border-red-600 rounded outline-red-600"}
-                           placeholder="Значение на русском" {...register("value.ru", {required: true})} />
-                    <span className="text-red-600 text-sm">{errors.value?.ru?.message}</span>
+                <div className='mb-2'>
+                    <Input
+                        placeholder="Значение на русском" {...register("value.ru")}
+                        error={errors.value?.ru?.message}
+                    />
                 </div>
-                <div className="flex gap-2">
-                    <Button variant="secondary" className="h-[40px]" onClick={attrOnSubmit}>добавить</Button>
-                    <Button variant="alert" className="h-[40px]" onClick={onCancel}>отменить</Button>
+                <div className="flex gap-2 justify-end">
+                    <Button variant="secondary" className="h-[40px]" onClick={attrOnSubmit}>Добавить</Button>
+                    <Button variant="alert" className="h-[40px]" onClick={onCancel}>Отменить</Button>
                 </div>
             </div>
-        </div>
     )
 }

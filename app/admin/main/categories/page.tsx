@@ -42,7 +42,11 @@ export default function Categories() {
                 </>
 
             } headerTitle={"Категории"}>
+<<<<<<< Updated upstream
                 <div className="pl-5 pr-5">
+=======
+                <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
+>>>>>>> Stashed changes
                     {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>

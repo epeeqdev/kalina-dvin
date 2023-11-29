@@ -42,7 +42,11 @@ export default function Brands() {
                 </>
             } headerTitle={"Бренды"}
             >
+<<<<<<< Updated upstream
                 <div className="px-5">
+=======
+                <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
+>>>>>>> Stashed changes
                     {(ReorderedBrands ? ReorderedBrands : brands)?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>

@@ -33,7 +33,7 @@ export default function Layout({children}:PropsWithChildren){
 	const pages = [
 		{ title: 'О нас', link: '/admin/main/about-us' },
 		{ title: 'Продукты', link: '/admin/main/pages/products' },
-		{ title: 'Главная страница', link: '/admin/main/slider' },
+		{ title: 'Главная страница', link: '/admin/main/pages/slider' },
 		{ title: 'Категории', link: '/admin/main/pages/categories' },
 	];
 
@@ -76,7 +76,6 @@ export default function Layout({children}:PropsWithChildren){
 	}
 
 
-
 	const {logout} = useAuth()
 	return <RouteGuard>
 		<div className="mt-10 ">
@@ -87,12 +86,17 @@ export default function Layout({children}:PropsWithChildren){
 					<Hamburger toggled={isOpen} size={25}/>
 				</button>
 				<div>
-					<IconComponent onClick={logout} name={"logout"} className="bg-red-600 w-[40px] rounded h-[30px] mr-5 p-[5px] cursor-pointer hover:bg-red-800" />
+					<IconComponent onClick={logout} name={"logout"} className="bg-red-600 w-[40px] rounded h-[30px] mr-4 p-[5px] cursor-pointer hover:bg-red-800" />
 				</div>
 			</div>
 			<div className='flex min-h-screen overflow-hidden'>
 				<div className={`fixed z-[40] sm:relative sm:mt-0  sm inset-y-0 left-0 bg-gray-800 text-white ${isOpen ? "w-[200px] sm:w-[350px]" : "w-0 sm:w-0"} transition-all duration-300`}>
 					<div className={`mt-20 sm:mt-5 overflow-hidden ${isOpen ? "opacity-1 transition-all duration-300" : "opacity-0 transition-all duration-300"} `}>
+						<div className="block px-4 pb-10 text-[18px] transition whitespace-nowrap">Меню</div>
+						<Link
+							className={`${styles} ${isClicked === "admin/main" && "bg-white text-black font-bold"}`}
+							href={'/admin/main'}
+							onClick={handleClick}>Главная</Link>
 						<Link
 							className={`${styles} ${isClicked === "main/categories" && "bg-white text-black font-bold"}`}
 							href={'/admin/main/categories'}

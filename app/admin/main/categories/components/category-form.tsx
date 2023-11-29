@@ -69,7 +69,7 @@ export  const CategoryForm = ({id} : Prop) => {
         if (id) {
             editCategoryMutate(id, getValues()).then(() => router.push('/admin/main/categories'))
         } else {
-            addCategoryMutate(getValues()).then(() => router.push('/admin/main/categories'))
+            addCategoryMutate(getValues()).then((data) => router.push(`/admin/main/categories/edit/${data._id}`))
         }
     }
 
