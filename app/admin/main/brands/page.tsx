@@ -42,7 +42,7 @@ export default function Brands() {
                 </>
             } headerTitle={"Бренды"}
             >
-                <div className="px-5">
+                <div className="px-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">
                     {(ReorderedBrands ? ReorderedBrands : brands)?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
