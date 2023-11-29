@@ -36,16 +36,12 @@ export default function Categories() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    {reorderedCategories && <Button onClick={() => {
-                    }} variant="secondary">Сохранить порядок</Button>}
-                    {reorderedCategories &&
-                        <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
-                    <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить
-                        категорию</Button>
+                    {reorderedCategories && <Button onClick={() => {}} variant="secondary">Сохранить порядок</Button>}
+                    {reorderedCategories && <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
+                    <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить категорию</Button>
                 </>
 
             } headerTitle={"Категории"}>
-                <div className="pl-5 pr-5">
                     <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
                         {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
                             return (
@@ -60,8 +56,7 @@ export default function Categories() {
                         })
                         }
 
-                        {categoriesLoading && <LoadingSpinner/>}
-                    </div>
+                    {categoriesLoading && <LoadingSpinner/>}
                 </div>
             </PageLayout>
         </div>

@@ -27,12 +27,13 @@ export default function Attributes() {
                     <Button onClick={() => router.push("/admin/main/attributes/add")} variant="primary">Добавить Атрибут</Button>
                 </>
             } headerTitle={"Атрибуты"} >
-                <div className="px-5">
+                <div className="px-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">
                     {attributes?.map((item) => {
                         return (
                             <AttributeTemplate
                                 item={item}
                                 key={item._id}
+                                className="whitespace-nowrap"
                             />
                         )
                     })
