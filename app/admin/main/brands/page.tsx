@@ -13,6 +13,7 @@ import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import {useState} from "react";
+
 export default function Brands() {
 
 
@@ -25,7 +26,7 @@ export default function Brands() {
         isLoading: BrandsLoading
     } = useQuery<BrandResponseDTO[]>(getBrands);
 
-    const handleDrop = (args:DroppableArgs) => {
+    const handleDrop = (args: DroppableArgs) => {
         setReorderedBrands((prev) => {
             return getReorderedItems(prev || brands, args)
         });
@@ -36,17 +37,17 @@ export default function Brands() {
 
             <PageLayout headerButtons={
                 <>
-                    {ReorderedBrands && <Button onClick={() => {}} variant="secondary">Сохранить порядок</Button>}
-                    {ReorderedBrands && <Button onClick={() => setReorderedBrands(null)} variant="alert">Отменить</Button>}
-                    <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить Бренд</Button>
+                    {ReorderedBrands && <Button onClick={() => {
+                    }} variant="secondary">Сохранить порядок</Button>}
+                    {ReorderedBrands &&
+                        <Button onClick={() => setReorderedBrands(null)} variant="alert">Отменить</Button>}
+                    <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить
+                        Бренд</Button>
                 </>
             } headerTitle={"Бренды"}
             >
-<<<<<<< Updated upstream
                 <div className="px-5">
-=======
                 <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
->>>>>>> Stashed changes
                     {(ReorderedBrands ? ReorderedBrands : brands)?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
@@ -58,10 +59,11 @@ export default function Brands() {
                                 </Draggable>
                             </Droppable>
 
-                        )
-                    })
-                    }
-                    {BrandsLoading && <LoadingSpinner/>}
+                            )
+                        })
+                        }
+                        {BrandsLoading && <LoadingSpinner/>}
+                    </div>
                 </div>
             </PageLayout>
         </div>

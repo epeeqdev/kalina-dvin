@@ -23,9 +23,9 @@ export default function Categories() {
     const router = useRouter()
     const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[]>()
 
-    const handleDrop = (args:DroppableArgs) => {
+    const handleDrop = (args: DroppableArgs) => {
         setReorderedCategories((prev) => {
-                return getReorderedItems(prev || categories, args)
+            return getReorderedItems(prev || categories, args)
         });
     };
 
@@ -36,31 +36,32 @@ export default function Categories() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    {reorderedCategories && <Button onClick={() => {}} variant="secondary">Сохранить порядок</Button>}
-                    {reorderedCategories && <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
-                    <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить категорию</Button>
+                    {reorderedCategories && <Button onClick={() => {
+                    }} variant="secondary">Сохранить порядок</Button>}
+                    {reorderedCategories &&
+                        <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
+                    <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить
+                        категорию</Button>
                 </>
 
             } headerTitle={"Категории"}>
-<<<<<<< Updated upstream
                 <div className="pl-5 pr-5">
-=======
-                <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
->>>>>>> Stashed changes
-                    {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
-                        return (
-                            <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
-                                <Draggable id={item._id}>
-                                    <CategoryTemplate
-                                        item={item}
-                                    />
-                                </Draggable>
-                            </Droppable>
-                        )
-                    })
-                    }
+                    <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
+                        {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
+                            return (
+                                <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
+                                    <Draggable id={item._id}>
+                                        <CategoryTemplate
+                                            item={item}
+                                        />
+                                    </Draggable>
+                                </Droppable>
+                            )
+                        })
+                        }
 
-                    {categoriesLoading && <LoadingSpinner/>}
+                        {categoriesLoading && <LoadingSpinner/>}
+                    </div>
                 </div>
             </PageLayout>
         </div>
