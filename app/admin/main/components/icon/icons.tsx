@@ -5,6 +5,12 @@ export const icons = {
       d="m9.875 17.1-5.1-5.1 5.1-5.1.5.5-4.25 4.25h13.1v.7h-13.1l4.25 4.25-.5.5Z"
     />
   ),
+    isDraggable: (
+        <path
+            d="M3 15H21M3 9H21"
+            stroke="currentColor"
+        />
+    ),
   arrowOutward: (
     <path
       fill="currentColor"

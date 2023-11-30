@@ -17,7 +17,8 @@ export default function AttributesForm({control, name}: Props) {
             <Controller control={control} name={name} render={({field}) => (
                 <div>
                     <ShowAttributes
-                        onAddClick={() => setAdding(true)}
+                        isOpen={isAdding}
+                        onAddClick={() => setAdding(prev=> !prev)}
                         attributes={field.value}
                         removeItem={
                         (id) => {

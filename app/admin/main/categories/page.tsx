@@ -23,9 +23,9 @@ export default function Categories() {
     const router = useRouter()
     const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[]>()
 
-    const handleDrop = (args:DroppableArgs) => {
+    const handleDrop = (args: DroppableArgs) => {
         setReorderedCategories((prev) => {
-                return getReorderedItems(prev || categories, args)
+            return getReorderedItems(prev || categories, args)
         });
     };
 
@@ -42,19 +42,19 @@ export default function Categories() {
                 </>
 
             } headerTitle={"Категории"}>
-                <div className="pl-5 pr-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">
-                    {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
-                        return (
-                            <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
-                                <Draggable id={item._id}>
-                                    <CategoryTemplate
-                                        item={item}
-                                    />
-                                </Draggable>
-                            </Droppable>
-                        )
-                    })
-                    }
+                    <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
+                        {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
+                            return (
+                                <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
+                                    <Draggable id={item._id}>
+                                        <CategoryTemplate
+                                            item={item}
+                                        />
+                                    </Draggable>
+                                </Droppable>
+                            )
+                        })
+                        }
 
                     {categoriesLoading && <LoadingSpinner/>}
                 </div>

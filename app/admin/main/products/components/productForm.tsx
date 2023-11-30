@@ -88,7 +88,7 @@ export default function ProductForm({id}: { id: string }) {
                 <div className="mb-5">
                     <ImageUploader control={control} name="images" multiple/>
                 </div>
-                <div className="mb-2 sm:flex gap-3 w-full">
+                <div className="mb-4 sm:flex gap-3 w-full">
                     <Input label="Заголовок на армянском"
                            placeholder='Введите заголовок'
                            {...register("title.am")}
@@ -104,7 +104,7 @@ export default function ProductForm({id}: { id: string }) {
                            required
                     />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                     <TextArea
                         required
                         label="Описание на армянском"
@@ -122,7 +122,7 @@ export default function ProductForm({id}: { id: string }) {
                         className="min-h-[150px]"
                     />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                     <MultiSelectInput
                         control={control}
                         required
@@ -134,7 +134,7 @@ export default function ProductForm({id}: { id: string }) {
                         label="Категории"
                     />
                 </div>
-                <div className="mb-2">
+                <div className="mb-4">
                     <MultiSelectInput
                         control={control}
                         required

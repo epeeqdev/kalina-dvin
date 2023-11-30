@@ -25,7 +25,7 @@ export default function Brands() {
         isLoading: BrandsLoading
     } = useQuery<BrandResponseDTO[]>(getBrands);
 
-    const handleDrop = (args:DroppableArgs) => {
+    const handleDrop = (args: DroppableArgs) => {
         setReorderedBrands((prev) => {
             return getReorderedItems(prev || brands, args)
         });
@@ -42,7 +42,7 @@ export default function Brands() {
                 </>
             } headerTitle={"Бренды"}
             >
-                <div className="px-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">
+                <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
                     {(ReorderedBrands ? ReorderedBrands : brands)?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>

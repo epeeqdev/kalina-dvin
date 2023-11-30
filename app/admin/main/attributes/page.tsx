@@ -24,7 +24,7 @@ export default function Attributes() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    <Button onClick={() => router.push("/admin/main/attributes/add")} variant="primary">Добавить Атрибуты</Button>
+                    <Button onClick={() => router.push("/admin/main/attributes/add")} variant="primary">Добавить Атрибут</Button>
                 </>
             } headerTitle={"Атрибуты"} >
                 <div className="px-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">

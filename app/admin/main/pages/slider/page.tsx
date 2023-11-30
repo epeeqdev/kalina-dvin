@@ -5,9 +5,9 @@ import SliderForm from "@/app/admin/main/components/forms/slider-form";
 import Modal from "@/app/admin/main/products/helpers/modal";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
-import {getSliderData} from "@/app/admin/main/slider/api/getSliderData";
+import {getSliderData} from "@/app/admin/main/pages/slider/api/getSliderData";
 import {Controller, useForm} from "react-hook-form";
-import {addSlider} from "@/app/admin/main/slider/api/addSlider";
+import {addSlider} from "@/app/admin/main/pages/slider/api/addSlider";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {MainPageSliderDTO, SlideDTO} from "@/backend/types";
 import Alert from "@/app/admin/main/products/helpers/alert";
@@ -118,7 +118,7 @@ export default function Slider() {
                                                         <img src={item?.image?.src} alt='swiper'
                                                              className=' w-full h-[200px] min-w-[300px] object-cover bg-gray-200'/>
                                                     </div>
-                                                    <div className="absolute z-10 top-2 right-2">
+                                                    <div className="absolute z-30 top-2 right-2">
                                                         <IconComponent
                                                             name='edit'
                                                             className="bg-[#1f2937] rounded-[50%] p-2 w-8 h-8 text-white cursor-pointer mb-2 hover:bg-blue-900"
@@ -143,9 +143,8 @@ export default function Slider() {
                                                         >{item?.description?.ru}</div>
                                                         {(!!item?.buttonText?.ru || !!item?.buttonText?.am) &&
                                                             <Button variant="alert"
-                                                                    className="p-[2px] z-10 overflow-hidden top-0 h-[15px] text-[5px] flex justify-center items-center"
-                                                                    onClick={() => {
-                                                                    }}>
+                                                                    className="p-[2px] z-10 overflow-hidden top-0 h-[15px] text-[5px] flex justify-center items-center cursor-grab"
+                                                            >
                                                                 {item?.buttonText?.ru}
                                                             </Button>}
                                                     </div>

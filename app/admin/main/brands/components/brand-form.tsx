@@ -70,7 +70,7 @@ export const BrandForm = ({id}:Props) => {
         if (id) {
             editBrandMutate(id, getValues()).then(() => router.push('/admin/main/brands'))
         } else {
-            addBrandMutate(getValues()).then(() => router.push('/admin/main/brands'))
+            addBrandMutate(getValues()).then((data) => router.push(`/admin/main/brands/edit/${data._id}`))
         }
     }
 
