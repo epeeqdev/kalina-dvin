@@ -8,9 +8,11 @@ interface Props {
     removeItem : (id:string) => void;
     onAddClick: () => void;
     isOpen?: boolean
+    onEdit?: (id: string) => void
 }
 
-export default function  ShowAttributes({attributes, removeItem, onAddClick, isOpen} : Props){
+export default function  ShowAttributes({attributes, removeItem, onAddClick, isOpen, onEdit} : Props){
+
     return (
         <div className="mb-5">
             <div>
@@ -27,7 +29,10 @@ export default function  ShowAttributes({attributes, removeItem, onAddClick, isO
                                     <span className="font-bold m-0 mx-2">RU -</span>{value.ru}
                                 </div>
                                 <div className="flex items-center justify-center">
-                                    <IconComponent name="edit" className="cursor-pointer hover:opacity-50" onClick={() => {}}/>
+                                    <IconComponent name="edit" className="cursor-pointer hover:opacity-50" onClick={() => {
+                                        onEdit(id)
+                                        onAddClick()
+                                    }}/>
                                     <DeleteButton remove={() => removeItem(id!)} className='hover:opacity-50'/>
                                 </div>
                             </div>

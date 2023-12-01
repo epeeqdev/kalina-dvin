@@ -5,11 +5,12 @@ import {useRouter} from "next/navigation";
 import IconComponent from "@/app/admin/main/components/icon";
 
 interface Props {
-    item: CategoryResponseDTO[0];
+    item: CategoryResponseDTO;
     className?: string;
+    shownInMainPage?: boolean
 }
 
-export const CategoryTemplate = ({item, className}: Props) => {
+export const CategoryTemplate = ({item, className, shownInMainPage = false}: Props) => {
     const router = useRouter()
 
     return (
@@ -23,7 +24,7 @@ export const CategoryTemplate = ({item, className}: Props) => {
                 <div className='pr-4'>
                     <h3 className='text-[16px] mb-1 whitespace-nowrap'>{item.name.ru}</h3>
                 </div>
-                <IconComponent name="isDraggable" className="cursor-grab active:cursor-grabbing"/>
+                {!shownInMainPage && <IconComponent name="isDraggable" className="cursor-grab active:cursor-grabbing"/>}
             </div>
         </div>
     )

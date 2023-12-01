@@ -23,7 +23,7 @@ const validationSchema = yup.object().shape({
     name: yup.object().shape({
         am: yup.string().required("Обязательное поле"),
         ru: yup.string().required("Обязательное поле"),
-    }),
+    }) ,
 })
 
 interface Attribute {
@@ -86,7 +86,7 @@ export const AttributeForm = ({id}:Props) => {
     return (
         <div>
             <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
-                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный атрибут?</p>
+                <p className="text-2xl font-bold ">Вы уверены, что хотите удалить данный атрибут?</p>
                 <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
             </Alert>
             {loading && <LoadingSpinner />}

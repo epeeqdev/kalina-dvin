@@ -4,6 +4,7 @@ import ShowAttributes from "@/app/admin/main/products/components/showAttributes"
 import {useState} from "react";
 import {ProductAttribute} from "@/app/admin/main/products/types";
 import {Option} from "@/components/controls/autocomplete-input";
+import {ProductAttributeResponseDTO} from "@/backend/types";
 
 interface Props {
     control: Control<any>;
@@ -13,13 +14,24 @@ interface Props {
 
 export default function AttributesForm({control, name}: Props) {
     const [isAdding, setAdding] = useState(false);
+    const [editingItem, setEditingItem] = useState()
+
+
     return (
             <Controller control={control} name={name} render={({field}) => (
                 <div>
                     <ShowAttributes
                         isOpen={isAdding}
-                        onAddClick={() => setAdding(prev=> !prev)}
+                        onAddClick={() => {
+                            setAdding(prev => !prev)
+                        }}
                         attributes={field.value}
+                        onEdit={(id) => {
+                            const item = field?.value?.find((item: ProductAttribute) => {
+                                return item.id === id
+                            })
+                            setEditingItem(item)
+                        }}
                         removeItem={
                         (id) => {
                             field.onChange(field?.value?.filter((item: ProductAttribute) => {
@@ -29,13 +41,26 @@ export default function AttributesForm({control, name}: Props) {
                     }
                     />
                     {isAdding && <AddAttributes
-                        onSubmit={(value: Option) => {
+                        onAddSubmit={(value: Option) => {
                         const oldFieldValue = field.value || [];
                         setAdding(false);
                         field.onChange([...oldFieldValue, value])
                     }}
+                        onEditSubmit={(value) => {
+                         const editedValues = field.value.map((item) => {
+                             if(item.id === value.id){
+                                 return value
+                             }else{
+                                 return item
+                             }
+                         })
+                         setAdding(false);
+                         field.onChange(editedValues)
+                        }}
+
                     onCancel={() => setAdding(false)}
                     data={field.value}
+                        editingItem={editingItem}
                     />}
                 </div>
             )}/>

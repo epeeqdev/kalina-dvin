@@ -134,7 +134,7 @@ export default function Layout({children}:PropsWithChildren){
 
 					</div>
 				</div>
-				<div className='w-full ' ref={burgerRef}>
+				<div className='w-full' ref={burgerRef}>
 					{children}
 				</div>
 			</div>

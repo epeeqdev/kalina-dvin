@@ -11,6 +11,7 @@ import {Draggable} from "@/app/admin/main/drag-and-drop/draggable";
 import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
+import Alert from "@/app/admin/main/products/helpers/alert";
 
 export interface ImageUploaderProps {
     multiple?: boolean;
@@ -107,15 +108,28 @@ interface ImageBlockProps {
 }
 
 const ImageBlock = ({isLoading, image, proportionalBlockStyle,imageFit, onRemove}: ImageBlockProps) => {
+
+    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
+    const closeModal = () => {
+        setDeleteModalOpen(false)
+    }
+
     return (
         <ProportionBlock isLoading={isLoading} draggable proportionalBlockStyle={proportionalBlockStyle}>
             <div className={clsx('relative w-full h-full')}>
                 <img src={image.src} alt='uploaded image' className={`w-full h-full object-${imageFit}`}/>
                 <div className='absolute top-0 right-0 p-1 cursor-pointer transition hover:bg-secondary bg-secondary-lighter'
-                     onClick={() => onRemove(image._id)}>
+                     onClick={() => setDeleteModalOpen(true)}>
                     <IconComponent name='deleteBin' color='white'/>
                 </div>
             </div>
+            <Alert isOpen={deleteModalOpen} onAccept={() => {
+                onRemove(image._id)
+                closeModal()
+            }} onClose={closeModal} onCancel={closeModal} title="Удалить Картинку ?" >
+                <p className="text-2xl font-bold my-10">Вы уверены, что хотите удалить эту картинку?</p>
+                <p className="text-gray-700 text-[16px]">После удаления не возможно восстановить данную картинку!</p>
+            </Alert>
         </ProportionBlock>
     );
 }
