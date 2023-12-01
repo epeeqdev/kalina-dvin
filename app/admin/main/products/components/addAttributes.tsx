@@ -62,8 +62,9 @@ export default function AddAttributes({onAddSubmit, onCancel, data, editingItem,
                     control={localFormControl}
                     options={attributesOptions}
                     name='attribute'
-                    label={"Select Attributes"}
+                    label={"Выберите атрибут"}
                     error={errors.attribute?.message}
+                    placeholder="Название атрибута"
                 />
                 <div className='mb-2'>
                     <Input

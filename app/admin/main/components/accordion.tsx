@@ -11,7 +11,7 @@ export default function Accordion({ items, isOpen, onBurgerClose, isClicked, isS
                     <div key={index} >
                         <Link
                             onClick={onBurgerClose}
-                            className={`${isClicked === clickedName && "bg-white text-black font-bold"} block px-4 py-2 text-[14px] hover:font-bold hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap href={item.link}>{item.title`}
+                            className={`${isClicked === clickedName && "bg-white text-black font-bold"} block px-4 py-2 text-[14px] hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap href={item.link}>{item.title`}
                             href={item.link}
                         >
                             <div className="pl-2">
