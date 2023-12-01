@@ -13,19 +13,27 @@ import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import {useState} from "react";
+import {setOrderBrands} from "@/app/admin/main/brands/helpers/setOrderBrands";
+
 export default function Brands() {
-
-
-    const router = useRouter()
-    const [ReorderedBrands, setReorderedBrands] = useState<BrandResponseDTO[]>()
-
 
     const {
         data: brands,
         isLoading: BrandsLoading
     } = useQuery<BrandResponseDTO[]>(getBrands);
 
+    const router = useRouter()
+    const [reorderedBrands, setReorderedBrands] = useState<BrandResponseDTO[]>(brands)
+    const [isTouched, setTouched] = useState(false);
+    const putOrderBrands = () => {
+        if(reorderedBrands) {
+            const data = reorderedBrands.map((item) => item._id)
+            setOrderBrands(data).then(r => setReorderedBrands(reorderedBrands))
+        }
+    }
+
     const handleDrop = (args: DroppableArgs) => {
+        setTouched(true)
         setReorderedBrands((prev) => {
             return getReorderedItems(prev || brands, args)
         });
@@ -36,14 +44,18 @@ export default function Brands() {
 
             <PageLayout headerButtons={
                 <>
-                    {ReorderedBrands && <Button onClick={() => {}} variant="secondary">Сохранить порядок</Button>}
-                    {ReorderedBrands && <Button onClick={() => setReorderedBrands(null)} variant="alert">Отменить</Button>}
+                    {isTouched &&
+                        <>
+                            <Button onClick={putOrderBrands} variant="secondary">Сохранить порядок</Button>
+                            <Button onClick={() => setReorderedBrands(brands)} variant="alert">Отменить</Button>
+                    </>}
+
                     <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить Бренд</Button>
                 </>
             } headerTitle={"Бренды"}
             >
                 <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
-                    {(ReorderedBrands ? ReorderedBrands : brands)?.map((item) => {
+                    {reorderedBrands?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
                                 <Draggable id={item._id}>
