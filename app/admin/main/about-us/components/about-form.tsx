@@ -3,7 +3,6 @@
 import {useRouter} from "next/navigation";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {TextArea} from "@/components/controls/text-area";
-import axios from "@/axios";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";
 import {Button} from "../../components/controls/button";
@@ -15,6 +14,7 @@ import {AboutUsDTO} from "@/backend/types";
 import {Input} from "@/components/controls/input";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import {getAboutUs} from "../helpers/getAboutUs";
 
 const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
@@ -30,7 +30,7 @@ const validationSchema = yup.object().shape({
 })
 export default function AboutForm() {
     const router = useRouter()
-    const {data: about, isLoading: getaAboutUsLoading} = useQuery<AboutUsDTO>(() => axios.get(`/api/pages/about-us`));
+    const {data: about, isLoading: getaAboutUsLoading} = useQuery<AboutUsDTO>(getAboutUs);
     const {mutate: editAboutUsMutate, isLoading: editAboutUsLoading} = useMutation(editAbout);
     const isLoading = getaAboutUsLoading || editAboutUsLoading;
 

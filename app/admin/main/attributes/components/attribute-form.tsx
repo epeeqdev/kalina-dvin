@@ -12,7 +12,7 @@ import LoadingSpinner from "@/components/controls/loading-spinner";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
-import {getAttribute} from "@/app/admin/main/attributes/halpers/grtAttributes";
+import {getAttribute} from "@/app/admin/main/attributes/halpers/getAttribute";
 import {AttributeDTO} from "@/backend/types";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 
