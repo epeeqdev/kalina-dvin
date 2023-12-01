@@ -23,3 +23,20 @@ export const verifyToken = async (req: NextRequest) => {
 export const handleUnauthorized = () => {
 	return new NextResponse(JSON.stringify({ error: "Unauthorized access." }), { status: 401 });
 };
+
+export function reorderObjectsById(ids: string[], objects: any[]): any[] {
+	// Create a map from the objects array for quick lookup
+	const objectMap = objects.reduce((acc, obj) => {
+		acc[obj._id.toString()] = obj;
+		return acc;
+	},{})
+	// Reorder the objects based on the ids array
+	const orderedObjects: any[] = [];
+	ids.forEach(id => {
+		if (objectMap[id]) {
+			orderedObjects.push(objectMap[id]);
+		}
+	});
+
+	return orderedObjects;
+}

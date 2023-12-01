@@ -6,7 +6,7 @@ export async function PUT(request: NextRequest) {
         const body = await request.json() as {order: string[]};
         const existing = await DB.BrandsOrder.findOne() ;
         if (existing) {
-            const updated = await DB.AboutUs.findByIdAndUpdate(
+            const updated = await DB.BrandsOrder.findByIdAndUpdate(
                 existing._id,
                 {
                     $set: body.order,
