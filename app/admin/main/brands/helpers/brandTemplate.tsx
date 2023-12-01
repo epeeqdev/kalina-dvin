@@ -7,9 +7,10 @@ import IconComponent from "../../components/icon";
 interface Props {
     item: CategoryResponseDTO[0];
     className?: string;
+    shownInMainPage?: boolean
 }
 
-export default function BrandTemplate ({item, className}: Props){
+export default function BrandTemplate ({item, className, shownInMainPage}: Props){
 
     const router = useRouter()
     return (
@@ -21,7 +22,7 @@ export default function BrandTemplate ({item, className}: Props){
                 <div className='pr-4'>
                     <h3 className='text-[16px] mb-1'>{item.name.ru}</h3>
                 </div>
-                <IconComponent name="isDraggable" className="cursor-grab active:cursor-grabbing"/>
+                {!shownInMainPage && <IconComponent name="isDraggable" className="cursor-grab active:cursor-grabbing"/>}
             </div>
         </div>
     )

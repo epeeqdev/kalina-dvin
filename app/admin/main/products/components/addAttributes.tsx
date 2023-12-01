@@ -4,7 +4,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {AttributesResponseDTO, ProductRequestDTO} from "@/backend/types";
+import {AttributesResponseDTO, ProductAttributeResponseDTO, ProductRequestDTO} from "@/backend/types";
 import axios from "@/axios";
 import {Button} from "../../components/controls/button";
 import uniqid from "uniqid";
@@ -19,18 +19,26 @@ const schema = yup.object().shape({
 })
 
 interface Props {
-    onSubmit?: (value: Option & {attribute: Option}) => void
+    onAddSubmit?: (value: ProductAttributeResponseDTO & {id: string}) => void
+    onEditSubmit?: (value: ProductAttributeResponseDTO & { id: string }) => void
     onCancel?: () => void
     data?: Option & {attribute: Option}[]
+    editingItem?: ProductAttributeResponseDTO
 }
-export default function AddAttributes({onSubmit, onCancel, data}: Props){
+export default function AddAttributes({onAddSubmit, onCancel, data, editingItem, onEditSubmit}: Props){
+
     const chosenValues = data?.map(item => item.attribute?.value)
 
     const {data: attributesResponse} = useQuery<AttributesResponseDTO[]>(() => axios.get(`/api/attributes`), [], )
     const attributesOptions = attributesResponse?.filter(item => !chosenValues?.find(option => option === item._id))?.map(item => ({label: item?.name?.ru, value: item?._id}));
     const attrOnSubmit = () => {
-        handleSubmit((data: ProductRequestDTO) => {
-            onSubmit({...data, id: uniqid()});
+        handleSubmit((data: ProductAttributeResponseDTO & { id: string }) => {
+            if(editingItem){
+                onEditSubmit(data)
+            }else{
+                onAddSubmit({...data, id: uniqid()});
+            }
+
         })()
     }
 
@@ -38,12 +46,14 @@ export default function AddAttributes({onSubmit, onCancel, data}: Props){
         register,
         handleSubmit,
         control: localFormControl,
-        formState: {errors}
+        formState: {errors},
     }
         = useForm({
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
+        ...(editingItem ? {
+            values: editingItem
+        }: {})
     });
-
 
     return (
             <div className="gap-2 mt-2 w-full">
@@ -62,13 +72,12 @@ export default function AddAttributes({onSubmit, onCancel, data}: Props){
                     />
                 </div>
                 <div className='mb-2'>
-                    <Input
-                        placeholder="Значение на русском" {...register("value.ru")}
-                        error={errors.value?.ru?.message}
-                    />
+                    <Input className={errors?.value?.ru && "border-2 border-red-600 rounded outline-red-600"}
+                           placeholder="Значение на русском" {...register("value.ru", {required: true})} />
+                    <span className="text-red-600 text-sm">{errors.value?.ru?.message}</span>
                 </div>
                 <div className="flex gap-2 justify-end">
-                    <Button variant="secondary" className="h-[40px]" onClick={attrOnSubmit}>Добавить</Button>
+                    <Button variant="secondary" className="h-[40px]" onClick={attrOnSubmit}>{editingItem ? "Сохранить" :"Добавить"}</Button>
                     <Button variant="alert" className="h-[40px]" onClick={onCancel}>Отменить</Button>
                 </div>
             </div>

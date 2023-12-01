@@ -2,7 +2,6 @@
 import {CategoryTemplate} from "@/app/admin/main/categories/halpers/categoryTamplate";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {CategoryResponseDTO} from "@/backend/types";
-import axios from "@/axios";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {Button} from "@/app/admin/main/components/controls/button";
 import {useRouter} from "next/navigation";
@@ -12,13 +11,14 @@ import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import {useState} from "react";
+import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 
 export default function Categories() {
 
     const {
         data: categories,
         isLoading: categoriesLoading
-    } = useQuery<CategoryResponseDTO[]>(() => axios.get(`/api/categories`));
+    } = useQuery<CategoryResponseDTO[]>(getCategories);
 
     const router = useRouter()
     const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[]>()

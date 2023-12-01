@@ -12,7 +12,7 @@ import LoadingSpinner from "@/components/controls/loading-spinner";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
 import {Button} from "../../components/controls/button";
-import {getAttribute} from "@/app/admin/main/attributes/halpers/grtAttributes";
+import {getAttribute} from "@/app/admin/main/attributes/halpers/getAttribute";
 import {AttributeDTO} from "@/backend/types";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 
@@ -23,7 +23,7 @@ const validationSchema = yup.object().shape({
     name: yup.object().shape({
         am: yup.string().required("Обязательное поле"),
         ru: yup.string().required("Обязательное поле"),
-    }),
+    }) ,
 })
 
 interface Attribute {
@@ -86,7 +86,7 @@ export const AttributeForm = ({id}:Props) => {
     return (
         <div>
             <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
-                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный атрибут?</p>
+                <p className="text-2xl font-bold ">Вы уверены, что хотите удалить данный атрибут?</p>
                 <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
             </Alert>
             {loading && <LoadingSpinner />}

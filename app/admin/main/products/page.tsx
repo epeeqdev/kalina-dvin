@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect, useState} from "react";
-import {getProducts} from "@/app/admin/main/products/helpers/getProducts";
+import {getProducts, getProductsWithSearch} from "@/app/admin/main/products/helpers/getProducts";
 import {ProductTemplate} from "@/components/product";
 import {Input} from "@/components/controls/input";
 import LoadingSpinner from "@/components/controls/loading-spinner";
@@ -13,7 +13,7 @@ import {useRouter} from "next/navigation";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 
 export default function ProductsPage() {
-    const {data, isLoading,refetch} = useQuery<ProductResponseDTO[]>(getProducts, [], {fetchOnMount: false});
+    const {data, isLoading,refetch} = useQuery<ProductResponseDTO[]>(getProductsWithSearch, [], {fetchOnMount: false});
     const [search, setSearch] = useDebouncedState('');
     const [searchResults,setSearchResults]=useState(data)
     const router = useRouter()
