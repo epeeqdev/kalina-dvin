@@ -20,7 +20,7 @@ export default function AdminMain() {
     const {data: categories} = useQuery<CategoryResponseDTO[]>(getCategories);
     const {data: brands} = useQuery<BrandResponseDTO[]>(getBrands);
     const {data: attributes} = useQuery<AttributeDTO[]>(getAttributes);
-    const {data: products} = useQuery<ProductResponseDTO[]>(getProducts);g
+    const {data: products} = useQuery<ProductResponseDTO[]>(getProducts);
 
     return (
         <PageLayout headerTitle={"Главная"}>
