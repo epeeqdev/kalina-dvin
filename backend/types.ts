@@ -90,7 +90,8 @@ export interface ProductResponseDTO {
 	brand: BrandResponseDTO;
 	categories: CategoryResponseDTO[];
 	attributes: ProductAttributeResponseDTO[];
-	images: ImageDTO[]
+	images: ImageDTO[];
+	relatedProducts?: ProductResponseDTO[];
 }
 
 export interface SlideDTO {

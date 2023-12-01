@@ -8,10 +8,22 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest, context: Params) {
 	try {
-		const product = await DB.Product.findById(context.params.id).populate('categories')
-			.populate('brand').populate('images').populate('attributes.attribute') as Product;
-		return NextResponse.json(product);
+		const allProducts = await DB.Product.find().populate('categories')
+			.populate('brand').populate('images').populate('attributes.attribute');
+		const currentProduct = allProducts?.find(p => p._id?.toString() === context.params.id);
+		const currentProductCategories = currentProduct?.categories?.reduce((acc, item) => {
+			acc[item._id?.toString()] = true;
+			return acc
+		}, {});
+		const relatedProducts = allProducts.filter(p => p._id?.toString() !== context.params.id)
+			.filter(item => item.categories.some(cat => {
+				console.log(cat)
+				return currentProductCategories[cat._id?.toString()]
+			})).slice(0, 5)
+
+		return NextResponse.json({...currentProduct._doc, relatedProducts});
 	} catch (err) {
+		console.log(err)
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
 }
@@ -27,7 +39,7 @@ export async function PUT(request: NextRequest, context: Params) {
 				$set: body,
 			},
 			{new:true}
-		);
+		)
 		return NextResponse.json(updatedProduct);
 	} catch (err) {
 		console.log('err', err)

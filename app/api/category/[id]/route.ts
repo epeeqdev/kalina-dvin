@@ -36,13 +36,14 @@ export async function PUT(request: NextRequest, context: Params) {
 
 export async function DELETE(request: NextRequest, context: Params) {
 	try {
-		const oldCategory = await DB.Category.findById(context.params.id) as Brand;
+		const oldCategory = await DB.Category.findById(context.params.id).populate('image') as Brand;
 		if(oldCategory){
 			await deleteImage(oldCategory.image.id);
 		}
 		await DB.Category.findByIdAndDelete(context.params.id);
 		return NextResponse.json(JSON.stringify({success: true}));
 	} catch (err) {
+		console.log(err)
 		return new NextResponse(JSON.stringify({message: "Something went wrong on our side."}), {status: 500})
 	}
 }
