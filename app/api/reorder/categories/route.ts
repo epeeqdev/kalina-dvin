@@ -9,7 +9,7 @@ export async function PUT(request: NextRequest) {
             const updated = await DB.CategoriesOrder.findByIdAndUpdate(
                 existing._id,
                 {
-                    $set: body.order,
+                    $set: body,
                 },
                 { new: true }
             );

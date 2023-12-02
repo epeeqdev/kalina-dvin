@@ -18,16 +18,19 @@ export default function Categories() {
 
     const {
         data: categories,
-        isLoading: categoriesLoading
+        isLoading: categoriesLoading,
+        refetch
     } = useQuery<CategoryResponseDTO[]>(getCategories);
 
 
     const router = useRouter()
     const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[] >(null)
-    const putOrderCategories = () => {
+    const putOrderCategories = async () => {
         if(reorderedCategories) {
             const data = reorderedCategories.map((item) => item._id)
-            setOrderCategories(data).then(r => setReorderedCategories(reorderedCategories))
+            await setOrderCategories(data);
+            await refetch();
+            setReorderedCategories(null);
         }
     }
     const handleDrop = (args: DroppableArgs) => {

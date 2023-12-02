@@ -7,9 +7,9 @@ export const dynamic = "force-dynamic";
 export async function GET() {
 	try{
 		const categories = await DB.Category.find().populate('image');
-		const brandsOrder = await DB.CategoriesOrder.findOne() as { order: string[] };
-		if(brandsOrder){
-			const reordered = reorderObjectsById(brandsOrder.order, categories);
+		const categoriesOrder = await DB.CategoriesOrder.findOne() as { order: string[] };
+		if(categoriesOrder){
+			const reordered = reorderObjectsById(categoriesOrder.order, categories);
 			if(reordered.length){
 				return NextResponse.json(reordered);
 			}
