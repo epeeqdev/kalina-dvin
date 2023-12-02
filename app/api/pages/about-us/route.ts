@@ -7,10 +7,14 @@ export async function PUT(request: NextRequest) {
     try {
         const body = await request.json() as AboutUsDTO;
         const existing = await DB.AboutUs.findOne() as AboutUsDTO;
-        const image = body.image._id;
+        const mainPageImage = body.mainPageImage._id;
+        const aboutPageTopImage = body.aboutPageTopImage._id;
+        const aboutPageBottomImage = body.aboutPageBottomImage._id;
         const aboutUs = {
             ...body,
-            image
+            mainPageImage,
+            aboutPageTopImage,
+            aboutPageBottomImage
         }
         if (existing) {
             const updated = await DB.AboutUs.findByIdAndUpdate(
@@ -31,7 +35,9 @@ export async function PUT(request: NextRequest) {
 }
 
 const initialData:AboutUsDTO = {
-    image: null,
+    mainPageImage: null,
+    aboutPageTopImage: null,
+    aboutPageBottomImage: null,
     homePageDescription: {
         ru: "",
         am: ""
@@ -50,7 +56,7 @@ const initialData:AboutUsDTO = {
 }
 export async function GET() {
     try {
-        const existing = await DB.AboutUs.findOne().populate('image') as AboutUsDTO;
+        const existing = await DB.AboutUs.findOne().populate('mainPageImage').populate('aboutPageTopImage').populate('aboutPageBottomImage') as AboutUsDTO;
         if (existing) {
             return NextResponse.json(existing);
         } else {
