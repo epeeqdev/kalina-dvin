@@ -51,10 +51,10 @@ export default function AboutForm() {
                 },
                 aboutUsPageDescriptionTop: {am: about.aboutUsPageDescriptionTop.am, ru: about.aboutUsPageDescriptionTop.ru },
                 aboutUsPageDescriptionBottom: {am: about.aboutUsPageDescriptionBottom.am, ru: about.aboutUsPageDescriptionBottom.ru },
-                assortmentCount: about.assortmentCount,
-                mainPageImage: about.mainPageImage,
+                mainPageImage:about.mainPageImage || null,
                 aboutPageTopImage: about.aboutPageTopImage,
-                aboutPageBottomImage: about.aboutPageBottomImage || null,
+                aboutPageBottomImage: about.aboutPageBottomImage,
+                assortmentCount: about.assortmentCount,
                 brandsCount: about.brandsCount,
                 partnersCount:about.partnersCount,
             }

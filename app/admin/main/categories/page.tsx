@@ -12,7 +12,7 @@ import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import {useState} from "react";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
-import {setOrderCategories} from "@/app/admin/main/categories/halpers/setOrderCategories";
+import {updateOrderCategories} from "@/app/admin/main/categories/halpers/updateOrderCategories";
 
 export default function Categories() {
 
@@ -25,10 +25,10 @@ export default function Categories() {
 
     const router = useRouter()
     const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[] >(null)
-    const putOrderCategories = async () => {
+    const handleUpdateCategories = async () => {
         if(reorderedCategories) {
             const data = reorderedCategories.map((item) => item._id)
-            await setOrderCategories(data);
+            await updateOrderCategories(data);
             await refetch();
             setReorderedCategories(null);
         }
@@ -46,7 +46,7 @@ export default function Categories() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    {reorderedCategories && <Button onClick={putOrderCategories} variant="secondary">Сохранить порядок</Button>}
+                    {reorderedCategories && <Button onClick={handleUpdateCategories} variant="secondary">Сохранить порядок</Button>}
                     {reorderedCategories && <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
                     <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить категорию</Button>
                 </>
