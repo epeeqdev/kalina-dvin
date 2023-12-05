@@ -24,13 +24,10 @@ export const ProductTemplate = ({item, className}: Props) => {
                     <img className='w-[150px] h-[150px] min-w-[150px] object-contain bg-[#dadada] rounded left-0 top-0' src={item.images?.[0]?.src} alt="photo"/>
                 </div>
                 <div className='pr-4'>
-                    <p className='text-[#666060] text-[10px]'>{item.brand?.name?.ru}</p>
+                    <p className='text-[#666060] text-[12px]'>{item.brand?.name?.ru}</p>
                     <h3 className='text-[16px] mb-1'>{item.title.ru}</h3>
-                    <div className='text-[10px] text-grey' style={descriptionStyles}>{item.description.ru}</div>
-                    <div className='mt-3 text-[12px] font-medium'>Категории:</div>
-                    <div className='text-[10px] text-grey'>{item.categories.map((category, index) => <span key={category?._id}>{category?.name?.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
-                    <div className='mt-3 text-[12px] font-medium'>Аттрибуты:</div>
-                    <div className='text-[10px] text-grey'>{item.attributes.map((attribute, index) => <span key={attribute?._id}>{attribute.attribute?.name?.ru}:{attribute.value.ru}{index !== item.categories.length-1 && ', '}</span>)}</div>
+                    <div className='text-[12px] text-grey' style={descriptionStyles}>{item.description.ru}</div>
+                    <div className='mt-1 text-[11px] text-grey'>{item.attributes.map((attribute, index) => <div key={attribute?._id}><span className="font-bold  ">{attribute.attribute?.name?.ru}</span> : {attribute.value.ru}{index !== item.categories.length-1 && ', '}</div>)}</div>
                 </div>
             </div>
     )
