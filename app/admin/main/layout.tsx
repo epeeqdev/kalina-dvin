@@ -9,6 +9,7 @@ import IconComponent from "@/app/admin/main/components/icon";
 import Accordion from "@/app/admin/main/components/accordion";
 import {usePathname} from "next/navigation";
 import SideBarLink from "./components/sideBarLink";
+import {Button} from "@/app/admin/main/components/controls/button";
 
 export default function Layout({children}:PropsWithChildren){
 	const isMobile = useMatchMedia('(max-width: 639.1px)');
@@ -81,9 +82,10 @@ export default function Layout({children}:PropsWithChildren){
 					className={`toggle-btn`}>
 					<Hamburger toggled={isOpen} size={25}/>
 				</button>
-				<div>
-					<IconComponent onClick={logout} name={"logout"} className="bg-red-600 w-[40px] rounded h-[30px] mr-4 p-[5px] cursor-pointer hover:bg-red-800" />
-				</div>
+				<Button variant="alert" className="flex gap-2 bg-white mx-2">
+					<div>Выйти</div>
+					<IconComponent onClick={logout} name={"logout"}/>
+				</Button>
 			</div>
 			<div className='flex min-h-screen overflow-hidden'>
 				<div className={`fixed z-[40] sm:relative sm:mt-0  sm inset-y-0 left-0 bg-gray-800 text-white ${isOpen ? "w-[200px] sm:w-[350px]" : "w-0 sm:w-0"} transition-all duration-300`}>
