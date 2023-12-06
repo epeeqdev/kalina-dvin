@@ -1,7 +1,7 @@
 'use client'
 
 import {useEffect, useState} from "react";
-import {getProducts, getProductsWithSearch} from "@/app/admin/main/products/helpers/getProducts";
+import {getProductsWithSearch} from "@/app/admin/main/products/helpers/getProducts";
 import {ProductTemplate} from "@/components/product";
 import {Input} from "@/components/controls/input";
 import LoadingSpinner from "@/components/controls/loading-spinner";
@@ -11,6 +11,7 @@ import {ProductResponseDTO} from "@/backend/types";
 import {Button} from "@/app/admin/main/components/controls/button";
 import {useRouter} from "next/navigation";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 
 export default function ProductsPage() {
     const {data, isLoading,refetch} = useQuery<ProductResponseDTO[]>(getProductsWithSearch, [], {fetchOnMount: false});
@@ -41,7 +42,7 @@ export default function ProductsPage() {
     return <div className="mx-auto w-full pb-16">
         {isLoading && <LoadingSpinner/>}
         <PageLayout withSearch={true} headerButtons={
-            <div className="flex items-center w-full">
+            <div className="flex items-center w-full gap-2">
                 <Input
                     defaultValue={search}
                     className='mr-2 flex-1 min-w-[150px]'
@@ -49,6 +50,7 @@ export default function ProductsPage() {
                     placeholder='Search'
                 />
                 <Button onClick={() => router.push("/admin/main/products/add")} variant="primary">Добавить</Button>
+                <ToItemPageButton link={`/main/products`}/>
             </div>
         } headerTitle={"Продукты"}>
             <>

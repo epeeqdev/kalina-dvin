@@ -17,6 +17,8 @@ import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import IconComponent from "@/app/admin/main/components/icon";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import {useRouter} from "next/navigation";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 
 export default function Slider() {
     const {data: sliderData, isLoading: isSliderLoading} = useQuery<MainPageSliderDTO>(getSliderData);
@@ -97,14 +99,20 @@ export default function Slider() {
                         : <div></div>
                 }
                 <PageLayout headerButtons={
-                    <Button variant="primary" onClick={() => {
-                        onAdd()
-                        setEditingItem(null)
-                    }}>
-                        Сохранить
-                    </Button>
+                    <>
+                        <Button variant="primary" onClick={() => {
+                            onAdd()
+                            setEditingItem(null)
+                        }}>
+                            Сохранить
+                        </Button>
+                        <ToItemPageButton link='/main'/>
+                    </>
+
+
                 } headerTitle={"Слайдеры"}>
-                    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-[50px] pl-5 pr-5">
+                    <div
+                        className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-[50px] pl-5 pr-5">
                         {
                             getValues()?.slides?.map((item) => {
                                 return (
@@ -143,7 +151,7 @@ export default function Slider() {
                                                         >{item?.description?.ru}</div>
                                                         {(!!item?.buttonText?.ru || !!item?.buttonText?.am) &&
                                                             <Button variant="alert"
-                                                                    className="p-[2px] z-10 overflow-hidden top-0 h-[15px] text-[5px] flex justify-center items-center cursor-grab"
+                                                                    className="p-[2px] z-10 bg-red-700 text-white overflow-hidden top-0 h-[15px] text-[5px] rounded-none flex justify-center items-center cursor-grab"
                                                             >
                                                                 {item?.buttonText?.ru}
                                                             </Button>}

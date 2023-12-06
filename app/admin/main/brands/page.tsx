@@ -12,9 +12,10 @@ import {Draggable} from "@/app/admin/main/drag-and-drop/draggable";
 import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
-import {useState} from "react";
+import React, {useState} from "react";
 import {updateOrderBrands} from "@/app/admin/main/brands/helpers/updateOrderBrands";
-import {updateOrderCategories} from "@/app/admin/main/categories/halpers/updateOrderCategories";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
 
 export default function Brands() {
 
@@ -53,6 +54,9 @@ export default function Brands() {
                     </>}
 
                     <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить Бренд</Button>
+                    <Link href={"/main#brands-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
             } headerTitle={"Бренды"}
             >
