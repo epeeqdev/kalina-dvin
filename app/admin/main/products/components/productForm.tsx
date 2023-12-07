@@ -144,7 +144,7 @@ export default function ProductForm({id}: { id: string }) {
                         required
                         name='brand'
                         options={brands}
-                        error={errors.brand?.message}
+                        error={errors.brand?.value?.message}
                         label="Выберите бренд"
                     />
                 </div>

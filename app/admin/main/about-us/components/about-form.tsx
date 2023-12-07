@@ -63,7 +63,6 @@ export default function AboutForm() {
         }: {})
     });
 
-
     const onSubmit = async () => {
         editAboutUsMutate(getValues()).then(() => router.push("/admin/main"))
     }
@@ -89,7 +88,12 @@ export default function AboutForm() {
             >
                 <div className="w-full pb-16 pl-5 pr-8">
                         <div className="my-5 flex justify-start">
-                            <ImageUploader label="Фото Главной страницы" className='max-w-[600px]' imageHeightProportion={100} control={control} name='mainPageImage'/>
+                            <ImageUploader
+                                label="Фото Главной страницы"
+                                className='max-w-[600px]'
+                                imageHeightProportion={100}
+                                control={control}
+                                name='mainPageImage'/>
                         </div>
                     <div className="mb-5">
                         <TextArea

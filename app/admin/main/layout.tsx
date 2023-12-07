@@ -19,7 +19,7 @@ export default function Layout({children}:PropsWithChildren){
 	const slicedPathName = path.split("/").slice(-2).join("/")
 
 	const [isOpen, setIsOpen] = useState(false);
-	const styles = "block px-4 py-2 text-[14px] hover:font-bold hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
+	const styles = "block px-4 py-2 text-[14px] hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
 
 	const toggleSidebar = () => {
 		setIsOpen(!isOpen);
