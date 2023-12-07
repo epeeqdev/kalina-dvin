@@ -15,14 +15,16 @@ import {Input} from "@/components/controls/input";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {getAboutUs} from "../helpers/getAboutUs";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
 
 const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
     aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
     aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
-    aboutUsMainImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
-    aboutUsBottomTopImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
-    aboutUsBottomImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    mainPageImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    aboutPageTopImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    aboutPageBottomImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
     assortmentCount: yup.number().required("Обязательное поле"),
     brandsCount: yup.number().required("Обязательное поле"),
     partnersCount: yup.number().required("Обязательное поле"),
@@ -51,9 +53,9 @@ export default function AboutForm() {
                 },
                 aboutUsPageDescriptionTop: {am: about.aboutUsPageDescriptionTop.am, ru: about.aboutUsPageDescriptionTop.ru },
                 aboutUsPageDescriptionBottom: {am: about.aboutUsPageDescriptionBottom.am, ru: about.aboutUsPageDescriptionBottom.ru },
-                aboutUsMainImage:about.aboutUsMainImage || null,
-                aboutUsPageTopImage: about.aboutUsPageTopImage,
-                aboutUsPageBottomImage: about.aboutUsPageBottomImage,
+                mainPageImage:about.mainPageImage || null,
+                aboutPageTopImage: about.aboutPageTopImage,
+                aboutPageBottomImage: about.aboutPageBottomImage,
                 assortmentCount: about.assortmentCount,
                 brandsCount: about.brandsCount,
                 partnersCount:about.partnersCount,
@@ -76,16 +78,11 @@ export default function AboutForm() {
             {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
-                    <Button className="h-[40px]" onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            submit()
-                        }}
-                        className="h-[40px]"
-                    >
-                        Сохранить
-                    </Button>
+                    <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
+                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    <Link href={"/main#about-us-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
             } headerTitle={"О нас"}
             >
@@ -96,7 +93,7 @@ export default function AboutForm() {
                                 className='max-w-[600px]'
                                 imageHeightProportion={100}
                                 control={control}
-                                name='aboutUsMainImage'/>
+                                name='mainPageImage'/>
                         </div>
                     <div className="mb-5">
                         <TextArea
@@ -117,12 +114,7 @@ export default function AboutForm() {
                         />
                     </div>
                     <div className="my-5 flex justify-start">
-                        <ImageUploader
-                            label="Верхнее фото страницы О нас"
-                            className='max-w-[600px]'
-                            imageHeightProportion={100}
-                            control={control}
-                            name='aboutUsPageTopImage'/>
+                        <ImageUploader label="Верхнее фото страницы О нас" className='max-w-[600px]' imageHeightProportion={100} control={control} name='aboutPageTopImage'/>
                     </div>
                     <div className="mb-5">
                         <TextArea
@@ -142,12 +134,7 @@ export default function AboutForm() {
                         />
                     </div>
                     <div className="my-5 flex justify-start">
-                        <ImageUploader
-                            label="Нижнее фото страницы О нас"
-                            className='max-w-[600px]'
-                            imageHeightProportion={100}
-                            control={control}
-                            name='aboutUsPageBottomImage'/>
+                        <ImageUploader label="Нижнее фото страницы О нас" className='max-w-[600px]' imageHeightProportion={100} control={control} name='aboutPageBottomImage'/>
                     </div>
                     <div className="mb-5">
                         <TextArea

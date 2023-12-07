@@ -13,6 +13,7 @@ import {getProductsPage} from "@/app/admin/helpers/api/getProductsPage";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import React from "react";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 
 
 const validationSchema = yup.object().shape({
@@ -49,12 +50,10 @@ export default function ProductsPageForm() {
         <div className="mx-auto w-full col-auto">
             {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
-                <Button
-                className="h-[40px]"
-                variant="primary"
-                onClick={() => {
-                    onEdit()
-                }}>Сохранить</Button>
+                <>
+                    <Button variant="primary" onClick={onEdit}>Сохранить</Button>
+                    <ToItemPageButton link={`/main/products`}/>
+                </>
             } headerTitle={"Страница продуктов"}>
                 <div className="gap-4 justify-center mx-5">
                     <ImageUploader

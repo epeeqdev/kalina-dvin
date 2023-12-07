@@ -90,7 +90,8 @@ export interface ProductResponseDTO {
 	brand: BrandResponseDTO;
 	categories: CategoryResponseDTO[];
 	attributes: ProductAttributeResponseDTO[];
-	images: ImageDTO[]
+	images: ImageDTO[];
+	relatedProducts?: ProductResponseDTO[];
 }
 
 export interface SlideDTO {
@@ -110,9 +111,9 @@ export interface MainPageSliderDTO {
 
 export interface AboutUsDTO {
 	_id?: string;
-	aboutUsMainImage: ImageDTO,
-	aboutUsPageTopImage: ImageDTO,
-	aboutUsPageBottomImage: ImageDTO,
+	mainPageImage: ImageDTO,
+	aboutPageTopImage: ImageDTO,
+	aboutPageBottomImage: ImageDTO,
 	homePageDescription: TextStructure,
 	aboutUsPageDescriptionTop: TextStructure,
 	aboutUsPageDescriptionBottom: TextStructure,

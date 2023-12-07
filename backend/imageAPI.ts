@@ -19,14 +19,11 @@ export const uploadImage = async (image: ImageDTO): Promise<ImageDTO | null> => 
 }
 export const deleteImage = async (id:string) => {
 	if(!id) return;
-	console.log('Deleting image')
 	const existingImage = await DB.Image.findById(id);
-
 	await DB.Image.findByIdAndDelete(existingImage?._id)
 	if(existingImage){
 		return ImageAPI.deleteFile(existingImage?.id)
 	}
-
 }
 
 export const uploadFileImage = async (image: Buffer): Promise<ImageDTO | null> => {

@@ -21,9 +21,12 @@ import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {getBrands} from "@/app/admin/main/brands/helpers/getBrands";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 import {getProduct} from "@/app/admin/main/categories/halpers/getProduct";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 
 export default function ProductForm({id}: { id: string }) {
+
     const router = useRouter()
+
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(getCategories);
     const {data: productData, isLoading: productLoading} = useQuery<ProductResponseDTO>(getProduct, [id], {fetchOnMount: !!id});
@@ -83,6 +86,7 @@ export default function ProductForm({id}: { id: string }) {
                 >
                     Сохранить
                 </Button>
+                {productData?._id && <ToItemPageButton link={`/main/products/${productData._id}`}/>}
             </>}>
             <div className="mx-5 mb-[200px]">
                 <div className="mb-5">

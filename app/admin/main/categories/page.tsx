@@ -12,17 +12,29 @@ import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import {useState} from "react";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
+import {updateOrderCategories} from "@/app/admin/main/categories/halpers/updateOrderCategories";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
 
 export default function Categories() {
 
     const {
         data: categories,
-        isLoading: categoriesLoading
+        isLoading: categoriesLoading,
+        refetch
     } = useQuery<CategoryResponseDTO[]>(getCategories);
 
-    const router = useRouter()
-    const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[]>()
 
+    const router = useRouter()
+    const [reorderedCategories, setReorderedCategories] = useState<CategoryResponseDTO[] >(null)
+    const handleUpdateCategories = async () => {
+        if(reorderedCategories) {
+            const data = reorderedCategories.map((item) => item._id)
+            await updateOrderCategories(data);
+            await refetch();
+            setReorderedCategories(null);
+        }
+    }
     const handleDrop = (args: DroppableArgs) => {
         setReorderedCategories((prev) => {
             return getReorderedItems(prev || categories, args)
@@ -36,9 +48,12 @@ export default function Categories() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    {reorderedCategories && <Button onClick={() => {}} variant="secondary">Сохранить порядок</Button>}
+                    {reorderedCategories && <Button onClick={handleUpdateCategories} variant="secondary">Сохранить порядок</Button>}
                     {reorderedCategories && <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
                     <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить категорию</Button>
+                    <Link href={"/main#categories-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
 
             } headerTitle={"Категории"}>

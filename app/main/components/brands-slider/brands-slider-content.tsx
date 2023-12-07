@@ -12,34 +12,38 @@ interface Props {
 
 export const BrandsSliderContent =({brands}: Props) => {
     const brandsDoubled = brands ? [...brands, ...brands, ...brands] : []
-    return <HomePageSection
-        header={BLOCK_TITLE}
-        childrenClassName='pl-[5%]'
-        className='pt-[25px] lg:pt-[45px]'
-    >
-        {/*<BrandsSlider brands={brands}/>*/}
-        <Swiper
-            modules={[Scrollbar, Mousewheel, Autoplay]}
-            loop={true}
-            pagination={{ clickable: true }}
-            mousewheel={{
-                invert: false,
-            }}
-            autoplay={{
-                delay: 3000,
-                stopOnLastSlide: false,
-                disableOnInteraction: false,
-            }}
-            breakpoints={Breakpoints}
-            className="breakpoint h-[80px] xl:h-[120px]"
-        >
-            {brandsDoubled.map((item, index) => {
-                return (
-                    <SwiperSlide key={`${item._id}_${index}`}  className='py-1'>
-                        <BrandCard data={item}/>
-                    </SwiperSlide>
-                );
-            })}
-        </Swiper>
-    </HomePageSection>
+    return (
+        <div id="brands-part">
+            <HomePageSection
+                header={BLOCK_TITLE}
+                childrenClassName='pl-[5%]'
+                className='pt-[25px] lg:pt-[45px]'
+            >
+                {/*<BrandsSlider brands={brands}/>*/}
+                <Swiper
+                    modules={[Scrollbar, Mousewheel, Autoplay]}
+                    loop={true}
+                    pagination={{ clickable: true }}
+                    mousewheel={{
+                        invert: false,
+                    }}
+                    autoplay={{
+                        delay: 3000,
+                        stopOnLastSlide: false,
+                        disableOnInteraction: false,
+                    }}
+                    breakpoints={Breakpoints}
+                    className="breakpoint h-[80px] xl:h-[120px]"
+                >
+                    {brandsDoubled.map((item, index) => {
+                        return (
+                            <SwiperSlide key={`${item._id}_${index}`}  className='py-1'>
+                                <BrandCard data={item}/>
+                            </SwiperSlide>
+                        );
+                    })}
+                </Swiper>
+            </HomePageSection>
+        </div>
+    )
 }

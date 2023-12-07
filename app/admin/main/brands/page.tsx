@@ -12,18 +12,29 @@ import {Draggable} from "@/app/admin/main/drag-and-drop/draggable";
 import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
-import {useState} from "react";
+import React, {useState} from "react";
+import {updateOrderBrands} from "@/app/admin/main/brands/helpers/updateOrderBrands";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
+
 export default function Brands() {
-
-
-    const router = useRouter()
-    const [ReorderedBrands, setReorderedBrands] = useState<BrandResponseDTO[]>()
-
 
     const {
         data: brands,
-        isLoading: BrandsLoading
+        isLoading: BrandsLoading,
+        refetch,
     } = useQuery<BrandResponseDTO[]>(getBrands);
+
+    const router = useRouter()
+    const [reorderedBrands, setReorderedBrands] = useState<BrandResponseDTO[]>(null)
+    const handleUpdateOrderBrands = async () => {
+        if(reorderedBrands) {
+            const data = reorderedBrands.map((item) => item._id)
+            await updateOrderBrands(data);
+            await refetch();
+            setReorderedBrands(null);
+        }
+    }
 
     const handleDrop = (args: DroppableArgs) => {
         setReorderedBrands((prev) => {
@@ -36,14 +47,21 @@ export default function Brands() {
 
             <PageLayout headerButtons={
                 <>
-                    {ReorderedBrands && <Button onClick={() => {}} variant="secondary">Сохранить порядок</Button>}
-                    {ReorderedBrands && <Button onClick={() => setReorderedBrands(null)} variant="alert">Отменить</Button>}
+                    {reorderedBrands &&
+                        <>
+                            <Button onClick={handleUpdateOrderBrands} variant="secondary">Сохранить порядок</Button>
+                            <Button onClick={() => setReorderedBrands(brands)} variant="alert">Отменить</Button>
+                    </>}
+
                     <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить Бренд</Button>
+                    <Link href={"/main#brands-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
             } headerTitle={"Бренды"}
             >
                 <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
-                    {(ReorderedBrands ? ReorderedBrands : brands)?.map((item) => {
+                    {(reorderedBrands ? reorderedBrands : brands)?.map((item) => {
                         return (
                             <Droppable id={item._id} key={item._id} onDrop={(args) => handleDrop(args)}>
                                 <Draggable id={item._id}>
