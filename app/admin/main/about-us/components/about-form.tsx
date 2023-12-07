@@ -15,6 +15,8 @@ import {Input} from "@/components/controls/input";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {getAboutUs} from "../helpers/getAboutUs";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
 
 const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
@@ -77,16 +79,11 @@ export default function AboutForm() {
             {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
-                    <Button className="h-[40px]" onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            submit()
-                        }}
-                        className="h-[40px]"
-                    >
-                        Сохранить
-                    </Button>
+                    <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
+                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    <Link href={"/main#about-us-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
             } headerTitle={"О нас"}
             >

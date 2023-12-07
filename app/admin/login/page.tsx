@@ -37,7 +37,7 @@ export default function Login(){
 		<div>
 			<Input label='Пароль' type='password' placeholder='Введите пароль' {...register('password')} className='w-full'/>
 		</div>
-		<Button type='submit' className='mt-2' variant="primary">Войти</Button>
+		<Button type='submit' className='mt-2 flrx justify-center'  variant="primary">Войти</Button>
 	</form>
 	</div>
 }

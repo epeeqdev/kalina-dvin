@@ -13,6 +13,8 @@ import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorder
 import {useState} from "react";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 import {updateOrderCategories} from "@/app/admin/main/categories/halpers/updateOrderCategories";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
 
 export default function Categories() {
 
@@ -49,6 +51,9 @@ export default function Categories() {
                     {reorderedCategories && <Button onClick={handleUpdateCategories} variant="secondary">Сохранить порядок</Button>}
                     {reorderedCategories && <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
                     <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить категорию</Button>
+                    <Link href={"/main#categories-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
 
             } headerTitle={"Категории"}>
