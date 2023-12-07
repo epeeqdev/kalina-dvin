@@ -43,7 +43,7 @@ export default function AdminMain() {
             {/*-----------------------------------------------------        PRODUCTS        ---------------------------------------------------------*/}
 
             <MainPageSectionComponent title={"products"}>
-                {products?.slice(0,6)?.map(item => <ProductTemplate className='col-span-12 lg:col-span-6 xl:col-span-4' key={item._id} item={item}/>)}
+                {products?.slice(0,6)?.map(item => <ProductTemplate key={item._id} item={item}/>)}
             </MainPageSectionComponent>
 
 

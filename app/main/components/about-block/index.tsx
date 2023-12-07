@@ -8,12 +8,15 @@ interface Props{
 }
 export const AboutBlock = ({data}: Props) => {
     return  (
-        <HomePageSection
-            header={BLOCK_TITLE}
-            childrenClassName='px-[5%]'
-            className='pt-[25px] lg:pt-[45px] pb-[45px]'
-        >
-            <AboutGrid aboutOptions={data}/>
-        </HomePageSection>
+        <div id="about-us-part">
+            <HomePageSection
+                header={BLOCK_TITLE}
+                childrenClassName='px-[5%]'
+                className='pt-[25px] lg:pt-[45px] pb-[45px]'
+            >
+                <AboutGrid aboutOptions={data}/>
+            </HomePageSection>
+        </div>
+
     )
 }

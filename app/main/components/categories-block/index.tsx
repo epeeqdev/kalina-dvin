@@ -9,12 +9,14 @@ interface Props {
 }
 export const CategoriesBlock = ({categories}: Props) => {
     return  (
-        <HomePageSection
-            header={BLOCK_TITLE}
-            childrenClassName='px-[5%]'
-            className='pt-[25px] pb-0 lg:pt-[45px]'
-        >
-            <CategoriesGrid categories={categories}/>
-        </HomePageSection>
+        <div id="categories-part">
+            <HomePageSection
+                header={BLOCK_TITLE}
+                childrenClassName='px-[5%]'
+                className='pt-[25px] pb-0 lg:pt-[45px]'
+            >
+                <CategoriesGrid categories={categories}/>
+            </HomePageSection>
+        </div>
     )
 }

@@ -3,7 +3,9 @@ import {TextFragment} from "@/backend/fragments";
 
 const AboutUsPage = new Schema(
     {
-        image: { type: Schema.Types.ObjectId,ref: 'Image'},
+        mainPageImage: { type: Schema.Types.ObjectId,ref: 'Image'},
+        aboutPageTopImage: { type: Schema.Types.ObjectId,ref: 'Image'},
+        aboutPageBottomImage: { type: Schema.Types.ObjectId,ref: 'Image'},
         homePageDescription: {...TextFragment},
         aboutUsPageDescriptionTop: {...TextFragment},
         aboutUsPageDescriptionBottom: {...TextFragment},

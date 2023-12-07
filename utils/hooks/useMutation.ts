@@ -13,7 +13,7 @@ export const useMutation = <MutationFunction extends (...args: any[]) => any, Ar
 			const result = await mutation(...currentArgs);
 			setData(result?.data);
 			toast.success('Успешно')
-			return result.data;
+			return result?.data;
 		} catch (err) {
 			setError(err);
 			toast.error(err?.response?.data?.error || err?.message || 'Что то пошло не так.');

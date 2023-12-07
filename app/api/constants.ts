@@ -22,6 +22,10 @@ export const API_ROUTES = {
         contacts:'/api/pages/contacts',
         categories:'/api/pages/categories',
         products:'/api/pages/products'
+    },
+    reorder: {
+        brands: '/api/reorder/brands',
+        categories: '/api/reorder/categories',
     }
 }
 
@@ -36,4 +40,6 @@ export const PROTECTED_ROUTES = {
     [API_ROUTES.pages.categories]: [APIMethods.PUT],
     [API_ROUTES.pages.products]: [APIMethods.PUT],
     [API_ROUTES.pages.aboutUs]: [APIMethods.PUT],
+    [API_ROUTES.reorder.brands]: [APIMethods.PUT],
+    [API_ROUTES.reorder.categories]: [APIMethods.PUT],
 }

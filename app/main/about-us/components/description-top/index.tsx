@@ -1,19 +1,21 @@
 import {Typography} from "@/app/main/components/controls/typography";
 import {LogoIcon} from "@/app/main/components/logoIcon";
+import {ImageDTO} from "@/backend/types";
 
 interface Props {
-    aboutUsPageDescriptionTop: string
+    aboutUsPageDescriptionTop: string;
+    aboutPageTopImage: ImageDTO
 }
 
 
-export const DescriptionTop = ({aboutUsPageDescriptionTop}:Props) => {
+export const DescriptionTop = ({aboutUsPageDescriptionTop, aboutPageTopImage}:Props) => {
     return(
         <div>
             <div className='bg-primary w-full relative pr-[14%] py-[5%] box-border h-[200px] sm:h-auto'>
                 <div className='flex justify-end'>
                     <LogoIcon color='white' className='hidden sm:block'/>
                     <div className='absolute left-0 top-14 sm:-bottom-4 sm:top-[unset] transform sm:translate-y-1/2 w-full'>
-                            <img src='/cargo.png' alt='footerLogo' className='w-[414px] sm:w-[50%]'/>
+                            <img src={aboutPageTopImage?.src} alt={aboutPageTopImage?._id} className='w-[414px] sm:w-[50%]'/>
                     </div>
                 </div>
             </div>

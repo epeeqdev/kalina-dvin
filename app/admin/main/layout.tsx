@@ -8,18 +8,15 @@ import {useMatchMedia} from "@/utils/hooks/useMatchMedia";
 import IconComponent from "@/app/admin/main/components/icon";
 import Accordion from "@/app/admin/main/components/accordion";
 import {usePathname} from "next/navigation";
+import SideBarLink from "./components/sideBarLink";
+import {Button} from "@/app/admin/main/components/controls/button";
 
 export default function Layout({children}:PropsWithChildren){
 	const isMobile = useMatchMedia('(max-width: 639.1px)');
 	const isLaptop = useMatchMedia('(min-width: 1024px)');
-	const [isClicked, setIsClicked] = useState("")
 
 	const path = usePathname()
-	const pathName = path.split("/").slice(-2).join("/")
-
-	useEffect(() => {
-		setIsClicked(pathName)
-	},[path])
+	const slicedPathName = path.split("/").slice(-2).join("/")
 
 	const [isOpen, setIsOpen] = useState(false);
 	const styles = "block px-4 py-2 text-[14px] hover:font-bold hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
@@ -85,46 +82,29 @@ export default function Layout({children}:PropsWithChildren){
 					className={`toggle-btn`}>
 					<Hamburger toggled={isOpen} size={25}/>
 				</button>
-				<div>
-					<IconComponent onClick={logout} name={"logout"} className="bg-red-600 w-[40px] rounded h-[30px] mr-4 p-[5px] cursor-pointer hover:bg-red-800" />
-				</div>
+				<Button variant="alert" className="flex gap-2 bg-white mx-2">
+					<div>Выйти</div>
+					<IconComponent onClick={logout} name={"logout"}/>
+				</Button>
 			</div>
 			<div className='flex min-h-screen overflow-hidden'>
 				<div className={`fixed z-[40] sm:relative sm:mt-0  sm inset-y-0 left-0 bg-gray-800 text-white ${isOpen ? "w-[200px] sm:w-[350px]" : "w-0 sm:w-0"} transition-all duration-300`}>
 					<div className={`mt-20 sm:mt-5 overflow-hidden ${isOpen ? "opacity-1 transition-all duration-300" : "opacity-0 transition-all duration-300"} `}>
 						<div className="block px-4 pb-10 text-[18px] transition whitespace-nowrap">Меню</div>
-						<Link
-							className={`${styles} ${isClicked === "admin/main" && "bg-white text-black font-bold"}`}
-							href={'/admin/main'}
-							onClick={handleClick}>Главная</Link>
-						<Link
-							className={`${styles} ${isClicked === "main/categories" && "bg-white text-black font-bold"}`}
-							href={'/admin/main/categories'}
-							onClick={handleClick}>Категории</Link>
-						<Link
-							className={`${styles} ${isClicked === "main/brands" && "bg-white text-black font-bold"}`}
-							href={'/admin/main/brands'}
-							onClick={handleClick}>Бренды</Link>
-						<Link
-							className={`${styles} ${isClicked === "main/products" && "bg-white text-black font-bold"}`}
-							href={'/admin/main/products'}
-							onClick={handleClick}>Продукты</Link>
-						<Link
-							className={`${styles} ${isClicked === "main/attributes" && "bg-white text-black font-bold"}`}
-							href={'/admin/main/attributes'}
-							onClick={handleClick}>Атрибуты</Link>
-						<Link
-							className={`${styles} ${isClicked === "main/contacts" && "bg-white text-black font-bold"}`}
-							href={'/admin/main/contacts'}
-							onClick={handleClick}>Контакты</Link>
+						<SideBarLink title="Главная" chosenNamePath="admin/main" slicedPathName={slicedPathName} className={styles} handleClick={handleClick} href='/admin/main' />
+						<SideBarLink title="Категории" chosenNamePath="main/categories" slicedPathName={slicedPathName} className={styles} handleClick={handleClick} href='/admin/main/categories'  />
+						<SideBarLink title="Бренды" chosenNamePath="main/brands" slicedPathName={slicedPathName} className={styles} handleClick={handleClick} href='/admin/main/brands' />
+						<SideBarLink title="Продукты" chosenNamePath="main/products" slicedPathName={slicedPathName} className={styles} handleClick={handleClick} href={'/admin/main/products'} />
+						<SideBarLink title="Атрибуты" chosenNamePath="main/attributes" slicedPathName={slicedPathName} className={styles} handleClick={handleClick} href='/admin/main/attributes' />
+						<SideBarLink title="Контакты" chosenNamePath="main/contacts" slicedPathName={slicedPathName} className={styles} handleClick={handleClick} href='/admin/main/contacts' />
 						<div>
 							<div className={`${styles} cursor-pointer flex justify-between sidebar-overlay`} onClick={() => toggleAccordion()}>
 							 	<div>Страницы</div>
 								<IconComponent name={accordionIsOpen ? "chevronUp" : "chevronDown"}/>
 							</div>
 							<Accordion
-								isClicked={isClicked}
-								isSidebarOpen={isOpen}
+								styles={styles}
+								isClicked={slicedPathName}
 								isOpen={accordionIsOpen}
 								items={pages}
 								onBurgerClose={() => {

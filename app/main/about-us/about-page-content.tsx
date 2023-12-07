@@ -14,13 +14,13 @@ export const AboutPageContent = ({aboutUsData}:Props) => {
     const {getLanguage} = useLanguage()
     return (
         <div>
-            <DescriptionTop aboutUsPageDescriptionTop={getLanguage(aboutUsData.aboutUsPageDescriptionTop)}/>
+            <DescriptionTop aboutUsPageDescriptionTop={getLanguage(aboutUsData.aboutUsPageDescriptionTop)} aboutPageTopImage={aboutUsData.aboutPageTopImage}/>
             <div className='flex w-full bg-primary items-center justify-center gap-[6%] py-[20px]'>
                 <AboutOptions title={getLanguage(BRAND)} option={aboutUsData.brandsCount} optionClassName='text-secondary' titleClassName='text-white'/>
                 <AboutOptions title={getLanguage(ASSORTMENT)} option={aboutUsData.assortmentCount} optionClassName='text-secondary' titleClassName='text-white'/>
                 <AboutOptions title={getLanguage(PARTNER)} option={aboutUsData.partnersCount} optionClassName='text-secondary' titleClassName='text-white'/>
             </div>
-            <DescriptionBottom aboutUsPageDescriptionBottom={getLanguage(aboutUsData.aboutUsPageDescriptionBottom)}/>
+            <DescriptionBottom aboutUsPageDescriptionBottom={getLanguage(aboutUsData.aboutUsPageDescriptionBottom)} aboutPageBottomImage={aboutUsData.aboutPageBottomImage}/>
         </div>
     )
 }

@@ -22,7 +22,7 @@ export const Footer = ({categories, contacts}:Props) => {
     const categoriesData = categories?.slice(0,5)
 
     return(
-        <div className='bg-primary w-full flex flex-col'>
+        <div id="footer-part" className='bg-primary w-full flex flex-col'>
             <div className='flex-1 pt-[14px] lg:pt-[48px] pb-[12px] lg:pb-[48px] pl-[7%] pr-[7.5%]'>
                 <div className='flex flex-col lg:flex-row h-full'>
                     <div className='flex justify-start gap-x-[10%] lg:gap-x-0 pr-[48px] items-center lg:items-baseline lg:justify-between flex-row lg:flex-col border-r-[0] border-b-[1px] lg:border-r-[1px] lg:border-b-[0] border-secondary w-full max-w-full lg:max-w-[230px] xl:max-w-[383px] h-full'>

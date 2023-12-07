@@ -26,7 +26,7 @@ export const useQuery = <ReturnValue, QueryFunction extends (...args: any[]) => 
 
 	const refetch = (...newArgs:ArgTypes[]) => {
 		const currentArgs = newArgs || args;
-		fetchData(...currentArgs);
+		return fetchData(...currentArgs);
 	}
 
 	return {isLoading, refetch, error, data}

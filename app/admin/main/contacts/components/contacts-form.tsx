@@ -13,20 +13,31 @@ import {ContactsPageDTO} from "@/backend/types";
 import {Input} from "@/components/controls/input";
 import {editContacts} from "@/app/admin/main/contacts/helpers/edit-contacts";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import Link from "next/link";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 
 const validationSchema = yup.object().shape({
-    phone: yup.string().matches(phoneRegExp,'Номер телефона, должно быть в формате +374(XX)-XX-XX-XX').min(11).required("Обязательное поле"),
+    phone: yup.string().matches(phoneRegExp, 'Номер телефона, должно быть в формате +374(XX)-XX-XX-XX').min(11).required("Обязательное поле"),
     email: yup.string().email("Укажите корректную эл. почту").required("Обязательное поле"),
-    address: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
-    socialLinks: yup.object().shape({instagram: yup.string().url("Укажите корректную ссылку").required("Обязательное поле"), facebook: yup.string().url("Укажите корректную ссылку").required("Обязательное поле")})
+    address: yup.object().shape({
+        am: yup.string().required("Обязательное поле"),
+        ru: yup.string().required("Обязательное поле")
+    }),
+    socialLinks: yup.object().shape({
+        instagram: yup.string().url("Укажите корректную ссылку").required("Обязательное поле"),
+        facebook: yup.string().url("Укажите корректную ссылку").required("Обязательное поле")
+    })
 
 })
 export default function ContactsForm() {
     const router = useRouter()
-    const {data: contacts, isLoading: getaContactsLoading} = useQuery<ContactsPageDTO>(() => axios.get(`/api/pages/contacts`));
+    const {
+        data: contacts,
+        isLoading: getaContactsLoading
+    } = useQuery<ContactsPageDTO>(() => axios.get(`/api/pages/contacts`));
     const {mutate: editContactsUsMutate, isLoading: editContactsUsLoading} = useMutation(editContacts);
     const isLoading = getaContactsLoading || editContactsUsLoading;
 
@@ -39,7 +50,7 @@ export default function ContactsForm() {
     } = useForm<ContactsPageDTO>({
         resolver: yupResolver(validationSchema),
         ...(contacts ? {
-            values : {
+            values: {
                 phone: contacts.phone,
                 email: contacts.email,
                 address: {
@@ -47,11 +58,11 @@ export default function ContactsForm() {
                     ru: contacts.address.ru
                 },
                 socialLinks: {
-                    facebook : contacts.socialLinks.facebook,
+                    facebook: contacts.socialLinks.facebook,
                     instagram: contacts.socialLinks.instagram
                 }
             }
-        }: {})
+        } : {})
     });
 
     const onSubmit = async () => {
@@ -71,16 +82,11 @@ export default function ContactsForm() {
 
             <PageLayout headerButtons={
                 <>
-                    <Button className="h-[40px]" onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    <Button
-                        variant="primary"
-                        onClick={() => {
-                            submit()
-                        }}
-                        className="h-[40px]"
-                    >
-                        Сохранить
-                    </Button>
+                    <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
+                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    <Link href={"/main#footer-part"} target="_blank">
+                        <ToItemPageButton/>
+                    </Link>
                 </>
             } headerTitle={"Контактная информация"}
             >
