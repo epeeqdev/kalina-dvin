@@ -115,7 +115,7 @@ export default function ProductForm({id}: { id: string }) {
                         placeholder='Введите описание'
                         {...register("description.am", {required: true})}
                         error={errors.description?.am?.message}
-                        className="min-h-[150px] mb-2"
+                        className="min-h-[150px]"
                     />
                     <TextArea
                         required
@@ -126,7 +126,6 @@ export default function ProductForm({id}: { id: string }) {
                         className="min-h-[150px]"
                     />
                 </div>
-                <div className="mb-4">
                     <MultiSelectInput
                         control={control}
                         required
@@ -137,8 +136,6 @@ export default function ProductForm({id}: { id: string }) {
                         placeholder='Выберите категории'
                         label="Категории"
                     />
-                </div>
-                <div className="mb-4">
                     <MultiSelectInput
                         control={control}
                         required
@@ -147,7 +144,6 @@ export default function ProductForm({id}: { id: string }) {
                         error={errors.brand?.value?.message}
                         label="Выберите бренд"
                     />
-                </div>
                 <AttributesForm control={control} name='attributes'/>
             </div>
             </PageLayout>

@@ -82,9 +82,9 @@ export default function Layout({children}:PropsWithChildren){
 					className={`toggle-btn`}>
 					<Hamburger toggled={isOpen} size={25}/>
 				</button>
-				<Button variant="alert" className="flex gap-2 bg-white mx-2">
+				<Button variant="alert" onClick={logout} className="flex gap-2 bg-white mx-2">
 					<div>Выйти</div>
-					<IconComponent onClick={logout} name={"logout"}/>
+					<IconComponent name={"logout"}/>
 				</Button>
 			</div>
 			<div className='flex min-h-screen overflow-hidden'>

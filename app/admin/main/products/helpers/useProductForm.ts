@@ -37,7 +37,7 @@ export const useProductForm = (data?: ProductResponseDTO) => {
         title: data.title,
         description: data.description,
         categories: data.categories.map(category => ({label: category.name.ru, value: category._id})),
-        brand: {label: data.brand.name.ru, value: data.brand._id},
+        brand: {label: data?.brand?.name.ru, value: data?.brand?._id},
         images: data.images,
         attributes: data?.attributes?.map(attribute => ({attribute: {label: attribute.attribute?.name.ru, value: attribute.attribute._id},id:attribute.attribute._id, value: attribute.value}))
     } : null;

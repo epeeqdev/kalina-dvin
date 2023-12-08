@@ -25,7 +25,7 @@ const validationSchema = yup.object().shape({
         am: yup.string().required("Обязательное поле"),
         ru: yup.string().required("Обязательное поле"),
     }),
-    image: yup.object().shape({extension: yup.string(), id: yup.string(), src: yup.string() }).nullable(),
+    image: yup.object().shape({id: yup.string(), src: yup.string().required("Изображение обязательно")}),
 })
 
 interface Category {
@@ -103,7 +103,7 @@ export const BrandForm = ({id}:Props) => {
             } headerTitle={"Добавить Бренд"}>
                 <div className=" w-[100%] pl-5 pr-5 pr-5 mb-20">
                     <div className="gap-4">
-                        <ImageUploader imageFit='contain' control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                        <ImageUploader error={errors.image?.src?.message} imageFit='contain' control={control} name='image' imageHeightProportion={50} />
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}
