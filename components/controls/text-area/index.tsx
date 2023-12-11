@@ -12,7 +12,7 @@ interface Props extends ComponentPropsWithoutRef<'textarea'> {
 export const TextArea = forwardRef<HTMLTextAreaElement, Props>(({
      label, required, className, error, ...props} : Props, ref) => {
     return (
-        <div>
+        <div className="mb-5">
             <div className="flex">
                 {label && <span className='text-[16px] block text-dark-grey mb-2'>{label}</span>}
                 {required && <span className="text-red-600">*</span>}

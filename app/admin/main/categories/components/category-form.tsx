@@ -36,7 +36,7 @@ export  const CategoryForm = ({id} : Prop) => {
             am: yup.string().required("Обязательное поле"),
             ru: yup.string().required("Обязательное поле"),
         }),
-        image: yup.object().shape({id: yup.string(), src: yup.string() }).nullable(),
+        image: yup.object().shape({id: yup.string(), src: yup.string().required("Изображение обязательно")})
     })
 
     const loading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
@@ -46,7 +46,7 @@ export  const CategoryForm = ({id} : Prop) => {
         handleSubmit,
         register,
         getValues,
-        formState: {errors}
+        formState: {errors, touchedFields}
     } = useForm<CategoryResponseDTO>({
         resolver: yupResolver(validationSchema),
         ...(category ? {
@@ -78,7 +78,7 @@ export  const CategoryForm = ({id} : Prop) => {
             onSubmit()
         })()
     }
-
+console.log(touchedFields, "fields")
     return (
         <div>
             <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
@@ -96,13 +96,17 @@ export  const CategoryForm = ({id} : Prop) => {
                             }}>Удалить</Button>
                             : <></>
                     }
-                    <Button onClick={() => router.push('/admin/main/categories')} variant="secondary">Отмена</Button>
+                    <Button onClick={() => {
+                        // if(getValues().image?.src){
+                            router.push('/admin/main/categories')
+                        // }
+                    }} variant="secondary">Отмена</Button>
                     <Button variant="primary" onClick={submit}>Сохранить</Button>
                 </>
             } headerTitle={"Добавить категорию"}>
-                <div className=" w-[100%] pl-5 pr-5 pr-5 mb-20">
+                <div className=" w-[100%] pl-5 pr-5 mb-20">
                     <div className="gap-4">
-                        <ImageUploader control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                        <ImageUploader error={errors.image?.src?.message} control={control} name='image' imageHeightProportion={50}/>
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}

@@ -21,7 +21,7 @@ export default function Brands() {
 
     const {
         data: brands,
-        isLoading: BrandsLoading,
+        isLoading: BrandsIsLoading,
         refetch,
     } = useQuery<BrandResponseDTO[]>(getBrands);
 
@@ -60,6 +60,7 @@ export default function Brands() {
                 </>
             } headerTitle={"Бренды"}
             >
+                {(!brands || !brands[0]) && !BrandsIsLoading && <div className="text-lg flex justify-center">Бренды не найдены.</div>}
                 <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
                     {(reorderedBrands ? reorderedBrands : brands)?.map((item) => {
                         return (
@@ -75,7 +76,7 @@ export default function Brands() {
                         )
                     })
                     }
-                    {BrandsLoading && <LoadingSpinner/>}
+                    {BrandsIsLoading && <LoadingSpinner/>}
                 </div>
             </PageLayout>
         </div>

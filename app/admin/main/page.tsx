@@ -27,22 +27,26 @@ export default function AdminMain() {
 
             {/*-----------------------------------------------------       CATEGORIES       ---------------------------------------------------------*/}
 
-            <MainPageSectionComponent title={"categories"}>
+            <MainPageSectionComponent title={"Категории"}>
+                {(!categories || !categories[0]) && <div className="text-lg">Категории не найдены.</div>}
                 {categories?.slice(0,6)?.map(item => <CategoryTemplate item={item} key={item._id} shownInMainPage={true}/>)}
             </MainPageSectionComponent>
             {/*-----------------------------------------------------         BRANDS        ---------------------------------------------------------*/}
 
-            <MainPageSectionComponent title={"brands"}>
+            <MainPageSectionComponent title={"Бренды"}>
+                {(!brands || !brands[0]) && <div className="text-lg">Бренды не найдены.</div>}
                 {brands?.slice(0,6)?.map(item => <BrandTemplate item={item} key={item._id} shownInMainPage={true}/>)}
             </MainPageSectionComponent>
             {/*-----------------------------------------------------       ATTRIBUTES        ---------------------------------------------------------*/}
 
-            <MainPageSectionComponent title={"attributes"}>
+            <MainPageSectionComponent title={"Атрибуты"}>
+                {(!attributes || !attributes[0]) && <div className="text-lg">Атрибуты не найдены.</div>}
                 {attributes?.slice(0,6)?.map(item => <AttributeTemplate item={item} key={item._id} className="whitespace-nowrap"/>)}
             </MainPageSectionComponent>
             {/*-----------------------------------------------------        PRODUCTS        ---------------------------------------------------------*/}
 
-            <MainPageSectionComponent title={"products"}>
+            <MainPageSectionComponent title={"Продукты"}>
+                {(!products || !products[0]) && <div className="text-lg">Продкты не найдены.</div>}
                 {products?.slice(0,6)?.map(item => <ProductTemplate key={item._id} item={item}/>)}
             </MainPageSectionComponent>
 

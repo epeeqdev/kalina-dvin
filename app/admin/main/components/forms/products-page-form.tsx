@@ -17,7 +17,7 @@ import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageBut
 
 
 const validationSchema = yup.object().shape({
-    image: yup.object().shape({extension: yup.string().required(""), id: yup.string().required(""), src: yup.string()}),
+    image: yup.object().shape({id: yup.string(), src: yup.string().required("regergergergerg")}).required("regergergergerg")
 })
 export default function ProductsPageForm() {
 
@@ -51,12 +51,13 @@ export default function ProductsPageForm() {
             {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
-                    <Button variant="primary" onClick={onEdit}>Сохранить</Button>
+                    {<Button variant="primary" onClick={onEdit}>Сохранить</Button>}
                     <ToItemPageButton link={`/main/products`}/>
                 </>
             } headerTitle={"Страница продуктов"}>
                 <div className="gap-4 justify-center mx-5">
                     <ImageUploader
+                        error={errors?.src?.message}
                         label="Обложка"
                         control={control}
                         name='image'

@@ -21,9 +21,10 @@ export interface ImageUploaderProps {
     className?: string;
     imageFit?: 'contain' | 'cover';
     label?: string
+    error?: string | any
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100}) => {
+export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100, error}) => {
     const [isUploadingFromUrl, setUploadingFromUrl] = useState(false);
     const {
         handleUploadFiles,
@@ -45,55 +46,61 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
         onUploadComplete(reordered);
     };
 
-    return <div className={
-        clsx('w-full grid gap-4', {
-            'grid-cols-1': !multiple,
-            'grid-cols-2 md:grid-cols-5 ': multiple
-        }, className)}>
-        {label && <label>{label}</label>}
-        <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
-                         isLoading={loading && !multiple}>
-            {((multiple) || (!multiple && !uploadedImages.length)) ?
-                <div className='flex flex-col justify-stretch h-full'>
-                    <ImageVariantButton onClick={() => setUploadingFromUrl(true)}>
-                        <IconComponent name='link'/>
-                        <span>Ссылка</span>
-                    </ImageVariantButton>
-                    <ImageVariantButton as='label'>
-                        <input
-                            type="file"
-                            value={[]}
-                            multiple={multiple}
-                            onChange={handleUploadFiles}
-                            accept="image/*"
-                            className="hidden"
-                        />
-                        <IconComponent name='image'/>
-                        <span>Файл</span>
-                    </ImageVariantButton>
-                </div> : <ImageBlock
-                    imageFit={imageFit}
-                    isLoading={loadingImagesIds.includes(uploadedImages[0].id)}
-                    proportionalBlockStyle={proportionalBlockStyle} image={uploadedImages[0]} onRemove={removeImage}/>}
-        </ProportionBlock>
-        {multiple && uploadedImages.map((image, index) => (
-            <Droppable key={image._id} id={image._id} onDrop={handleDrop}>
-                <Draggable id={image._id}>
-                    <ImageBlock
+    return <div className="mb-5">
+        <div className={
+            clsx('w-full grid gap-4', {
+                'grid-cols-1': !multiple,
+                'grid-cols-2 md:grid-cols-5 ': multiple
+            }, className, {"border-2 border-red-600" : error})}>
+            {label && <label>{label}</label>}
+            <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
+                             isLoading={loading && !multiple}>
+                {((multiple) || (!multiple && !uploadedImages.length)) ?
+                    <div className='flex flex-col justify-stretch h-full'>
+                        <ImageVariantButton onClick={() => setUploadingFromUrl(true)}>
+                            <IconComponent name='link'/>
+                            <span>Ссылка</span>
+                        </ImageVariantButton>
+                        <ImageVariantButton as='label'>
+                            <input
+                                type="file"
+                                value={[]}
+                                multiple={multiple}
+                                onChange={handleUploadFiles}
+                                accept="image/*"
+                                className="hidden"
+                            />
+                            <IconComponent name='image'/>
+                            <span>Файл</span>
+                        </ImageVariantButton>
+                    </div> : <ImageBlock
                         imageFit={imageFit}
-                        isLoading={loadingImagesIds.includes(image._id)}
-                        proportionalBlockStyle={proportionalBlockStyle}
-                        image={image}
-                        onRemove={removeImage}/>
-                </Draggable>
-            </Droppable>
+                        isLoading={loadingImagesIds.includes(uploadedImages[0].id)}
+                        proportionalBlockStyle={proportionalBlockStyle} image={uploadedImages[0]} onRemove={removeImage}/>}
+            </ProportionBlock>
+            {multiple && uploadedImages.map((image, index) => (
+                <Droppable key={image._id} id={image._id} onDrop={handleDrop}>
+                    <Draggable id={image._id}>
+                        <ImageBlock
+                            imageFit={imageFit}
+                            isLoading={loadingImagesIds.includes(image._id)}
+                            proportionalBlockStyle={proportionalBlockStyle}
+                            image={image}
+                            onRemove={removeImage}/>
+                    </Draggable>
+                </Droppable>
 
-        ))}
-        {multiple && new Array(uploadingImagesLoadingCount).fill(0).map((_, index) => <ProportionBlock key={index}
-                                                                                                       proportionalBlockStyle={proportionalBlockStyle}
-                                                                                                       isLoading/>)}
-        <UrlUploadModal onSubmit={handleUploadFromURL} isOpen={isUploadingFromUrl}
-                        onClose={() => setUploadingFromUrl(false)}/>
+            ))}
+            {multiple && new Array(uploadingImagesLoadingCount).fill(0).map((_, index) => <ProportionBlock key={index}
+                                                                                                           proportionalBlockStyle={proportionalBlockStyle}
+                                                                                                           isLoading/>)}
+            <UrlUploadModal
+                onSubmit={handleUploadFromURL}
+                isOpen={isUploadingFromUrl}
+                onClose={() => setUploadingFromUrl(false)}
+            />
+        </div>
+        {!!error && <span className="text-sm text-red-600">{error}</span>}
     </div>
 };
 
@@ -115,6 +122,7 @@ const ImageBlock = ({isLoading, image, proportionalBlockStyle,imageFit, onRemove
     }
 
     return (
+        <>
         <ProportionBlock isLoading={isLoading} draggable proportionalBlockStyle={proportionalBlockStyle}>
             <div className={clsx('relative w-full h-full')}>
                 <img src={image.src} alt='uploaded image' className={`w-full h-full object-${imageFit}`}/>
@@ -123,13 +131,14 @@ const ImageBlock = ({isLoading, image, proportionalBlockStyle,imageFit, onRemove
                     <IconComponent name='deleteBin' color='white'/>
                 </div>
             </div>
-            <Alert isOpen={deleteModalOpen} onAccept={() => {
-                onRemove(image._id)
-                closeModal()
-            }} onClose={closeModal} onCancel={closeModal} title="Удалить Картинку ?" >
-                <p className="text-2xl font-bold my-10">Вы уверены, что хотите удалить эту картинку?</p>
-                <p className="text-gray-700 text-[16px]">После удаления не возможно восстановить данную картинку!</p>
-            </Alert>
         </ProportionBlock>
+                <Alert isOpen={deleteModalOpen} onAccept={() => {
+                    onRemove(image._id)
+                    closeModal()
+                }} onClose={closeModal} onCancel={closeModal} title="Удалить Картинку ?" >
+                    <p className="text-2xl font-bold my-10">Вы уверены, что хотите удалить эту картинку?</p>
+                    <p className="text-gray-700 text-[16px]">После удаления не возможно восстановить данную картинку!</p>
+                </Alert>
+        </>
     );
 }

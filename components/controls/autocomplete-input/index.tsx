@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import {Control, Controller} from "react-hook-form";
+import clsx from "clsx";
 
 export interface Option {
     label: string;
@@ -22,7 +23,7 @@ export interface Props {
 export default function AutocompleteInput({control, name, options, error, label,placeholder, required, multiselect, className}: Props) {
     return <Controller control={control} name={name} render={({field}) => {
         return (
-            <div className={className}>
+            <div className={clsx("mb-5" ,className)} >
                 <div className="flex items-center">
                     <label className='text-[16px] mb-1 text-dark-grey whitespace-nowrap'>{label}</label>
                     {required && <span className="text-red-600">*</span>}

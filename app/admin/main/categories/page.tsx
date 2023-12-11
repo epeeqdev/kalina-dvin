@@ -41,9 +41,7 @@ export default function Categories() {
         });
     };
 
-
     return (
-
 
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
@@ -57,6 +55,7 @@ export default function Categories() {
                 </>
 
             } headerTitle={"Категории"}>
+                {(!categories || !categories[0]) && !categoriesLoading && <div className="text-lg flex justify-center">Категории не найдены.</div>}
                     <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
                         {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {
                             return (
