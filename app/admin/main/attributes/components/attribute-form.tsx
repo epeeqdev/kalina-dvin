@@ -40,13 +40,13 @@ export const AttributeForm = ({id}:Props) => {
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: attribute, isLoading: attributeLoading} = useQuery<AttributeDTO>(getAttribute,[id], {fetchOnMount: !!id});
 
-    const loading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading
+    const isLoading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading
 
     const {
         handleSubmit,
         register,
         getValues,
-        formState: {errors}
+        formState: {errors, isDirty}
     } = useForm<Attribute>({
         resolver: yupResolver(validationSchema),
         ...(attribute ? {
@@ -89,7 +89,7 @@ export const AttributeForm = ({id}:Props) => {
                 <p className="text-2xl font-bold ">Вы уверены, что хотите удалить данный атрибут?</p>
                 <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
             </Alert>
-            {loading && <LoadingSpinner />}
+            {isLoading && <LoadingSpinner />}
             <PageLayout headerButtons={
                 <>
                     {
@@ -101,7 +101,7 @@ export const AttributeForm = ({id}:Props) => {
                             : <></>
                     }
                     <Button onClick={() => router.push("/admin/main/attributes")} variant="secondary">Отмена</Button>
-                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                 </>
             } headerTitle={"Добавить Атрибуты"} >
                 <div className="flex gap-4 px-5">

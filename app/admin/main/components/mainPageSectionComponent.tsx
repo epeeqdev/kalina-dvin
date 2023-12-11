@@ -6,8 +6,9 @@ import {ReactNode} from "react";
 type Prop = {
     children: ReactNode
     title: string
+    path?: string
 }
-export default function MainPageSectionComponent({children, title} : Prop){
+export default function MainPageSectionComponent({children, title, path} : Prop){
     const router = useRouter()
 
     return (
@@ -17,7 +18,7 @@ export default function MainPageSectionComponent({children, title} : Prop){
                 {children}
             </div>
             <div className="flex justify-end my-10 mx-5">
-                <Button variant="primary" onClick={() => router.push(`main/${title}`)}>Подробнее</Button>
+                <Button variant="primary" onClick={() => router.push(`main/${path}`)}>Подробнее</Button>
             </div>
             <div className='w-full flex justify-center '>
                 <div className='border border-b-grey-400 w-full mx-5'/>

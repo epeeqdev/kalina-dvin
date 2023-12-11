@@ -46,7 +46,7 @@ export default function ContactsForm() {
         handleSubmit,
         register,
         getValues,
-        formState: {errors}
+        formState: {errors, isDirty}
     } = useForm<ContactsPageDTO>({
         resolver: yupResolver(validationSchema),
         ...(contacts ? {
@@ -83,7 +83,7 @@ export default function ContactsForm() {
             <PageLayout headerButtons={
                 <>
                     <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                     <Link href={"/main#footer-part"} target="_blank">
                         <ToItemPageButton/>
                     </Link>

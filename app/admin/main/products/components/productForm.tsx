@@ -41,7 +41,8 @@ export default function ProductForm({id}: { id: string }) {
         control,
         register,
         handleSubmit,
-        getRequestData
+        getRequestData,
+        isDirty
     } = useProductForm(productData);
 
     const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
@@ -80,12 +81,7 @@ export default function ProductForm({id}: { id: string }) {
                         : <></>
                 }
                 <Button onClick={() => router.push("/admin/main/products")} variant="secondary">Отмена</Button>
-                <Button
-                    variant="primary"
-                    onClick={submit}
-                >
-                    Сохранить
-                </Button>
+                {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                 {productData?._id && <ToItemPageButton link={`/main/products/${productData._id}`}/>}
             </>}>
             <div className="mx-5 mb-[200px]">
@@ -97,7 +93,7 @@ export default function ProductForm({id}: { id: string }) {
                            placeholder='Введите заголовок'
                            {...register("title.am")}
                            className='flex-1 mb-2'
-                           error={errors.title?.ru?.message}
+                           error={errors?.title?.ru?.message}
                            required
                     />
                     <Input label="Заголовок на русском"

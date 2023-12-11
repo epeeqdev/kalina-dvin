@@ -47,12 +47,12 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
     };
 
     return <div className="mb-5">
+        {label && <div className="mb-2">{label}</div>}
         <div className={
             clsx('w-full grid gap-4', {
                 'grid-cols-1': !multiple,
                 'grid-cols-2 md:grid-cols-5 ': multiple
             }, className, {"border-2 border-red-600" : error})}>
-            {label && <label>{label}</label>}
             <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
                              isLoading={loading && !multiple}>
                 {((multiple) || (!multiple && !uploadedImages.length)) ?
