@@ -26,6 +26,7 @@ export const handleUnauthorized = () => {
 
 export function reorderObjectsById(ids: string[], objects: any[]): any[] {
 	// Create a map from the objects array for quick lookup
+	const itemsWithoutOrder = objects.filter((item) => !ids.includes(item._id?.toString()))
 	const objectMap = objects.reduce((acc, obj) => {
 		acc[obj._id.toString()] = obj;
 		return acc;
@@ -38,5 +39,5 @@ export function reorderObjectsById(ids: string[], objects: any[]): any[] {
 		}
 	});
 
-	return orderedObjects;
+	return [...orderedObjects, ...itemsWithoutOrder];
 }
