@@ -58,12 +58,13 @@ export default function AddAttributes({onAddSubmit, onCancel, data, editingItem,
     return (
             <div className="gap-2 mt-2 w-full">
                 <MultiSelectInput
-                    className="w-full gap-4 mb-2"
+                    className="w-full gap-4 mb-[8px]"
                     control={localFormControl}
                     options={attributesOptions}
                     name='attribute'
-                    label={"Select Attributes"}
+                    label={"Выберите атрибут"}
                     error={errors.attribute?.message}
+                    placeholder="Название атрибута"
                 />
                 <div className='mb-2'>
                     <Input

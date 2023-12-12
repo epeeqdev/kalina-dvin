@@ -27,6 +27,7 @@ export default function Attributes() {
                     <Button onClick={() => router.push("/admin/main/attributes/add")} variant="primary">Добавить Атрибут</Button>
                 </>
             } headerTitle={"Атрибуты"} >
+                {(!attributes || !attributes[0]) && !attributesLoading && <div className="text-lg flex justify-center">Атрибуты не найдены.</div>}
                 <div className="px-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">
                     {attributes?.map((item) => {
                         return (

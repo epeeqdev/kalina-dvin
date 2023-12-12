@@ -34,7 +34,7 @@ export default function Slider() {
 
     const {
         control: localFormControl,
-        formState: {errors},
+        formState: { isDirty},
         getValues,
         setValue
     } = useForm<MainPageSliderDTO>({
@@ -100,12 +100,15 @@ export default function Slider() {
                 }
                 <PageLayout headerButtons={
                     <>
-                        <Button variant="primary" onClick={() => {
-                            onAdd()
-                            setEditingItem(null)
-                        }}>
+                        {
+                            isDirty && !isLoading && <Button
+                            variant="primary"
+                            onClick={() => {
+                                onAdd()
+                                setEditingItem(null)
+                            }}>
                             Сохранить
-                        </Button>
+                        </Button>}
                         <ToItemPageButton link='/main'/>
                     </>
 
@@ -159,29 +162,6 @@ export default function Slider() {
                                                     <div
                                                         className=" w-full h-full absolute bg-zinc-600 top-0 right-0 left-0 bottom-0 opacity-40"></div>
                                                 </div>
-                                                <div className="flex justify-end gap-2 relative">
-                                                    <Alert
-                                                        isOpen={alertModal}
-                                                        onAccept={() => {
-                                                            onDelete(deletingItemId)
-                                                            setDeletingItemId("")
-                                                        }}
-                                                        onClose={() => {
-                                                            setDeletingItemId("")
-                                                            setAlertModal(false)
-                                                        }}
-                                                        onCancel={() => {
-                                                            setDeletingItemId("")
-                                                            setAlertModal(false)
-                                                        }}
-                                                    >
-                                                        <p className="text-2xl font-bold">Вы уверены, что хотите удалить
-                                                            данный Слайд?</p>
-                                                        <p className="text-gray-700">После удаления Слайд не возможно
-                                                            восстановить!</p>
-                                                    </Alert>
-                                                </div>
-
                                             </div>
                                         </Draggable>
                                     </Droppable>
@@ -200,6 +180,28 @@ export default function Slider() {
                     </div>
                 </PageLayout>
                 {isLoading && <LoadingSpinner/>}
+                <div className="flex justify-end gap-2 relative">
+                    <Alert
+                        isOpen={alertModal}
+                        onAccept={() => {
+                            onDelete(deletingItemId)
+                            setDeletingItemId("")
+                        }}
+                        onClose={() => {
+                            setDeletingItemId("")
+                            setAlertModal(false)
+                        }}
+                        onCancel={() => {
+                            setDeletingItemId("")
+                            setAlertModal(false)
+                        }}
+                    >
+                        <p className="text-2xl font-bold">Вы уверены, что хотите удалить
+                            данный Слайд?</p>
+                        <p className="text-gray-700">После удаления Слайд не возможно
+                            восстановить!</p>
+                    </Alert>
+                </div>
             </div>
         )} name="slides"/>
     )

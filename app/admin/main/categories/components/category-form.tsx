@@ -9,7 +9,6 @@ import {CategoryResponseDTO} from "@/backend/types";
 import {getCategory} from "@/app/admin/main/categories/halpers/getCategory";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {log} from "util";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
@@ -36,32 +35,31 @@ export  const CategoryForm = ({id} : Prop) => {
             am: yup.string().required("Обязательное поле"),
             ru: yup.string().required("Обязательное поле"),
         }),
-        image: yup.object().shape({id: yup.string(), src: yup.string() }).nullable(),
+        image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Изображение обязательно")
     })
 
-    const loading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
+    const isLoading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
 
     const {
         control ,
         handleSubmit,
         register,
         getValues,
-        formState: {errors}
+        formState: {errors, isDirty}
     } = useForm<CategoryResponseDTO>({
         resolver: yupResolver(validationSchema),
-        ...(category ? {
             values: {
-                name: category?.name,
-                image: category?.image
+                name: category ? category?.name : null,
+                image: category ? category?.image : null,
+                _id: category?._id
             }
-        }: {})
     }) ?? {};
 
     const onCancel = () => {
         setDeleteModalOpen(false)
     }
     const onDelete = async () => {
-        deleteCategoryMutate(id).then(() => router.push('/admin/main/categories')).catch((e) => log("cqatch error" , e));
+        deleteCategoryMutate(id).then(() => router.push('/admin/main/categories')).catch((e) => console.log("catch error" , e));
     }
 
 
@@ -85,7 +83,7 @@ export  const CategoryForm = ({id} : Prop) => {
                 <p className="text-2xl font-bold">Вы уверены, что хотите удалить данную категорию?</p>
                 <p className="text-gray-700">После удаления категорию не возможно восстановить!</p>
             </Alert>
-            {loading && <LoadingSpinner />}
+            {isLoading && <LoadingSpinner />}
             <PageLayout headerButtons={
                 <>
                     {
@@ -96,13 +94,15 @@ export  const CategoryForm = ({id} : Prop) => {
                             }}>Удалить</Button>
                             : <></>
                     }
-                    <Button onClick={() => router.push('/admin/main/categories')} variant="secondary">Отмена</Button>
-                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    <Button onClick={() => {
+                            router.push('/admin/main/categories')
+                    }} variant="secondary">Отмена</Button>
+                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                 </>
             } headerTitle={"Добавить категорию"}>
-                <div className=" w-[100%] pl-5 pr-5 pr-5 mb-20">
+                <div className=" w-[100%] pl-5 pr-5 mb-20">
                     <div className="gap-4">
-                        <ImageUploader control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                        <ImageUploader error={errors.image?.message} control={control} name='image' imageHeightProportion={50}/>
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}

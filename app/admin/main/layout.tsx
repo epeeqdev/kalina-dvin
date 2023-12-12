@@ -19,7 +19,7 @@ export default function Layout({children}:PropsWithChildren){
 	const slicedPathName = path.split("/").slice(-2).join("/")
 
 	const [isOpen, setIsOpen] = useState(false);
-	const styles = "block px-4 py-2 text-[14px] hover:font-bold hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
+	const styles = "block px-4 py-2 text-[14px] hover:bg-[#eeeeee] hover:text-gray-800 transition whitespace-nowrap"
 
 	const toggleSidebar = () => {
 		setIsOpen(!isOpen);
@@ -82,9 +82,9 @@ export default function Layout({children}:PropsWithChildren){
 					className={`toggle-btn`}>
 					<Hamburger toggled={isOpen} size={25}/>
 				</button>
-				<Button variant="alert" className="flex gap-2 bg-white mx-2">
+				<Button variant="alert" onClick={logout} className="flex gap-2 bg-white mx-2">
 					<div>Выйти</div>
-					<IconComponent onClick={logout} name={"logout"}/>
+					<IconComponent name={"logout"}/>
 				</Button>
 			</div>
 			<div className='flex min-h-screen overflow-hidden'>

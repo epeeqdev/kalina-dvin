@@ -25,7 +25,7 @@ const validationSchema = yup.object().shape({
         am: yup.string().required("Обязательное поле"),
         ru: yup.string().required("Обязательное поле"),
     }),
-    image: yup.object().shape({extension: yup.string(), id: yup.string(), src: yup.string() }).nullable(),
+    image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Изображение обязательно"),
 })
 
 interface Category {
@@ -47,15 +47,13 @@ export const BrandForm = ({id}:Props) => {
         handleSubmit,
         register,
         getValues,
-        formState: {errors}
+        formState: {errors, isDirty}
     } = useForm<Category>({
         resolver: yupResolver(validationSchema),
-        ...(brand ? {
             values: {
-                name: brand?.name,
-                image: brand?.image
+                name: brand ? brand?.name : null,
+                image:brand ? brand?.image : null
             }
-        }: {})
     }) ?? {};
 
 
@@ -98,12 +96,12 @@ export const BrandForm = ({id}:Props) => {
                             : <></>
                     }
                         <Button onClick={() => router.push("/admin/main/brands")} variant="secondary">Отмена</Button>
-                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    {isDirty && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                 </>
             } headerTitle={"Добавить Бренд"}>
                 <div className=" w-[100%] pl-5 pr-5 pr-5 mb-20">
                     <div className="gap-4">
-                        <ImageUploader imageFit='contain' control={control} name='image' imageHeightProportion={50} className="mb-5" />
+                        <ImageUploader error={errors.image?.message} imageFit='contain' control={control} name='image' imageHeightProportion={50} />
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}

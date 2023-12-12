@@ -29,14 +29,14 @@ export default function Modal({ isOpen, onClose , title , message, children, cla
     }, [isOpen, onClose]);
 
     return (
-        <div className={clsx('fixed inset-0 flex items-center justify-center z-50 transition', {
+        <div className={clsx('fixed inset-0 flex cursor-pointer items-center justify-center z-50 transition', {
             'opacity-0 pointer-events-none':!isOpen,
             'opacity-100': isOpen,
         })}>
             <div className="modal-overlay fixed inset-0 bg-black opacity-[0.5]"></div>
-            <div className={clsx("relative modal-container bg-white max-w-[600px] w-full mx-auto rounded shadow-lg z-50 overflow-y-auto", classname)}>
+            <div className={clsx("relative modal-container bg-white max-w-[600px] w-full mx-auto rounded shadow-lg z-50 overflow-y-auto cursor-default", classname)}>
                     <Header title={title}>
-                        <button onClick={onClose} className="absolute top-0 right-0 cursor-pointer p-2 cursor-pointer hover:bg-gray-lighter">
+                        <button onClick={onClose} className="absolute top-0 right-0 cursor-pointer p-2 hover:bg-gray-lighter">
                             <IconComponent name='close'/>
                         </button>
                     </Header>

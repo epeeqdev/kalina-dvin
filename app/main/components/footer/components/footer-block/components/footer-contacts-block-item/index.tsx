@@ -10,9 +10,9 @@ type Props = {
 }
 export const FooterContactsBlock = ({icon, title,link, blankType}: Props) => {
     return(
-        <a href={link ? link: '#'} className='cursor-pointer flex items-center gap-x-1 group hover:text-secondary mb-2' target={blankType ? '_blank': ''} rel={blankType ? 'noopener noreferrer': ''}>
+        <a href={link ? link: '#'} className='cursor-pointer flex items-center gap-x-1 group hover:text-secondary mb-2 m' target={blankType ? '_blank': ''} rel={blankType ? 'noopener noreferrer': ''}>
             {icon && <IconComponent color='white' size='sm' name={icon} className='lg:w-[18px] lg:h-[18px] xl:w-[24px] xl:h-[24px] group-hover:text-secondary transition'/>}
-            <Typography color='white' size='md' className='group-hover:text-secondary transition'>{title}</Typography>
+            <Typography color='white' size='md' className='group-hover:text-secondary transition overflow-hidden w-[140px] overflow-ellipsis whitespace-nowrap sm:w-full'>{title}</Typography>
         </a>
     )
 }
