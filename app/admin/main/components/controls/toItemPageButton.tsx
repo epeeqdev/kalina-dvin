@@ -15,7 +15,7 @@ export default function ToItemPageButton({link}: Prop) {
     return (
         <Button
             variant="primary"
-            className="flex justify-center items-center"
+            className="flex justify-center items-center px-[5px]"
             onClick={() => {
                 if (link) {
                     navigateToNewTab(link)
