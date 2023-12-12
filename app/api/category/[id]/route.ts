@@ -37,7 +37,7 @@ export async function PUT(request: NextRequest, context: Params) {
 export async function DELETE(request: NextRequest, context: Params) {
 	try {
 		const oldCategory = await DB.Category.findById(context.params.id).populate('image') as Brand;
-		if(oldCategory){
+		if(oldCategory && oldCategory.image){
 			await deleteImage(oldCategory.image.id);
 		}
 		await DB.Category.findByIdAndDelete(context.params.id);

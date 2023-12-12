@@ -8,8 +8,8 @@ import clsx from "clsx";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Kalina Dvin',
-  description: '«СВОБОДА»,«BIG»,«Авангард»,«BUMFA GROUP»,\n' +
+  title: 'Kalina Dvin/Կալինա Դվին/Калина двин',
+  description: 'Kalina Dvin/Կալինա Դվին/Калина двин: «СВОБОДА»,«BIG»,«Авангард»,«BUMFA GROUP»,\n' +
       '«BIO WORLD» և «Терпак» պաշտոնական ներկայացուցիչը ՀՀ-ում:',
 }
 
@@ -31,14 +31,14 @@ export default function RootLayout({
       <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
       <meta
           name="description"
-          content="«СВОБОДА»,«BIG»,«Авангард»,«BUMFA GROUP»,«BIO WORLD» և «Терпак» պաշտոնական ներկայացուցիչը ՀՀ-ում:"
+          content="Kalina Dvin/Կալինա Դվին/Калина двин: «СВОБОДА»,«BIG»,«Авангард»,«BUMFA GROUP»,«BIO WORLD» և «Терпак» պաշտոնական ներկայացուցիչը ՀՀ-ում:"
       />
       <meta
           name="title"
-          content="Kalina Dvin/ Կալինա Դվին"
+          content="Kalina Dvin/Կալինա Դվին/Калина двин"
       />
       <title>
-        Kalina Dvin
+        Kalina Dvin/Калина двин
       </title>
     </head>
       <body className={clsx(inter.className, 'bg-[#fcfbfb]')} style={{overflowX: "hidden"}}>{children}</body>

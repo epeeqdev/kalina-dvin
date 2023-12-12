@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import clsx from "clsx";
 
 type ImageProps = {
     src: string;
     alt?: string;
-    placeholder?: string;
     className?: string;
+    placeholderWithoutBorder?: boolean
 };
 
-export const CustomImage: React.FC<ImageProps> = ({ src, alt, className, placeholder }) => {
+export const CustomImage: React.FC<ImageProps> = ({ src, alt, className, placeholderWithoutBorder }) => {
     const [imageSrc, setImageSrc] = useState<string>(src);
     const [error, setError] = useState<boolean>(false);
 
@@ -19,8 +20,11 @@ export const CustomImage: React.FC<ImageProps> = ({ src, alt, className, placeho
     }, [src]);
 
     if (error) {
-        return <img className={className} src='/no-image-placeholder.png' alt={alt || 'placeholder'} />;
+        return <div className={clsx('flex w-full h-full justify-center items-center', !placeholderWithoutBorder && 'border',className)}><img className={clsx('max-h-[100%]')} src='/no-image-placeholder.png' alt={alt || 'placeholder'} /></div>;
     }
+    if(src){
+        return <img className={className} src={imageSrc} alt={alt} loading="lazy" />;
+    }
+    return null;
 
-    return <img className={className} src={imageSrc} alt={alt} loading="lazy" />;
 };
