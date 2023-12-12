@@ -9,7 +9,6 @@ import {CategoryResponseDTO} from "@/backend/types";
 import {getCategory} from "@/app/admin/main/categories/halpers/getCategory";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {log} from "util";
 import LoadingSpinner from "@/components/controls/loading-spinner";
 import {Input} from "@/components/controls/input";
 import * as yup from "yup";
@@ -60,7 +59,7 @@ export  const CategoryForm = ({id} : Prop) => {
         setDeleteModalOpen(false)
     }
     const onDelete = async () => {
-        deleteCategoryMutate(id).then(() => router.push('/admin/main/categories')).catch((e) => log("cqatch error" , e));
+        deleteCategoryMutate(id).then(() => router.push('/admin/main/categories')).catch((e) => console.log("catch error" , e));
     }
 
 
