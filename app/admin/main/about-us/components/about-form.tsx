@@ -22,9 +22,9 @@ const validationSchema = yup.object().shape({
     homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
     aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
     aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
-    mainPageImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
-    aboutPageTopImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
-    aboutPageBottomImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).nullable(),
+    mainPageImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required("Изображение обязательно"),
+    aboutPageTopImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("")}).required("Изображение обязательно"),
+    aboutPageBottomImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required("Изображение обязательно"),
     assortmentCount: yup.number().required("Обязательное поле"),
     brandsCount: yup.number().required("Обязательное поле"),
     partnersCount: yup.number().required("Обязательное поле"),
@@ -42,7 +42,7 @@ export default function AboutForm() {
         handleSubmit,
         register,
         getValues,
-        formState: {errors}
+        formState: {errors, isDirty}
     } = useForm<AboutUsDTO>({
         resolver: yupResolver(validationSchema),
         ...(about ? {
@@ -79,7 +79,7 @@ export default function AboutForm() {
             <PageLayout headerButtons={
                 <>
                     <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                     <Link href={"/main#about-us-part"} target="_blank">
                         <ToItemPageButton/>
                     </Link>
@@ -87,13 +87,15 @@ export default function AboutForm() {
             } headerTitle={"О нас"}
             >
                 <div className="w-full pb-16 pl-5 pr-8">
-                        <div className="my-5 flex justify-start">
+                        <div className="my-5">
                             <ImageUploader
                                 label="Фото Главной страницы"
                                 className='max-w-[600px]'
                                 imageHeightProportion={100}
                                 control={control}
-                                name='mainPageImage'/>
+                                name='mainPageImage'
+                                error={errors.mainPageImage?.message}
+                            />
                         </div>
                     <div className="mb-5">
                         <TextArea
@@ -113,8 +115,15 @@ export default function AboutForm() {
                             error={errors.homePageDescription?.ru?.message}
                         />
                     </div>
-                    <div className="my-5 flex justify-start">
-                        <ImageUploader label="Верхнее фото страницы О нас" className='max-w-[600px]' imageHeightProportion={100} control={control} name='aboutPageTopImage'/>
+                    <div className="my-5">
+                        <ImageUploader
+                            label="Верхнее фото страницы О нас"
+                            className='max-w-[600px]'
+                            imageHeightProportion={100}
+                            control={control}
+                            name='aboutPageTopImage'
+                            error={errors.aboutPageTopImage?.message}
+                        />
                     </div>
                     <div className="mb-5">
                         <TextArea
@@ -133,8 +142,15 @@ export default function AboutForm() {
                             error={errors.aboutUsPageDescriptionTop?.ru?.message}
                         />
                     </div>
-                    <div className="my-5 flex justify-start">
-                        <ImageUploader label="Нижнее фото страницы О нас" className='max-w-[600px]' imageHeightProportion={100} control={control} name='aboutPageBottomImage'/>
+                    <div className="my-5">
+                        <ImageUploader
+                            label="Нижнее фото страницы О нас"
+                            className='max-w-[600px]'
+                            imageHeightProportion={100}
+                            control={control}
+                            name='aboutPageBottomImage'
+                            error={errors.aboutPageBottomImage?.message}
+                        />
                     </div>
                     <div className="mb-5">
                         <TextArea

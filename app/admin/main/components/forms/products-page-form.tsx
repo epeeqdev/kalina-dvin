@@ -30,7 +30,7 @@ export default function ProductsPageForm() {
 
     const {
         control,
-        formState: {errors},
+        formState: {errors, isDirty},
         getValues
     } = useForm<ImageDTO>({
         resolver: yupResolver(validationSchema),
@@ -51,7 +51,7 @@ export default function ProductsPageForm() {
             {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
-                    {<Button variant="primary" onClick={onEdit}>Сохранить</Button>}
+                    {isDirty && !isLoading && <Button variant="primary" onClick={onEdit}>Сохранить</Button>}
                     <ToItemPageButton link={`/main/products`}/>
                 </>
             } headerTitle={"Страница продуктов"}>

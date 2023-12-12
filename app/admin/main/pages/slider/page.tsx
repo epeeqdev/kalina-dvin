@@ -34,7 +34,7 @@ export default function Slider() {
 
     const {
         control: localFormControl,
-        formState: {errors},
+        formState: { isDirty},
         getValues,
         setValue
     } = useForm<MainPageSliderDTO>({
@@ -100,12 +100,15 @@ export default function Slider() {
                 }
                 <PageLayout headerButtons={
                     <>
-                        <Button variant="primary" onClick={() => {
-                            onAdd()
-                            setEditingItem(null)
-                        }}>
+                        {
+                            isDirty && !isLoading && <Button
+                            variant="primary"
+                            onClick={() => {
+                                onAdd()
+                                setEditingItem(null)
+                            }}>
                             Сохранить
-                        </Button>
+                        </Button>}
                         <ToItemPageButton link='/main'/>
                     </>
 

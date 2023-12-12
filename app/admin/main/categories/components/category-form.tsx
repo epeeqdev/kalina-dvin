@@ -36,25 +36,24 @@ export  const CategoryForm = ({id} : Prop) => {
             am: yup.string().required("Обязательное поле"),
             ru: yup.string().required("Обязательное поле"),
         }),
-        image: yup.object().shape({id: yup.string(), src: yup.string().required("Изображение обязательно")})
+        image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Изображение обязательно")
     })
 
-    const loading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
+    const isLoading = editCategoryLoading || addCategoryLoading || deleteCategoryLoading || categoryLoading
 
     const {
         control ,
         handleSubmit,
         register,
         getValues,
-        formState: {errors, touchedFields}
+        formState: {errors, isDirty}
     } = useForm<CategoryResponseDTO>({
         resolver: yupResolver(validationSchema),
-        ...(category ? {
             values: {
-                name: category?.name,
-                image: category?.image
+                name: category ? category?.name : null,
+                image: category ? category?.image : null,
+                _id: category?._id
             }
-        }: {})
     }) ?? {};
 
     const onCancel = () => {
@@ -78,14 +77,14 @@ export  const CategoryForm = ({id} : Prop) => {
             onSubmit()
         })()
     }
-console.log(touchedFields, "fields")
+
     return (
         <div>
             <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
                 <p className="text-2xl font-bold">Вы уверены, что хотите удалить данную категорию?</p>
                 <p className="text-gray-700">После удаления категорию не возможно восстановить!</p>
             </Alert>
-            {loading && <LoadingSpinner />}
+            {isLoading && <LoadingSpinner />}
             <PageLayout headerButtons={
                 <>
                     {
@@ -97,16 +96,14 @@ console.log(touchedFields, "fields")
                             : <></>
                     }
                     <Button onClick={() => {
-                        // if(getValues().image?.src){
                             router.push('/admin/main/categories')
-                        // }
                     }} variant="secondary">Отмена</Button>
-                    <Button variant="primary" onClick={submit}>Сохранить</Button>
+                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
                 </>
             } headerTitle={"Добавить категорию"}>
                 <div className=" w-[100%] pl-5 pr-5 mb-20">
                     <div className="gap-4">
-                        <ImageUploader error={errors.image?.src?.message} control={control} name='image' imageHeightProportion={50}/>
+                        <ImageUploader error={errors.image?.message} control={control} name='image' imageHeightProportion={50}/>
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}

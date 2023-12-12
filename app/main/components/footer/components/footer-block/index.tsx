@@ -13,7 +13,6 @@ export const FooterBlock = ({title, children}: Props) => {
             <div className='flex flex-col gap-y-1 lg:gap-x-3'>
                 {children}
             </div>
-
         </div>
     )
 }

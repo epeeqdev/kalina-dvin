@@ -17,7 +17,7 @@ import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageBut
 
 
 const validationSchema = yup.object().shape({
-    image: yup.object().shape({extension: yup.string().required(""), id: yup.string().required(""), src: yup.string().required("")}).required(""),
+    image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Изображение обязательно"),
 })
 export default function CategoriesPageForm() {
 
@@ -26,9 +26,11 @@ export default function CategoriesPageForm() {
     const {mutate: editCategoriesImage, isLoading: editCategoriesLoading} = useMutation(editCategoriesPage);
 
 
+    const isLoading = editCategoriesLoading || dataLoading
+
     const {
         control,
-        formState: {errors},
+        formState: {errors,isDirty},
         getValues
     } = useForm<CategoriesPageDTO>({
         resolver: yupResolver(validationSchema),
@@ -42,14 +44,12 @@ export default function CategoriesPageForm() {
     const onEdit = () => {
         editCategoriesImage(getValues()).then(() => router.push("/admin/main"))
     }
-
     return (
         <div className="mx-auto w-full col-auto">
-            {editCategoriesLoading && <LoadingSpinner />}
-
+            {isLoading && <LoadingSpinner />}
             <PageLayout headerButtons={
                 <>
-                    <Button variant="primary" onClick={onEdit}>Сохранить</Button>
+                    {isDirty && !isLoading && <Button variant="primary" onClick={onEdit}>Сохранить</Button>}
                     <ToItemPageButton link={`/main/categories`}/>
                 </>
             } headerTitle={"Страница категорий"}>
@@ -60,6 +60,7 @@ export default function CategoriesPageForm() {
                             name='image'
                             className="border-none justify-stretch"
                             imageHeightProportion={40}
+                            error={errors.image?.message}
                         />
                 </div>
             </PageLayout>

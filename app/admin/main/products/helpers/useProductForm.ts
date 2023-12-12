@@ -62,5 +62,5 @@ export const useProductForm = (data?: ProductResponseDTO) => {
             images: images || []
         }
     }
-    return {errors: values?.formState?.errors, control, getRequestData, ...values}
+    return {errors: values?.formState?.errors, isDirty: values?.formState?.isDirty, control, getRequestData, ...values}
 }
