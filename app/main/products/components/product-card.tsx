@@ -1,5 +1,5 @@
 import {ProductResponseDTO} from "@/backend/types";
-import {CustomImage} from "@/app/main/components/image";
+import {CustomImage} from "@/app/components/image";
 import {useLanguage} from "@/app/main/hooks/useLanguage";
 import {Typography} from "@/app/main/components/controls/typography";
 import clsx from "clsx";

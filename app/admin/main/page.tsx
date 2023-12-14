@@ -5,7 +5,7 @@ import {AttributeDTO, BrandResponseDTO, CategoryResponseDTO, ProductResponseDTO}
 import {CategoryTemplate} from "@/app/admin/main/categories/halpers/categoryTamplate";
 import {useRouter} from "next/navigation";
 import {getBrands} from "@/app/admin/main/brands/helpers/getBrands";
-import BrandTemplate from "@/app/admin/main/brands/helpers/brandTemplate";
+import BrandTemplate from "@/app/admin/main/brands/components/template/brandTemplate";
 import AttributeTemplate from "@/app/admin/main/attributes/halpers/attributeTemplate";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import MainPageSectionComponent from "@/app/admin/main/components/mainPageSectionComponent";
@@ -49,8 +49,6 @@ export default function AdminMain() {
                 {(!products || !products[0]) && <div className="text-lg">Продкты не найдены.</div>}
                 {products?.slice(0,6)?.map(item => <ProductTemplate key={item._id} item={item}/>)}
             </MainPageSectionComponent>
-
-
         </PageLayout>
     )
 }
