@@ -2,7 +2,7 @@ import {Typography} from "@/app/main/components/controls/typography";
 import {CategoryResponseDTO} from "@/backend/types";
 import clsx from "clsx";
 import {useLanguage} from "@/app/main/hooks/useLanguage";
-import {CustomImage} from "@/app/main/components/image";
+import {CustomImage} from "@/app/components/image";
 import Link from "next/link";
 
 interface Props {

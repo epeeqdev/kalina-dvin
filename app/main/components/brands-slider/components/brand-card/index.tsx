@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Link from "next/link";
 import {BrandResponseDTO} from "@/backend/types";
-import {CustomImage} from "@/app/main/components/image";
+import {CustomImage} from "@/app/components/image";
 
 interface Props {
     data: BrandResponseDTO;

@@ -20,7 +20,7 @@ export const CustomImage: React.FC<ImageProps> = ({ src, alt, className, placeho
     }, [src]);
 
     if (error) {
-        return <div className={clsx('flex w-full h-full justify-center items-center', !placeholderWithoutBorder && 'border',className)}><img className={clsx('max-h-[100%]')} src='/no-image-placeholder.png' alt={alt || 'placeholder'} /></div>;
+        return <div className={clsx('flex justify-center items-center', !placeholderWithoutBorder && 'border',className)}><img className={clsx('max-h-[100%]')} src='/no-image-placeholder.png' alt={alt || 'placeholder'} /></div>;
     }
     if(src){
         return <img className={className} src={imageSrc} alt={alt} loading="lazy" />;

@@ -1,6 +1,6 @@
 "use client"
 
-import BrandTemplate from "@/app/admin/main/brands/helpers/brandTemplate";
+import BrandTemplate from "@/app/admin/main/brands/components/template/brandTemplate";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {BrandResponseDTO} from "@/backend/types";
 import LoadingSpinner from "@/components/controls/loading-spinner";

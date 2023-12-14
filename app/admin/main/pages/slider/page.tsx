@@ -17,8 +17,8 @@ import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import IconComponent from "@/app/admin/main/components/icon";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
-import {useRouter} from "next/navigation";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import {CustomImage} from "@/app/components/image";
 
 export default function Slider() {
     const {data: sliderData, isLoading: isSliderLoading} = useQuery<MainPageSliderDTO>(getSliderData);
@@ -125,13 +125,8 @@ export default function Slider() {
                                     <Droppable key={item.id || item._id} id={item.id || item._id}
                                                onDrop={handleDrop}>
                                         <Draggable id={item.id || item._id}>
-                                            <div key={item?._id}
-                                                 className="border-2 border-gray-300 relative overflow-hidden">
-                                                <div className='justify-center items-start relative'>
-                                                    <div>
-                                                        <img src={item?.image?.src} alt='swiper'
-                                                             className=' w-full h-[200px] min-w-[300px] object-cover bg-gray-200'/>
-                                                    </div>
+                                            <div key={item?._id} className="border-2 border-gray-300 relative overflow-hidden">
+                                                        <CustomImage className='w-full h-[200px] min-w-[300px] object-cover bg-gray-200' src={item?.image?.src} alt='swiper' />
                                                     <div className="absolute z-30 top-2 right-2">
                                                         <IconComponent
                                                             name='edit'
@@ -162,9 +157,7 @@ export default function Slider() {
                                                                 {item?.buttonText?.ru}
                                                             </Button>}
                                                     </div>
-                                                    <div
-                                                        className=" w-full h-full absolute bg-zinc-600 top-0 right-0 left-0 bottom-0 opacity-40"></div>
-                                                </div>
+                                                    <div className=" w-full h-full absolute bg-zinc-600 top-0 right-0 left-0 bottom-0 opacity-40"></div>
                                             </div>
                                         </Draggable>
                                     </Droppable>
