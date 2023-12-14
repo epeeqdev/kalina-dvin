@@ -1,6 +1,6 @@
 import {ProductResponseDTO} from "@/backend/types";
 import clsx from "clsx";
-import {CustomImage} from "@/app/main/components/image";
+import {CustomImage} from "@/app/components/image";
 import {ProductDescription} from "@/app/main/products/[id]/components/product-description";
 import {ReusableSlider} from "../../../components/controls/reusable-slider";
 
