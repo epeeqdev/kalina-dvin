@@ -20,7 +20,7 @@ const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2
 
 
 const validationSchema = yup.object().shape({
-    phone: yup.string().matches(phoneRegExp, 'Номер телефона, должно быть в формате +374(XX)-XX-XX-XX').min(11).required("Обязательное поле"),
+    phone: yup.string().matches(phoneRegExp, 'Номер телефона, должно быть в формате 374(XX) XX-XX-XX').max(11).required("Обязательное поле"),
     email: yup.string().email("Укажите корректную эл. почту").required("Обязательное поле"),
     address: yup.object().shape({
         am: yup.string().required("Обязательное поле"),

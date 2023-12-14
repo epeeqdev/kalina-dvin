@@ -12,16 +12,16 @@ import uniqid from "uniqid";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 
 const validationSchema:ObjectSchema<SlideDTO> = yup.object().shape({
-    title: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(),
+    title: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
     description: yup.object().shape({am: yup.string(), ru: yup.string()}),
-    image: yup.object().shape({id: yup.string().required("Обязательно добавить картинку"), src: yup.string().required("Обязательно добавить картинку")}).required(""),
+    image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Обязательно добавить картинку"),
     buttonLink: yup.string(),
     buttonText: yup.object().shape({am: yup.string(), ru: yup.string()})
 })
 
 interface Prop {
     id?: string,
-    onSubmit?: (value: SlideDTO) => void,
+    onSubmit?: (value) => void,
     name : string,
     editingSlideData?: SlideDTO
     className?: string
@@ -32,12 +32,16 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
         control,
         handleSubmit,
         register,
-        formState: {errors},
+        formState: {errors, isDirty},
     } = useForm<SlideDTO>({
         resolver: yupResolver<SlideDTO>(validationSchema),
-        ...(editingSlideData ? {
-            values: editingSlideData
-        } : {})
+            values: {
+                image: editingSlideData?.image ?  editingSlideData.image : null,
+                title: editingSlideData?.title ?  editingSlideData.title : null,
+                description: editingSlideData?.description,
+                buttonText: editingSlideData?.buttonText,
+                buttonLink: editingSlideData?.buttonLink
+            }
     });
 
 
@@ -50,8 +54,7 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
     return (
             <div className={clsx(" mx-auto w-full pb-16", className)}>
                 <div className="mb-5">
-                    <ImageUploader control={control} name='image' imageHeightProportion={50} className={`mb-5 ${errors.image?.src?.message && "border-2 border-red-600"}`}/>
-                    {errors.image?.src?.message && <span className="text-red-600 text-sm">{errors.image?.src?.message}</span>}
+                    <ImageUploader error={errors.image?.message} control={control} name='image' imageHeightProportion={50} className={`${errors.image?.src?.message && "border-2 border-red-600"}`}/>
                 </div>
                 <div className="mb-2">
                     <Input
@@ -72,14 +75,12 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
                 </div>
                 <div className="mb-2">
                     <TextArea
-                        required
                         label="Oписание на армянском"
                         placeholder='Введите описание'
                         {...register("description.am")}
                         error={errors.description?.am?.message}
                     />
                     <TextArea
-                        required
                         label="Oписание на русском"
                         placeholder='Введите описание'
                         {...register("description.ru")}
@@ -88,7 +89,6 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
                 </div>
                 <div className="mb-2">
                     <Input
-                        required
                         label="Ссылка Кнопки"
                         placeholder='Введите заголовок'
                         {...register("buttonLink")}
@@ -96,7 +96,6 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
                         className="mb-2"
                     />
                     <Input
-                        required
                         label="Текст Кнопки Ам"
                         placeholder='Введите Текст Ам'
                         {...register("buttonText.am")}
@@ -104,7 +103,6 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
                         className="mb-2"
                     />
                     <Input
-                        required
                         label="Текст Кнопки Ру"
                         placeholder='Введите Текст Ру'
                         {...register("buttonText.ru")}

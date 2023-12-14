@@ -63,7 +63,10 @@ export default function Slider() {
     }
 
     const handleDrop = (args: DroppableArgs) => {
-        setValue("slides", getReorderedItems(getValues().slides as SlideDTO[], args))
+        setValue("slides", getReorderedItems(getValues().slides as SlideDTO[], args), {
+            shouldValidate: true,
+            shouldDirty: true
+        })
     }
 
 
