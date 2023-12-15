@@ -14,9 +14,12 @@ export const CustomImage: React.FC<ImageProps> = ({ src, alt, className, placeho
 
     useEffect(() => {
         const img = new Image();
-        img.src = src;
-        img.onload = () => setImageSrc(src);
-        img.onerror = () => setError(true);
+        if(src){
+            img.src = src;
+            img.onload = () => setImageSrc(src)
+        }else{
+            setError(true)
+        }
     }, [src]);
 
     if (error) {
