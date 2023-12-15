@@ -1,6 +1,7 @@
 import {Typography} from "@/app/main/components/controls/typography";
 import {LogoIcon} from "@/app/main/components/logoIcon";
 import {ImageDTO} from "@/backend/types";
+import {CustomImage} from "../../../../components/image";
 
 interface Props {
     aboutUsPageDescriptionTop: string;
@@ -15,7 +16,7 @@ export const DescriptionTop = ({aboutUsPageDescriptionTop, aboutPageTopImage}:Pr
                 <div className='flex justify-end'>
                     <LogoIcon color='white' className='hidden sm:block'/>
                     <div className='absolute left-0 top-14 sm:-bottom-4 sm:top-[unset] transform sm:translate-y-1/2 w-full'>
-                            <img src={aboutPageTopImage?.src} alt={aboutPageTopImage?._id} className='w-[414px] sm:w-[50%]'/>
+                        <CustomImage src={aboutPageTopImage?.src} alt={aboutPageTopImage?._id} className='w-[414px] sm:w-[50%]' placeholderWithoutBorder={true}/>
                     </div>
                 </div>
             </div>

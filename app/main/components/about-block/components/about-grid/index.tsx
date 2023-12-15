@@ -8,6 +8,7 @@ import {AboutOptions} from "@/app/main/components/about-block/components/about-g
 import {Typography} from "@/app/main/components/controls/typography";
 import {useRouter} from "next/navigation";
 import {AboutUsDTO} from "@/backend/types";
+import {CustomImage} from "../../../../../components/image";
 
 interface Props {
     aboutOptions: AboutUsDTO
@@ -23,7 +24,11 @@ export const AboutGrid = ({aboutOptions}:Props) => {
         <div className="grid grid-cols-12 gap-x-[5%] gap-y-[40px]">
             <div className="col-span-12 sm:col-span-4">
                 <div className={clsx('relative pt-[100%] select-none')}>
-                    <img src={aboutOptions.mainPageImage?.src} alt={aboutOptions.mainPageImage?.id} className={clsx('absolute top-0 left-0 w-full h-full transition object-cover')}/>
+                    <CustomImage
+                        src={aboutOptions.mainPageImage?.src}
+                        alt={aboutOptions.mainPageImage?.id}
+                        className={clsx('absolute top-0 left-0 w-full h-full transition object-cover')}
+                    />
                 </div>
             </div>
             <div className='col-span-12 sm:col-span-8'>

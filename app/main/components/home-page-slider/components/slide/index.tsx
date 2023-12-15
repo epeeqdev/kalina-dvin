@@ -5,6 +5,7 @@ import {Typography} from "@/app/main/components/controls/typography";
 import {Button} from "@/app/main/components/controls/button";
 import {SlideDTO} from "@/backend/types";
 import clsx from "clsx";
+import {CustomImage} from "../../../../../components/image";
 
 interface Props {
     data: SlideDTO;
@@ -25,7 +26,7 @@ export const Slide = ({data, className, imageClassName}: Props) => {
     return (
         <>
             <div className={clsx('w-full h-full', className)}>
-                <img src={image?.src} alt='Main page slide image' className={clsx('w-full h-full object-cover', imageClassName)}/>
+                <CustomImage src={image?.src} alt='Main page slide image' className={clsx('w-full h-full object-cover', imageClassName)}/>
             </div>
             <div
                 className='absolute top-0 bottom-0 right-0 left-0 bg-primary bg-opacity-40 flex flex-col justify-center items-start'
