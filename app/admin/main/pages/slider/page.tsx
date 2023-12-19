@@ -1,7 +1,7 @@
 "use client"
 import {Button} from "@/app/admin/main/components/controls/button";
 import React, {useState} from "react";
-import SliderForm from "@/app/admin/main/components/forms/slider-form";
+import SliderForm from "@/app/admin/main/pages/forms/slider-form";
 import Modal from "@/app/admin/main/products/helpers/modal";
 import {useQuery} from "@/utils/hooks/useQuery";
 import {useMutation} from "@/utils/hooks/useMutation";

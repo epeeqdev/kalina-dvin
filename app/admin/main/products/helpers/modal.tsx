@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import clsx from "clsx";
 import IconComponent from "@/app/admin/main/components/icon";
 import Header from "@/app/admin/main/components/header";
+import * as events from "events";
 
 interface Prop extends React.PropsWithChildren{
     isOpen?: boolean,
@@ -13,8 +14,7 @@ interface Prop extends React.PropsWithChildren{
 export default function Modal({ isOpen, onClose , title , message, children, classname} : Prop){
     useEffect(() => {
         if (isOpen) {
-            // todo change any to other type
-            const handleOutsideClick = (e:any) => {
+            const handleOutsideClick = (e) => {
                 if (e.target?.classList.contains('modal-overlay')) {
                     onClose();
                 }
@@ -40,7 +40,7 @@ export default function Modal({ isOpen, onClose , title , message, children, cla
                             <IconComponent name='close'/>
                         </button>
                     </Header>
-                <div className="modal-content pb-4 text-left px-5">
+                <div className="modal-content pb-4 text-left px-5 overflow-y-auto">
                     <p className="text-gray-700">{message}</p>
                     <div>
                         {children}
