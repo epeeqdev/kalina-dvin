@@ -53,7 +53,7 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
 
     return (
             <div className={clsx(" mx-auto w-full pb-16", className)}>
-                <div className="mb-5">
+                <div className="my-5">
                     <ImageUploader error={errors.image?.message} control={control} name='image' imageHeightProportion={50} className={`${errors.image?.src?.message && "border-2 border-red-600"}`}/>
                 </div>
                 <div className="mb-2">
