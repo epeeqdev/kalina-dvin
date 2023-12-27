@@ -15,7 +15,7 @@ export const LngProvider = React.memo(({ children }: any) => {
 
     const language = defaultLng  ? defaultLng : DEFAULT_STATE
     return (
-        <MainContextProvider defaultValue={language} >
+        <MainContextProvider defaultValue={language}>
             {children}
         </MainContextProvider>
     );

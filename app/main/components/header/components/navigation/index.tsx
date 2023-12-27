@@ -58,7 +58,7 @@ export const Navigation = ({contacts, language, onChangeLng}: Props) => {
                 <Dropdown title={language.toUpperCase()} onChange={onChangeLng} dropdownClassName='display felx justify-center'>
                     {Object.values(LanguageOptions.options).map((el) => (
                         <Option title={getLanguage(el.title)} key={el.id} id={el.id} className='px-4 cursor-pointer'/>
-                    ))}
+                    ))} 
                 </Dropdown>
             </div>
         </>
