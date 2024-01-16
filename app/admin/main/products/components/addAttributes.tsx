@@ -4,11 +4,12 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import {useQuery} from "@/utils/hooks/useQuery";
-import {AttributesResponseDTO, ProductAttributeResponseDTO, ProductRequestDTO} from "@/backend/types";
+import {AttributesResponseDTO, ProductAttributeResponseDTO} from "@/backend/types";
 import axios from "@/axios";
 import {Button} from "../../components/controls/button";
 import uniqid from "uniqid";
 import {REQUIRED_FIELD_TEXT} from "@/utils/form";
+import {ADD_BUTTON, CANCEL_BUTTON, SAVE_BUTTON} from "../../costants";
 
 const schema = yup.object().shape({
     value: yup.object().shape({
@@ -30,7 +31,7 @@ export default function AddAttributes({onAddSubmit, onCancel, data, editingItem,
     const chosenValues = data?.map(item => item.attribute?.value)
 
     const {data: attributesResponse} = useQuery<AttributesResponseDTO[]>(() => axios.get(`/api/attributes`), [], )
-    const attributesOptions = attributesResponse?.filter(item => !chosenValues?.find(option => option === item._id))?.map(item => ({label: item?.name?.ru, value: item?._id}));
+    const attributesOptions = attributesResponse?.filter(item => !chosenValues?.find(option => option === item._id))?.map(item => ({label: {am: item?.name?.am , ru: item?.name?.ru}, value: item?._id}));
     const attrOnSubmit = () => {
         handleSubmit((data: ProductAttributeResponseDTO & { id: string }) => {
             if(editingItem){
@@ -62,24 +63,26 @@ export default function AddAttributes({onAddSubmit, onCancel, data, editingItem,
                     control={localFormControl}
                     options={attributesOptions}
                     name='attribute'
-                    label={"Выберите атрибут"}
                     error={errors.attribute?.message}
-                    placeholder="Название атрибута"
+                    label={{am: "Ընտրեք Ատրիբուտը", ru: "Выберите атрибут"}}
+                    placeholder={{am: "Ատրիբուտի անվանումը", ru: "Название атрибута"}}
                 />
                 <div className='mb-2'>
                     <Input
-                        placeholder="Значение на армянском" {...register("value.am")}
-                        error={errors.value?.am?.message}
+                        placeholder={{am: "Արժեքը հայերեն" , ru:"Значение на русском"}} {...register("value.am")}
+                        error={errors.value?.am}
                     />
                 </div>
                 <div className='mb-2'>
-                    <Input className={errors?.value?.ru && "border-2 border-red-600 rounded outline-red-600"}
-                           placeholder="Значение на русском" {...register("value.ru", {required: true})} />
-                    <span className="text-red-600 text-sm">{errors.value?.ru?.message}</span>
+                    <Input
+                        error={errors.value?.ru}
+                        placeholder={{am: "Արժեքը ռուսերեն" , ru:"Значение на русском"}}
+                        {...register("value.ru", {required: true})}
+                    />
                 </div>
                 <div className="flex gap-2 justify-end">
-                    <Button variant="secondary" className="h-[40px]" onClick={attrOnSubmit}>{editingItem ? "Сохранить" :"Добавить"}</Button>
-                    <Button variant="alert" className="h-[40px]" onClick={onCancel}>Отменить</Button>
+                    <Button title={editingItem ? SAVE_BUTTON : ADD_BUTTON} variant="secondary" className="h-[40px]" onClick={attrOnSubmit}></Button>
+                    <Button title={CANCEL_BUTTON} variant="alert" className="h-[40px]" onClick={onCancel}></Button>
                 </div>
             </div>
     )

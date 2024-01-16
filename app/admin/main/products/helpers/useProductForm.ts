@@ -24,7 +24,7 @@ export interface ProductForm {
 const validationSchema = yup.object().shape({
     title: TEXT_SCHEMA_REQUIRED,
     description: TEXT_SCHEMA_REQUIRED,
-    categories: yup.array(OPTION_SCHEMA_REQUIRED).min(1).required(REQUIRED_FIELD_TEXT),
+    categories: yup.array(OPTION_SCHEMA_REQUIRED).min(1, {am: "Նշեք մինիմալ 1 կատեգորիա", ru: "Выберите минимум 1 категорию"}).required(REQUIRED_FIELD_TEXT),
     brand: OPTION_SCHEMA_REQUIRED,
     images: yup.array(IMAGE_SCHEMA),
     attributes: yup.array(yup.object().shape({attribute: OPTION_SCHEMA_REQUIRED, value: TEXT_SCHEMA_REQUIRED}))

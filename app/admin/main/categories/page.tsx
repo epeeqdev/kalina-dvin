@@ -15,6 +15,7 @@ import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 import {updateOrderCategories} from "@/app/admin/main/categories/halpers/updateOrderCategories";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 import Link from "next/link";
+import {ADD_CATEGORIES_BUTTON, CANCEL_BUTTON, CATEGORIES, SAVE_BUTTON} from "../costants";
 
 export default function Categories() {
 
@@ -46,15 +47,15 @@ export default function Categories() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    {reorderedCategories && <Button onClick={handleUpdateCategories} variant="secondary">Сохранить порядок</Button>}
-                    {reorderedCategories && <Button onClick={() => setReorderedCategories(null)} variant="alert">Отменить</Button>}
-                    <Button onClick={() => router.push("/admin/main/categories/add")} variant="primary">Добавить категорию</Button>
+                    {reorderedCategories && <Button title={SAVE_BUTTON} onClick={handleUpdateCategories} variant="secondary"></Button>}
+                    {reorderedCategories && <Button title={CANCEL_BUTTON} onClick={() => setReorderedCategories(null)} variant="alert"></Button>}
+                    <Button title={ADD_CATEGORIES_BUTTON} onClick={() => router.push("/admin/main/categories/add")} variant="primary"></Button>
                     <Link href={"/main#categories-part"} target="_blank">
                         <ToItemPageButton/>
                     </Link>
                 </>
 
-            } headerTitle={"Категории"}>
+            } headerTitle={CATEGORIES}>
                 {(!categories || !categories[0]) && !categoriesLoading && <div className="text-lg flex justify-center">Категории не найдены.</div>}
                     <div className="pl-5 pr-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
                         {(reorderedCategories ? reorderedCategories : categories)?.map((item) => {

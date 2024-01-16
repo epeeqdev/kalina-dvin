@@ -22,6 +22,7 @@ import {getBrands} from "@/app/admin/main/brands/helpers/getBrands";
 import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 import {getProduct} from "@/app/admin/main/categories/halpers/getProduct";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import {ADD_PRODUCT, CANCEL_BUTTON, DELETE_BUTTON, EDIT_PRODUCT, SAVE_BUTTON} from "../../costants";
 
 export default function ProductForm({id}: { id: string }) {
 
@@ -45,8 +46,8 @@ export default function ProductForm({id}: { id: string }) {
         isDirty
     } = useProductForm(productData);
 
-    const categories = categoriesResponse?.map(item => ({value: item._id, label: item.name.ru})) ?? []
-    const brands = brandsResponse?.map((item: BrandResponseDTO) => ({value: item._id, label: item.name.ru}))
+    const categories = categoriesResponse?.map(item => ({value: item._id, label: {am: item.name.am, ru: item.name.ru}})) ?? []
+    const brands = brandsResponse?.map((item: BrandResponseDTO) => ({value: item._id, label: {am: item.name.am, ru: item.name.ru}}))
 
     const onSubmit = async () => {
         if (id) {
@@ -69,19 +70,20 @@ export default function ProductForm({id}: { id: string }) {
     return (
         <div className="mx-auto w-full pb-16">
             {isLoading && <LoadingSpinner/>}
-            <PageLayout headerTitle={id ?'Редактировать продукт': "Добавить продукт"} headerButtons={  <>
+            <PageLayout headerTitle={id ? EDIT_PRODUCT : ADD_PRODUCT} headerButtons={  <>
                 {
                     id
                         ?
                         <Button
+                            title={DELETE_BUTTON}
                             variant="alert"
                             onClick={() => {
                                 setDeleteModalOpen(true)
-                            }}>Удалить</Button>
+                            }}></Button>
                         : <></>
                 }
-                <Button onClick={() => router.push("/admin/main/products")} variant="secondary">Отмена</Button>
-                {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
+                <Button title={CANCEL_BUTTON} onClick={() => router.push("/admin/main/products")} variant="secondary"></Button>
+                {isDirty && !isLoading && <Button title={SAVE_BUTTON} variant="primary" onClick={submit}></Button>}
                 {productData?._id && <ToItemPageButton link={`/main/products/${productData._id}`}/>}
             </>}>
             <div className="mx-5 mb-[200px]">
@@ -89,36 +91,38 @@ export default function ProductForm({id}: { id: string }) {
                     <ImageUploader control={control} name="images" multiple/>
                 </div>
                 <div className="mb-4 sm:flex gap-3 w-full">
-                    <Input label="Заголовок на армянском"
-                           placeholder='Введите заголовок'
-                           {...register("title.am")}
-                           className='flex-1 mb-2'
-                           error={errors?.title?.ru?.message}
-                           required
+                    <Input
+                        label={{am: "Վերնագիրի անվանումը ՀԱՅ", ru: "Название Заголовка по АРМ"}}
+                        placeholder={{am: "Վերնագիրի անվանումը Հայ", ru: "Название Заголовка по АРМ"}}
+                        {...register("title.am")}
+                        className='flex-1 mb-2'
+                        error={errors?.title?.am}
+                        required
                     />
-                    <Input label="Заголовок на русском"
-                           placeholder='Введите заголовок'
-                           {...register("title.ru")}
-                           className='flex-1'
-                           error={errors.title?.am?.message}
-                           required
+                    <Input
+                        label={{am: "Վերնագիրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
+                        placeholder={{am: "Վերնագիրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
+                        {...register("title.ru")}
+                        className='flex-1'
+                        error={errors?.title?.ru}
+                        required
                     />
                 </div>
                 <div className="mb-4">
                     <TextArea
                         required
-                        label="Описание на армянском"
-                        placeholder='Введите описание'
+                        label={{am: "Նկարագրությունը ՀԱՅ", ru: "Описание на АРМ"}}
+                        placeholder={{am: "Նկարագրությունը ՀԱՅ", ru: "Описание на АРМ"}}
                         {...register("description.am", {required: true})}
-                        error={errors.description?.am?.message}
+                        error={errors.description?.am}
                         className="min-h-[150px]"
                     />
                     <TextArea
                         required
-                        label="Описание на русском"
-                        placeholder='Введите описание'
+                        label={{am: "Նկարագրությունը ՌՈՒՍ", ru: "Описание на РУС"}}
+                        placeholder={{am: "Նկարագրությունը ՌՈՒՍ", ru: "Описание на РУС"}}
                         {...register("description.ru", {required: true})}
-                        error={errors.description?.ru?.message}
+                        error={errors.description?.ru}
                         className="min-h-[150px]"
                     />
                 </div>
@@ -129,8 +133,8 @@ export default function ProductForm({id}: { id: string }) {
                         multiselect
                         options={categories}
                         error={errors.categories?.message}
-                        placeholder='Выберите категории'
-                        label="Категории"
+                        label={{am: "Կատեգորիաներ", ru: "Категории"}}
+                        placeholder={{am: "Ավելացնել կատեգորիա", ru: "Выберите категории"}}
                     />
                     <MultiSelectInput
                         control={control}
@@ -138,7 +142,7 @@ export default function ProductForm({id}: { id: string }) {
                         name='brand'
                         options={brands}
                         error={errors.brand?.value?.message}
-                        label="Выберите бренд"
+                        label={{am: "Ընտրել բրենդ", ru: "Выберите бренд"}}
                     />
                 <AttributesForm control={control} name='attributes'/>
             </div>

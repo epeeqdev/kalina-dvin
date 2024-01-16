@@ -12,6 +12,7 @@ import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import Alert from "@/app/admin/main/products/helpers/alert";
+import { useLanguage } from '@/app/main/hooks/useLanguage';
 
 export interface ImageUploaderProps {
     multiple?: boolean;
@@ -21,10 +22,11 @@ export interface ImageUploaderProps {
     className?: string;
     imageFit?: 'contain' | 'cover';
     label?: string
-    error?: string | any
+    error?: {am: string, ru: string } | any
 }
 
 export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100, error}) => {
+    const { getLanguage } = useLanguage();
     const [isUploadingFromUrl, setUploadingFromUrl] = useState(false);
     const {
         handleUploadFiles,
@@ -52,14 +54,14 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
             clsx('w-full grid gap-4', {
                 'grid-cols-1': !multiple,
                 'grid-cols-2 md:grid-cols-5 ': multiple
-            }, className, {"border-2 border-red-600" : error})}>
+            }, className, {"border-2 border-red-600" : error?.ru})}>
             <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
                              isLoading={loading && !multiple}>
                 {((multiple) || (!multiple && !uploadedImages.length)) ?
                     <div className='flex flex-col justify-stretch h-full'>
                         <ImageVariantButton onClick={() => setUploadingFromUrl(true)}>
                             <IconComponent name='link'/>
-                            <span>Ссылка</span>
+                            <span>{getLanguage({am: "Հղում", ru: "Ссылка"})}</span>
                         </ImageVariantButton>
                         <ImageVariantButton as='label'>
                             <input
@@ -71,7 +73,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
                                 className="hidden"
                             />
                             <IconComponent name='image'/>
-                            <span>Файл</span>
+                            <span>{getLanguage({am: "Ֆայլ", ru: "Файл"})}</span>
                         </ImageVariantButton>
                     </div> : <ImageBlock
                         imageFit={imageFit}
@@ -100,7 +102,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
                 onClose={() => setUploadingFromUrl(false)}
             />
         </div>
-        {!!error && <span className="text-sm text-red-600">{error}</span>}
+        {!!error && <span className="text-sm text-red-600">{getLanguage({am: error?.am, ru: error?.ru})}</span>}
     </div>
 };
 

@@ -1,18 +1,20 @@
+import { useLanguage } from "@/app/main/hooks/useLanguage";
 import Link from "next/link";
 
 type Props = {
-    title: string,
+    title: { am : string, ru : string },
     className?: string
     slicedPathName?: string,
     handleClick?: () => void
     chosenNamePath?: string
     href?: string
 }
-export default function SideBarLink({title, className, slicedPathName, chosenNamePath, href, handleClick}: Props){
+export default function SideBarLink({title, className = "", slicedPathName = "", chosenNamePath = "", href = "", handleClick = () => {}}: Props){
+    const { getLanguage } = useLanguage();
     return (
         <Link
-            className={`${className} ${slicedPathName === chosenNamePath && "bg-white text-black font-bold"}`}
+            className={`${slicedPathName === chosenNamePath && "bg-white text-black font-bold"} ${className}`}
             href={href}
-            onClick={handleClick}>{title}</Link>
+            onClick={handleClick}>{getLanguage(title)}</Link>
     )
 }

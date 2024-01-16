@@ -9,7 +9,14 @@ export default function Accordion({ items, isOpen, onBurgerClose, isClicked, sty
             {items.map((item, index) => {
                const slicedPathName = item.link.split("/").slice(-2).join("/")
                 return (
-                        <SideBarLink key={index} title={item.title} href={item.link} className={`${styles} , pl-8` } slicedPathName={slicedPathName} chosenNamePath={isClicked} handleClick={onBurgerClose} />
+                        <SideBarLink
+                            key={index}
+                            title={{am: item.title.am, ru: item.title.ru }}
+                            href={item.link}
+                            className={`${styles} , pl-8` }
+                            slicedPathName={slicedPathName}
+                            chosenNamePath={isClicked}
+                            handleClick={onBurgerClose} />
                 )
             })}
         </div>

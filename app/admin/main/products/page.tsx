@@ -12,6 +12,7 @@ import {Button} from "@/app/admin/main/components/controls/button";
 import {useRouter} from "next/navigation";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import {ADD_BUTTON, PRODUCTS} from "../costants";
 
 export default function ProductsPage() {
     const {data, isLoading,refetch} = useQuery<ProductResponseDTO[]>(getProductsWithSearch, [], {fetchOnMount: false});
@@ -47,12 +48,12 @@ export default function ProductsPage() {
                     defaultValue={search}
                     className='mr-2 flex-1 min-w-[150px]'
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder='Search'
+                    placeholder={{am: "Որոնել", ru: 'Поиск'}}
                 />
-                <Button onClick={() => router.push("/admin/main/products/add")} variant="primary">Добавить</Button>
+                <Button title={ADD_BUTTON} onClick={() => router.push("/admin/main/products/add")} variant="primary"></Button>
                 <ToItemPageButton link={`/main/products`}/>
             </div>
-        } headerTitle={"Продукты"}>
+        } headerTitle={PRODUCTS}>
             <>
                 {!searchResults?.length && !isLoading && <div className='flex justify-center text-lg'>Продукты не найдены.</div>}
                 {!!searchResults?.length && <div className='grid grid-cols-12 mx-5'>
