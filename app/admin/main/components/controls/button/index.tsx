@@ -1,7 +1,9 @@
 import {forwardRef, ReactNode} from "react";
 import clsx from "clsx";
+import {useLanguage} from "../../../../../main/hooks/useLanguage";
 
 interface Props {
+	title?: {am: string, ru: string}
 	children?: ReactNode,
 	className?: string,
 	variant?: string
@@ -9,7 +11,9 @@ interface Props {
 	onClick?: () => void
 }
 
-export const Button = forwardRef<HTMLButtonElement, Props>(({children,className,variant='primary', type, onClick}:Props,) => {
+export const Button = forwardRef<HTMLButtonElement, Props>(({title, children,className,variant='primary', type, onClick}:Props,) => {
+	const { getLanguage } = useLanguage();
+
 	return <button
 		onClick={onClick}
 		type={type}
@@ -22,6 +26,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>(({children,className,
 			},
 			'border px-4 py-1 whitespace-nowrap flex justify-center items-center',
 			className)}>
+		{getLanguage(title)}
 		{children}
 	</button>
 })

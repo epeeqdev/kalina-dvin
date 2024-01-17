@@ -4,6 +4,7 @@ import {CategoryResponseDTO} from "@/backend/types";
 import {useRouter} from "next/navigation";
 import IconComponent from "@/app/admin/main/components/icon";
 import {CustomImage} from "@/app/components/image";
+import {useLanguage} from "../../../../main/hooks/useLanguage";
 
 interface Props {
     item: CategoryResponseDTO;
@@ -13,6 +14,8 @@ interface Props {
 
 export const CategoryTemplate = ({item, className, shownInMainPage = false}: Props) => {
     const router = useRouter()
+    const { getLanguage } = useLanguage();
+
 
     return (
         <div
@@ -23,7 +26,7 @@ export const CategoryTemplate = ({item, className, shownInMainPage = false}: Pro
             </div>
             <div className=" flex justify-between w-full items-center">
                 <div className='pr-4'>
-                    <h3 className='text-[16px] mb-1 whitespace-nowrap'>{item.name.ru}</h3>
+                    <h3 className='text-[16px] mb-1 whitespace-nowrap'>{getLanguage({am: item.name.am, ru: item.name.ru})}</h3>
                 </div>
                 {!shownInMainPage && <IconComponent name="isDraggable" className="cursor-grab active:cursor-grabbing"/>}
             </div>

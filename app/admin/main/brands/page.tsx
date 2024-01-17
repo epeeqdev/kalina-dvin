@@ -16,6 +16,8 @@ import React, {useState} from "react";
 import {updateOrderBrands} from "@/app/admin/main/brands/helpers/updateOrderBrands";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 import Link from "next/link";
+import {ADD_BRANDS_BUTTON, BRANDS, CANCEL_BUTTON, SAVE_QUE_BUTTON} from "../costants";
+import {useLanguage} from "../../../main/hooks/useLanguage";
 
 export default function Brands() {
 
@@ -24,7 +26,7 @@ export default function Brands() {
         isLoading: BrandsIsLoading,
         refetch,
     } = useQuery<BrandResponseDTO[]>(getBrands);
-
+    const { getLanguage } = useLanguage();
     const router = useRouter()
     const [reorderedBrands, setReorderedBrands] = useState<BrandResponseDTO[]>(null)
     const handleUpdateOrderBrands = async () => {
@@ -49,18 +51,18 @@ export default function Brands() {
                 <>
                     {reorderedBrands &&
                         <>
-                            <Button onClick={handleUpdateOrderBrands} variant="secondary">Сохранить порядок</Button>
-                            <Button onClick={() => setReorderedBrands(brands)} variant="alert">Отменить</Button>
+                            <Button title={SAVE_QUE_BUTTON} onClick={handleUpdateOrderBrands} variant="secondary"></Button>
+                            <Button title={CANCEL_BUTTON} onClick={() => setReorderedBrands(brands)} variant="alert"></Button>
                     </>}
 
-                    <Button onClick={() => router.push("/admin/main/brands/add")} variant="primary">Добавить Бренд</Button>
+                    <Button title={ADD_BRANDS_BUTTON} onClick={() => router.push("/admin/main/brands/add")} variant="primary"></Button>
                     <Link href={"/main#brands-part"} target="_blank">
                         <ToItemPageButton/>
                     </Link>
                 </>
-            } headerTitle={"Бренды"}
+            } headerTitle={BRANDS}
             >
-                {(!brands || !brands[0]) && !BrandsIsLoading && <div className="text-lg flex justify-center">Бренды не найдены.</div>}
+                {(!brands || !brands[0]) && !BrandsIsLoading && <div className="text-lg flex justify-center">{getLanguage({ru: 'Бренды не найдены.', am: "Բրենդներ չէն գտնվել"})}</div>}
                 <div className="px-5 grid lg:grid-cols-2 md:grid-cols-1 xl:grid-cols-3 gap-2">
                     {(reorderedBrands ? reorderedBrands : brands)?.map((item) => {
                         return (

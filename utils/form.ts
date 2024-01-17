@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 /** Error messages */
-export const REQUIRED_FIELD_TEXT = 'Обязательное поле';
+export const REQUIRED_FIELD_TEXT = {am :'Պարտադիր լրացման դաշտ', ru: "Обязательное поле"};
 
 
 /** Schemas */
@@ -25,6 +25,6 @@ export interface SchemaOption {
    value:string;
 }
 export interface SchemaText {
-    am: string;
+    am: string ;
     ru: string;
 }

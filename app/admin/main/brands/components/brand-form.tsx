@@ -16,16 +16,17 @@ import {Button} from "../../components/controls/button";
 import Alert from "../../products/helpers/alert";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import {ADD_BRANDS, CANCEL_BUTTON, DELETE_BUTTON, SAVE_BUTTON} from "../../costants";
 
 interface Props {
     id?: string
 }
 const validationSchema = yup.object().shape({
     name: yup.object().shape({
-        am: yup.string().required("Обязательное поле"),
-        ru: yup.string().required("Обязательное поле"),
+        am: yup.string().required({am: "Պարտադիր լրացման դաշտ", ru: "Обязательное поле"}),
+        ru: yup.string().required({am: "Պարտադիր լրացման դաշտ", ru: "Обязательное поле"}),
     }),
-    image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Изображение обязательно"),
+    image: yup.object().shape({id: yup.string(), src: yup.string()}).required({am: "Նկարը պարտադիր է", ru: "Изображение обязательно"}),
 })
 
 interface Category {
@@ -90,32 +91,32 @@ export const BrandForm = ({id}:Props) => {
                     {
                         id
                             ?
-                            <Button variant="alert" onClick={() => {
+                            <Button title={DELETE_BUTTON} variant="alert" onClick={() => {
                                 setDeleteModalOpen(true)
-                            }}>Удалить</Button>
+                            }}></Button>
                             : <></>
                     }
-                        <Button onClick={() => router.push("/admin/main/brands")} variant="secondary">Отмена</Button>
-                    {isDirty && <Button variant="primary" onClick={submit}>Сохранить</Button>}
+                        <Button title={CANCEL_BUTTON} onClick={() => router.push("/admin/main/brands")} variant="secondary"></Button>
+                    {isDirty && <Button title={SAVE_BUTTON} variant="primary" onClick={submit}></Button>}
                 </>
-            } headerTitle={"Добавить Бренд"}>
+            } headerTitle={ADD_BRANDS}>
                 <div className=" w-[100%] pl-5 pr-5 pr-5 mb-20">
                     <div className="gap-4">
                         <ImageUploader error={errors.image?.message} imageFit='contain' control={control} name='image' imageHeightProportion={50} />
                         <div className='flex-1'>
                             <Input
                                 {...register("name.am")}
-                                label="Название категории по АРМ"
-                                placeholder="Название по АРМ"
-                                error={errors.name?.am?.message}
+                                label={{am: "Բրենդի անվանումը Հայ", ru: "Название бренда по АРМ"}}
+                                placeholder={{am: "Բրենդի անվանումը Հայ", ru: "Название бренда по АРМ"}}
+                                error={errors.name?.am}
                                 required={true}
                                 className='w-full mb-5'
                             />
                             <Input
                                 {...register("name.ru")}
-                                label="Название категории по РУС"
-                                placeholder="Название по РУС"
-                                error={errors.name?.ru?.message}
+                                label={{am: "Բրենդի անվանումը Ռուս", ru: "Название бренда по РУС"}}
+                                placeholder={{am: "Բրենդի անվանումը Ռուս", ru: "Название бренда по РУС"}}
+                                error={errors.name?.ru}
                                 required={true}
                                 className='w-full'
                             />

@@ -2,7 +2,7 @@ import Header from "@/app/admin/main/components/header";
 import {ReactNode} from "react";
 
 interface Props extends React.PropsWithChildren{
-    headerTitle?: string;
+    headerTitle?: {am: string, ru: string};
     headerButtons?: ReactNode;
     withSearch?: boolean
     shownInMainPage?: boolean
