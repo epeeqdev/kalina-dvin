@@ -7,7 +7,7 @@ import * as events from "events";
 interface Prop extends React.PropsWithChildren{
     isOpen?: boolean,
     onClose: () => void,
-    title?: string,
+    title?: {am: string, ru: string },
     message?: string
     classname?: string
 }

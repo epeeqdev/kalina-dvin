@@ -1,19 +1,22 @@
 import {Button} from "@/app/admin/main/components/controls/button";
-import Modal from "@/app/admin/main/products/helpers/modal";
+import Modal from "@/app/admin/helpers/modal";
 import React,{ReactNode} from "react";
+import { useLanguage } from "@/app/main/hooks/useLanguage";
 
 interface Props {
     onAccept: () => void,
-    acceptButtonLabel?: string,
-    cancelButtonLabel?: string,
+    acceptButtonLabel?: {am: string, ru: string },
+    cancelButtonLabel?: {am: string, ru: string },
     onClose: () => void,
     onCancel: () => void,
     isOpen?:boolean;
     children?: ReactNode;
-    title?: string;
+    title?: {am: string, ru: string };
 }
 
-export default function Alert({onClose, isOpen, onAccept, onCancel, children, acceptButtonLabel = 'Да', cancelButtonLabel='Нет', title}: Props){
+export default function Alert({onClose, isOpen, onAccept, onCancel, children, acceptButtonLabel = {am:"այո", ru: 'да'}, cancelButtonLabel={am:"Ոչ", ru: 'нет'}, title}: Props){
+
+    const { getLanguage } = useLanguage()
     return (
         <Modal isOpen={isOpen} onClose={onClose} title={title}>
             <div>{children}</div>
@@ -22,12 +25,12 @@ export default function Alert({onClose, isOpen, onAccept, onCancel, children, ac
                     onClick={onCancel}
                     variant="alert"
                 >
-                    {cancelButtonLabel}
+                    {getLanguage(cancelButtonLabel)}
                 </Button>
                 <Button
                     onClick={onAccept}
                 >
-                    {acceptButtonLabel}
+                    {getLanguage(acceptButtonLabel)}
                 </Button>
             </div>
         </Modal>

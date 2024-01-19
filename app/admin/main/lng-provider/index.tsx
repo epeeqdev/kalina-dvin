@@ -5,9 +5,10 @@ import {MainContextProvider} from "@/app/admin/main/provider";
 const DEFAULT_STATE = 'am'
 
 export const LngProvider = React.memo(({ children }: any) => {
-    const [defaultLng, setDefaultLng] = useState('am')
+    const selectLng = localStorage.getItem('lng')
+    const [defaultLng, setDefaultLng] = useState(selectLng)
+
     useEffect(() => {
-        const selectLng = localStorage.getItem('lng')
         if(selectLng) {
             setDefaultLng(selectLng)
         }

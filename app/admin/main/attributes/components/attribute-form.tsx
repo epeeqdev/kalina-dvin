@@ -15,14 +15,17 @@ import {Button} from "../../components/controls/button";
 import {getAttribute} from "@/app/admin/main/attributes/halpers/getAttribute";
 import {AttributeDTO} from "@/backend/types";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
+import {ADD_ATTRIBUTES, CANCEL_BUTTON, DELETE_BUTTON, SAVE_BUTTON} from "../../costants";
+import {REQUIRED_FIELD_TEXT} from "@/utils/form";
+import {useLanguage} from "@/app/main/hooks/useLanguage";
 
 interface Props {
     id?: string
 }
 const validationSchema = yup.object().shape({
     name: yup.object().shape({
-        am: yup.string().required("Обязательное поле"),
-        ru: yup.string().required("Обязательное поле"),
+        am: yup.string().required(REQUIRED_FIELD_TEXT),
+        ru: yup.string().required(REQUIRED_FIELD_TEXT),
     }) ,
 })
 
@@ -39,6 +42,7 @@ export const AttributeForm = ({id}:Props) => {
     const {mutate: deleteAttributeMutate, isLoading: deleteAttributeLoading} = useMutation(deleteAttribute);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: attribute, isLoading: attributeLoading} = useQuery<AttributeDTO>(getAttribute,[id], {fetchOnMount: !!id});
+    const {getLanguage} = useLanguage();
 
     const isLoading = editAttributeLoading || addAttributeLoading || deleteAttributeLoading || attributeLoading
 
@@ -85,9 +89,19 @@ export const AttributeForm = ({id}:Props) => {
 
     return (
         <div>
-            <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
-                <p className="text-2xl font-bold ">Вы уверены, что хотите удалить данный атрибут?</p>
-                <p className="text-gray-700">После удаления атрибут не возможно восстановить!</p>
+            <Alert title={{am: "Ջնջել ատրիբուտը", ru: "Удалить Атрибут ?"}} onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold ">
+                    {getLanguage({
+                    am: "Դուք վստահ եք որ ուզում եք ջնջել այս ատրիբուտը",
+                    ru: "Вы уверены, что хотите удалить данный атрибут?"
+                })}</p>
+                <p className="text-gray-700">
+                    {getLanguage({
+                    am: "Ջնջվելուց հետո հնարավոր չէ վերականգնել",
+                    ru: "После удаления атрибут не возможно восстановить!"
+                })}
+                </p>
+
             </Alert>
             {isLoading && <LoadingSpinner />}
             <PageLayout headerButtons={
@@ -95,30 +109,30 @@ export const AttributeForm = ({id}:Props) => {
                     {
                         id
                             ?
-                            <Button variant="alert" onClick={() => {
+                            <Button title={DELETE_BUTTON} variant="alert" onClick={() => {
                                 setDeleteModalOpen(true)
-                            }}>Удалить</Button>
+                            }}></Button>
                             : <></>
                     }
-                    <Button onClick={() => router.push("/admin/main/attributes")} variant="secondary">Отмена</Button>
-                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
+                    <Button title={CANCEL_BUTTON} onClick={() => router.push("/admin/main/attributes")} variant="secondary"></Button>
+                    {isDirty && !isLoading && <Button title={SAVE_BUTTON} variant="primary" onClick={submit}></Button>}
                 </>
-            } headerTitle={"Добавить Атрибуты"} >
+            } headerTitle={ADD_ATTRIBUTES}>
                 <div className="flex gap-4 px-5">
                     <div className='flex-1'>
                         <Input
                             {...register("name.am")}
-                            label="Название атрибута по АРМ"
-                            placeholder="Название по АРМ"
-                            error={errors.name?.am?.message}
+                            label={{am: "Ատրիբուտի անվանումը ՀԱՅ" ,ru: "Название атрибута по АРМ"}}
+                            placeholder={{am: "Ատրիբուտի անվանումը ՀԱՅ" ,ru: "Название атрибута по АРМ"}}
+                            error={errors.name?.am}
                             required={true}
                             className='w-full mt-5'
                         />
                         <Input
                             {...register("name.ru")}
-                            label="Название атрибута по РУС"
-                            placeholder="Название по РУС"
-                            error={errors.name?.ru?.message}
+                            label={{am: "Ատրիբուտի անվանումը ՌՈՒՍ" ,ru: "Название атрибута по РУС"}}
+                            placeholder={{am: "Ատրիբուտի անվանումը ՌՈՒՍ" ,ru: "Название атрибута по РУС"}}
+                            error={errors.name?.ru}
                             required={true}
                             className='w-full mt-5'
                         />

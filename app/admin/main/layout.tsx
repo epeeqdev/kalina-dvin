@@ -112,7 +112,7 @@ export default function Layout({children}:PropsWithChildren){
 								className={`flex h-full mb-5 content-between justify-end items-end ${isOpen ? "opacity-1 transition-all duration-300" : "opacity-0 transition-all duration-300"}`}>
 								<LngSwitcher/>
 							</div>
-							<SideBarLink slicedPathName={slicedPathName} title={MENU} className="block px-4 pb-10 text-[18px] transition whitespace-nowrap"/>
+							<SideBarLink slicedPathName={slicedPathName} title={MENU} className="block px-4 pb-10 text-[18px] transition whitespace-nowrap cursor-default"/>
 							<SideBarLink title={MAIN} chosenNamePath="admin/main" slicedPathName={slicedPathName}
 										 className={styles} handleClick={handleClick} href='/admin/main'/>
 							<SideBarLink title={CATEGORIES} chosenNamePath="main/categories"

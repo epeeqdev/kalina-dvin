@@ -4,6 +4,7 @@ import React from "react";
 import * as yup from "yup";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {ADD_BUTTON, CANCEL_BUTTON} from "@/app/admin/main/costants";
 
 interface FormFields {
     uploadUrl?:string
@@ -34,8 +35,8 @@ export const UrlUploadModal = ({isOpen,onClose = () => null, onSubmit }:Props) =
         onClose();
     }
     return (
-        <Alert title='Загрузка изображения' isOpen={isOpen} acceptButtonLabel='Загрузить' cancelButtonLabel='Отмена' onAccept={onAccept} onClose={handleClose} onCancel={handleClose}>
-            <Input error={errors?.uploadUrl?.message} {...register('uploadUrl')} label='Ссылка'/>
+        <Alert title={{am: "Պատկերի վերբեռնում" ,ru: 'Загрузка изображения'}} isOpen={isOpen} acceptButtonLabel={ADD_BUTTON} cancelButtonLabel={CANCEL_BUTTON} onAccept={onAccept} onClose={handleClose} onCancel={handleClose}>
+            <Input error={errors?.uploadUrl?.message} {...register('uploadUrl')} label={{am: "Հղում" ,ru: 'Ссылка'}}/>
         </Alert>
     )
 }

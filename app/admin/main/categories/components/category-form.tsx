@@ -18,6 +18,7 @@ import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/i
 
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {ADD_CATEGORIES, CANCEL_BUTTON, DELETE_BUTTON, SAVE_BUTTON} from "../../costants";
+import { useLanguage } from "@/app/main/hooks/useLanguage";
 
 
 interface Prop {
@@ -30,6 +31,7 @@ export  const CategoryForm = ({id} : Prop) => {
     const {mutate: deleteCategoryMutate, isLoading: deleteCategoryLoading} = useMutation(deleteCategory);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: category, isLoading: categoryLoading} = useQuery<CategoryResponseDTO>(() => getCategory(id), [], {fetchOnMount: !!id});
+    const {getLanguage} = useLanguage();
 
     const validationSchema = yup.object().shape({
         name: yup.object().shape({
@@ -80,11 +82,20 @@ export  const CategoryForm = ({id} : Prop) => {
 
     return (
         <div>
-            <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
-                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данную категорию?</p>
-                <p className="text-gray-700">После удаления категорию не возможно восстановить!</p>
+            <Alert title={{am: "Ջնջել կատեգորիան", ru: "Удалить категорию ?"}} onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold ">
+                    {getLanguage({
+                        am: "Դուք վստահ եք որ ուզում եք ջնջել այս կատեգորիան",
+                        ru: "Вы уверены, что хотите удалить данный категорию?"
+                    })}</p>
+                <p className="text-gray-700">
+                    {getLanguage({
+                        am: "Ջնջելուց հետո հնարավոր չէ վերականգնել",
+                        ru: "После удаления категорию не возможно восстановить!"
+                    })}
+                </p>
             </Alert>
-            {isLoading && <LoadingSpinner />}
+            {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
                     {
@@ -96,7 +107,7 @@ export  const CategoryForm = ({id} : Prop) => {
                             : <></>
                     }
                     <Button title={CANCEL_BUTTON} onClick={() => {
-                            router.push('/admin/main/categories')
+                        router.push('/admin/main/categories')
                     }}  variant="secondary"></Button>
                     {isDirty && !isLoading && <Button variant="primary" title={SAVE_BUTTON} onClick={submit}></Button>}
                 </>

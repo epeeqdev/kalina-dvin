@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 export default function LngSwitcher({className = ""}){
     const styles = "cursor-pointer hover:text-red-600 text-sm"
     const [defaultLng, setDefaultLng] = useState("ru")
-    const [[setMainContextState]] = useMainContext()
+    const [Language , [setMainContextState]] = useMainContext()
 
     useEffect(() => {
         const selectLng = localStorage.getItem('lng')

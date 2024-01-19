@@ -14,6 +14,7 @@ import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/i
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import React from "react";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import {PRODUCTS_PAGE} from "../../costants";
 
 
 const validationSchema = yup.object().shape({
@@ -54,11 +55,11 @@ export default function ProductsPageForm() {
                     {isDirty && !isLoading && <Button variant="primary" onClick={onEdit}>Сохранить</Button>}
                     <ToItemPageButton link={`/main/products`}/>
                 </>
-            } headerTitle={"Страница продуктов"}>
+            } headerTitle={PRODUCTS_PAGE}>
                 <div className="gap-4 justify-center mx-5">
                     <ImageUploader
                         error={errors?.src?.message}
-                        label="Обложка"
+                        label={{am: "Պաստառ" ,ru:"Обложка"}}
                         control={control}
                         name='image'
                         imageClassName='object-cover'

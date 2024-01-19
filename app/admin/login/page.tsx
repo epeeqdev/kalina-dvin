@@ -32,12 +32,12 @@ export default function Login(){
 		{isLoading && <LoadingSpinner/>}
 		<form onSubmit={handleSubmit(login)} className='w-full max-w-[500px] flex flex-col justify-center items-stretch gap-y-[10px]'>
 		<div>
-			<Input label='Логин' placeholder='Введите логин' {...register('username')} className='w-full'/>
+			<Input label={{am: "Մուտքանուն", ru: 'Логин'}} placeholder={{am: "Լրացրեք մուտքանունը", ru: 'Введите логин'}} {...register('username')} className='w-full'/>
 		</div>
 		<div>
-			<Input label='Пароль' type='password' placeholder='Введите пароль' {...register('password')} className='w-full'/>
+			<Input label={{am: "Գաղտնաբառ",ru: 'Пароль'}} type='password' placeholder={{am: "Լրացրեք գաղտնաբառը" ,ru: 'Введите пароль'}} {...register('password')} className='w-full'/>
 		</div>
-		<Button type='submit' className='mt-2 flrx justify-center'  variant="primary">Войти</Button>
+		<Button title={{am: "Մուտք", ru: "Войти"}} type='submit' className='mt-2 flrx justify-center'  variant="primary"></Button>
 	</form>
 	</div>
 }
