@@ -8,10 +8,13 @@ import AttributeTemplate from "@/app/admin/main/attributes/halpers/attributeTemp
 import {useRouter} from "next/navigation";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {getAttributes} from "@/app/admin/main/attributes/halpers/getAttributes";
+import {ADD_ATTRIBUTE_BUTTON, ADD_ATTRIBUTES, ATTRIBUTES, ATTRIBUTES_NOT_FOUND} from "../costants";
+import { useLanguage } from "@/app/main/hooks/useLanguage";
 
 
 
 export default function Attributes() {
+    const {getLanguage} = useLanguage()
 
     const router = useRouter()
 
@@ -24,10 +27,10 @@ export default function Attributes() {
         <div className="mx-auto w-full pb-16">
             <PageLayout headerButtons={
                 <>
-                    <Button onClick={() => router.push("/admin/main/attributes/add")} variant="primary">Добавить Атрибут</Button>
+                    <Button title={ADD_ATTRIBUTE_BUTTON} onClick={() => router.push("/admin/main/attributes/add")} variant="primary"></Button>
                 </>
-            } headerTitle={"Атрибуты"} >
-                {(!attributes || !attributes[0]) && !attributesLoading && <div className="text-lg flex justify-center">Атрибуты не найдены.</div>}
+            } headerTitle={ATTRIBUTES} >
+                {(!attributes || !attributes[0]) && !attributesLoading && <div className="text-lg flex justify-center">{getLanguage(ATTRIBUTES_NOT_FOUND)}</div>}
                 <div className="px-5 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-2">
                     {attributes?.map((item) => {
                         return (

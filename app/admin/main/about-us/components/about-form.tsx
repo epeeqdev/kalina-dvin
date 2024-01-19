@@ -17,20 +17,22 @@ import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {getAboutUs} from "../helpers/getAboutUs";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 import Link from "next/link";
+import {ABOUT, CANCEL_BUTTON, SAVE_BUTTON} from "../../costants";
+import {REQUIRED_FIELD_TEXT, REQUIRED_IMAGE} from "../../../../../utils/form";
 
 const validationSchema = yup.object().shape({
-    homePageDescription: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
-    aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
-    aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}).required(""),
-    mainPageImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required("Изображение обязательно"),
-    aboutPageTopImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("")}).required("Изображение обязательно"),
-    aboutPageBottomImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required("Изображение обязательно"),
-    assortmentCount: yup.number().required("Обязательное поле"),
-    brandsCount: yup.number().required("Обязательное поле"),
-    partnersCount: yup.number().required("Обязательное поле"),
+    homePageDescription: yup.object().shape({am: yup.string().required(REQUIRED_FIELD_TEXT), ru: yup.string().required(REQUIRED_FIELD_TEXT)}).required(""),
+    aboutUsPageDescriptionTop: yup.object().shape({am: yup.string().required(REQUIRED_FIELD_TEXT), ru: yup.string().required(REQUIRED_FIELD_TEXT)}).required(""),
+    aboutUsPageDescriptionBottom: yup.object().shape({am: yup.string().required(REQUIRED_FIELD_TEXT), ru: yup.string().required(REQUIRED_FIELD_TEXT)}).required(""),
+    mainPageImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required(REQUIRED_IMAGE),
+    aboutPageTopImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("")}).required(REQUIRED_IMAGE),
+    aboutPageBottomImage: yup.object().shape({id: yup.string().required(""), src: yup.string().required("") }).required(REQUIRED_IMAGE),
+    assortmentCount: yup.number().typeError(REQUIRED_FIELD_TEXT).test( val => val.toString().length >= 1),
+    brandsCount: yup.number().typeError(REQUIRED_FIELD_TEXT).test( val => val.toString().length >= 1),
+    partnersCount: yup.number().typeError(REQUIRED_FIELD_TEXT).test( val => val.toString().length >= 1),
 
 })
-export default function AboutForm() {
+export default function  AboutForm() {
     const router = useRouter()
     const {data: about, isLoading: getaAboutUsLoading} = useQuery<AboutUsDTO>(getAboutUs);
     const {mutate: editAboutUsMutate, isLoading: editAboutUsLoading} = useMutation(editAbout);
@@ -58,7 +60,7 @@ export default function AboutForm() {
                 aboutPageBottomImage: about.aboutPageBottomImage,
                 assortmentCount: about.assortmentCount,
                 brandsCount: about.brandsCount,
-                partnersCount:about.partnersCount,
+                partnersCount: about.partnersCount,
             }
         }: {})
     });
@@ -78,121 +80,118 @@ export default function AboutForm() {
             {isLoading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
-                    <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
+                    <Button title={CANCEL_BUTTON} onClick={() => router.push("/admin/main")} variant="secondary"></Button>
+                    {isDirty && !isLoading && <Button title={SAVE_BUTTON} variant="primary" onClick={submit}></Button>}
                     <Link href={"/main#about-us-part"} target="_blank">
                         <ToItemPageButton/>
                     </Link>
                 </>
-            } headerTitle={"О нас"}
+            } headerTitle={ABOUT}
             >
                 <div className="w-full pb-16 pl-5 pr-8">
                         <div className="my-5">
                             <ImageUploader
-                                label="Фото Главной страницы"
+                                label={{am: "Գլխավոր էջի լուսանկար" ,ru: "Фото Главной страницы"}}
                                 className='max-w-[600px]'
                                 imageHeightProportion={100}
                                 control={control}
                                 name='mainPageImage'
-                                error={errors.mainPageImage?.message}
+                                error={errors.mainPageImage}
                             />
                         </div>
                     <div className="mb-5">
                         <TextArea
                             required
-                            label="Главный текст на армянском"
-                            placeholder='Введите заголовок'
+                            label={{am: "Հիմնական տեքստը ՀԱՅ" ,ru: "Главный текст на АРМ"}}
+                            placeholder={{am: "Մուտքագրեք տեքստը", ru: 'Введите текст'}}
                             {...register("homePageDescription.am")}
-                            error={errors.homePageDescription?.am?.message}
-                            className="mb-5"
+                            error={errors.homePageDescription?.am}
 
                         />
                         <TextArea
                             required
-                            label="Главный текст на русском"
-                            placeholder='Введите описание'
+                            label={{am: "Հիմնական տեքստը ՌՈՒՍ" ,ru: "Главный текст на РУС"}}
+                            placeholder={{am: "Մուտքագրեք տեքստը", ru: 'Введите текст'}}
                             {...register("homePageDescription.ru")}
-                            error={errors.homePageDescription?.ru?.message}
+                            error={errors.homePageDescription?.ru}
                         />
                     </div>
                     <div className="my-5">
                         <ImageUploader
-                            label="Верхнее фото страницы О нас"
+                            label={{am: "Վերևի Մեր մասին հատվածի լուսանկար" ,ru: "Верхний фото страницы О нас"}}
                             className='max-w-[600px]'
                             imageHeightProportion={100}
                             control={control}
                             name='aboutPageTopImage'
-                            error={errors.aboutPageTopImage?.message}
+                            error={errors.aboutPageTopImage}
                         />
                     </div>
                     <div className="mb-5">
                         <TextArea
                             required
-                            label="Верхний текст на армянском"
-                            placeholder='Введите описание'
+                            label={{am: "Վերևի տեքստը ՀԱՅ" ,ru: "Верхний текст на АРМ"}}
+                            placeholder={{am: "Մուտքագրեք տեքստը", ru: 'Введите текст'}}
                             {...register("aboutUsPageDescriptionTop.am")}
-                            error={errors.aboutUsPageDescriptionTop?.am?.message}
-                            className="mb-5"
+                            error={errors.aboutUsPageDescriptionTop?.am}
                         />
                         <TextArea
                             required
-                            label="Верхний текст на русском"
-                            placeholder='Введите описание'
+                            label={{am: "Վերևի տեքստը ՌՈՒՍ" ,ru: "Верхний текст на РУС"}}
+                            placeholder={{am: "Մուտքագրեք տեքստը", ru: 'Введите текст'}}
                             {...register("aboutUsPageDescriptionTop.ru")}
-                            error={errors.aboutUsPageDescriptionTop?.ru?.message}
+                            error={errors.aboutUsPageDescriptionTop?.ru}
                         />
                     </div>
                     <div className="my-5">
                         <ImageUploader
-                            label="Нижнее фото страницы О нас"
+                            label={{am: "Ներգևի Մեր մասին հատվածի լուսանկար" ,ru: "Нижнее фото страницы О нас"}}
                             className='max-w-[600px]'
                             imageHeightProportion={100}
                             control={control}
                             name='aboutPageBottomImage'
-                            error={errors.aboutPageBottomImage?.message}
+                            error={errors.aboutPageBottomImage}
                         />
                     </div>
                     <div className="mb-5">
                         <TextArea
                             required
-                            label="Нижний текст на армянском"
-                            placeholder='Введите описание'
+                            label={{am: "Ներգևի տեքստը ՀԱՅ" ,ru: "Нижний текст на АРМ"}}
+                            placeholder={{am: "Մուտքագրեք տեքստը", ru: 'Введите текст'}}
                             {...register("aboutUsPageDescriptionBottom.am")}
-                            error={errors.aboutUsPageDescriptionBottom?.am?.message}
-                            className="mb-5"
+                            error={errors.aboutUsPageDescriptionBottom?.am}
                         />
                         <TextArea
                             required
-                            label="Нижний текст на русском"
-                            placeholder='Введите описание'
+                            label={{am: "Ներգևի տեքստը ՌՈՒՍ" ,ru: "Нижний текст на РУС"}}
+                            placeholder={{am: "Մուտքագրեք տեքստը", ru: 'Введите текст'}}
                             {...register("aboutUsPageDescriptionBottom.ru")}
-                            error={errors.aboutUsPageDescriptionBottom?.ru?.message}
+                            error={errors.aboutUsPageDescriptionBottom?.ru}
                         />
                     </div>
                     <div>
                         <Input
                             {...register("assortmentCount")}
-                            label="Количество ассортимента"
-                            placeholder="количество ассортимента"
-                            error={errors.assortmentCount?.message}
+                            label={{am: "Տեսականու քանակը" ,ru: "Количество ассортимента"}}
+                            placeholder={{am: "Տեսականու քանակը", ru: 'Количество ассортимента'}}
+                            error={errors.assortmentCount}
                             required={true}
                             className='w-full mb-3'
                             type="number"
                         />
                         <Input
                             {...register("brandsCount")}
-                            label="Количество брендов"
-                            placeholder="количество брендов"
-                            error={errors.brandsCount?.message}
+                            label={{am: "Բրենդների քանակը" ,ru: "Количество брендов"}}
+                            placeholder={{am: "Բրենդների քանակը", ru: 'Количество брендов'}}
+                            error={errors.brandsCount}
                             required={true}
                             className='w-full mb-3'
                             type="number"
                         />
                         <Input
                             {...register("partnersCount")}
-                            label="Количество Партнеров"
-                            placeholder="количество партнеров"
-                            error={errors.partnersCount?.message}
+                            label={{am: "Գործընկերների քանակը" ,ru: "Количество Партнеров"}}
+                            placeholder={{am: "Գործընկերների քանակը", ru: 'Количество Партнеров'}}
+                            error={errors.partnersCount}
                             required={true}
                             className='w-full mb-3'
                             type="number"

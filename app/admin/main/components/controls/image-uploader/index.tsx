@@ -12,7 +12,7 @@ import {Droppable} from "@/app/admin/main/drag-and-drop/droppable";
 import {DroppableArgs} from "@/app/admin/main/drag-and-drop/types";
 import {getReorderedItems} from "@/app/admin/main/drag-and-drop/utils/getReorderedItems";
 import Alert from "@/app/admin/main/products/helpers/alert";
-import { useLanguage } from '@/app/main/hooks/useLanguage';
+import {useLanguage} from '@/app/main/hooks/useLanguage';
 
 export interface ImageUploaderProps {
     multiple?: boolean;
@@ -21,12 +21,21 @@ export interface ImageUploaderProps {
     defaultUploadedImages?: ImageDTO[];
     className?: string;
     imageFit?: 'contain' | 'cover';
-    label?: string
-    error?: {am: string, ru: string } | any
+    label?: { am: string, ru: string }
+    error?: { am: string, ru: string } | any
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,imageFit = 'contain', multiple = false, defaultUploadedImages, onUploadComplete, imageHeightProportion = 100, error}) => {
-    const { getLanguage } = useLanguage();
+export const ImageUploader: React.FC<ImageUploaderProps> = ({
+                                                                className,
+                                                                label,
+                                                                imageFit = 'contain',
+                                                                multiple = false,
+                                                                defaultUploadedImages,
+                                                                onUploadComplete,
+                                                                imageHeightProportion = 100,
+                                                                error
+                                                            }) => {
+    const {getLanguage} = useLanguage();
     const [isUploadingFromUrl, setUploadingFromUrl] = useState(false);
     const {
         handleUploadFiles,
@@ -42,19 +51,19 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
     const proportionalBlockStyle = {
         paddingTop: `${imageHeightProportion}%`
     }
-    const handleDrop = (args:DroppableArgs) => {
+    const handleDrop = (args: DroppableArgs) => {
         const reordered = getReorderedItems(uploadedImages, args);
         setUploadedImages(getReorderedItems(uploadedImages, args));
         onUploadComplete(reordered);
     };
 
     return <div className="mb-5">
-        {label && <div className="mb-2">{label}</div>}
+        {label && <div className="mb-2">{getLanguage(label)}</div>}
         <div className={
             clsx('w-full grid gap-4', {
                 'grid-cols-1': !multiple,
                 'grid-cols-2 md:grid-cols-5 ': multiple
-            }, className, {"border-2 border-red-600" : error?.ru})}>
+            }, className, {"border-2 border-red-600": error?.ru})}>
             <ProportionBlock proportionalBlockStyle={proportionalBlockStyle}
                              isLoading={loading && !multiple}>
                 {((multiple) || (!multiple && !uploadedImages.length)) ?
@@ -78,7 +87,8 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({className,label,ima
                     </div> : <ImageBlock
                         imageFit={imageFit}
                         isLoading={loadingImagesIds.includes(uploadedImages[0].id)}
-                        proportionalBlockStyle={proportionalBlockStyle} image={uploadedImages[0]} onRemove={removeImage}/>}
+                        proportionalBlockStyle={proportionalBlockStyle} image={uploadedImages[0]}
+                        onRemove={removeImage}/>}
             </ProportionBlock>
             {multiple && uploadedImages.map((image, index) => (
                 <Droppable key={image._id} id={image._id} onDrop={handleDrop}>
@@ -116,7 +126,8 @@ interface ImageBlockProps {
     imageFit: ImageUploaderProps['imageFit']
 }
 
-const ImageBlock = ({isLoading, image, proportionalBlockStyle,imageFit, onRemove}: ImageBlockProps) => {
+const ImageBlock = ({isLoading, image, proportionalBlockStyle, imageFit, onRemove}: ImageBlockProps) => {
+    const {getLanguage} = useLanguage();
 
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const closeModal = () => {
@@ -125,22 +136,39 @@ const ImageBlock = ({isLoading, image, proportionalBlockStyle,imageFit, onRemove
 
     return (
         <>
-        <ProportionBlock isLoading={isLoading} draggable proportionalBlockStyle={proportionalBlockStyle}>
-            <div className={clsx('relative w-full h-full')}>
-                <img src={image.src} alt='uploaded image' className={`w-full h-full object-${imageFit}`}/>
-                <div className='absolute top-0 right-0 p-1 cursor-pointer transition hover:bg-secondary bg-secondary-lighter'
-                     onClick={() => setDeleteModalOpen(true)}>
-                    <IconComponent name='deleteBin' color='white'/>
+            <ProportionBlock isLoading={isLoading} draggable proportionalBlockStyle={proportionalBlockStyle}>
+                <div className={clsx('relative w-full h-full')}>
+                    <img src={image.src} alt='uploaded image' className={`w-full h-full object-${imageFit}`}/>
+                    <div
+                        className='absolute top-0 right-0 p-1 cursor-pointer transition hover:bg-secondary bg-secondary-lighter'
+                        onClick={() => setDeleteModalOpen(true)}>
+                        <IconComponent name='deleteBin' color='white'/>
+                    </div>
                 </div>
-            </div>
-        </ProportionBlock>
-                <Alert isOpen={deleteModalOpen} onAccept={() => {
+            </ProportionBlock>
+            <Alert
+                isOpen={deleteModalOpen}
+                onAccept={() => {
                     onRemove(image._id)
                     closeModal()
-                }} onClose={closeModal} onCancel={closeModal} title="Удалить Картинку ?" >
-                    <p className="text-2xl font-bold my-10">Вы уверены, что хотите удалить эту картинку?</p>
-                    <p className="text-gray-700 text-[16px]">После удаления не возможно восстановить данную картинку!</p>
-                </Alert>
+                }}
+                onClose={closeModal}
+                onCancel={closeModal}
+                title={{am: "Ջնջել նկարը", ru: "Удалить Картинку ?"}}
+            >
+                <p className="text-2xl font-bold">
+                    {getLanguage({
+                        am: "Դուք վստահ եք որ ուզում եք ջնջել այս նկարը",
+                        ru: "Вы уверены, что хотите удалить эту картинку?"
+                    })}
+                </p>
+                <p className="text-gray-700 text-[16px]">
+                    {getLanguage({
+                        am: "Ջնջելուց հետո հնարավոր չէ վերականգնել այս պատկերը:",
+                        ru: "После удаления не возможно восстановить данную картинку!"
+                    })}
+                </p>
+            </Alert>
         </>
     );
 }

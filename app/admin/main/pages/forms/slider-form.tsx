@@ -10,11 +10,14 @@ import {ObjectSchema} from "yup";
 import clsx from "clsx";
 import uniqid from "uniqid";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
+import {ADD_BUTTON, SAVE_BUTTON} from "../../costants";
+import { useLanguage } from "@/app/main/hooks/useLanguage";
+import {REQUIRED_FIELD_TEXT, REQUIRED_IMAGE} from "@/utils/form";
 
 const validationSchema:ObjectSchema<SlideDTO> = yup.object().shape({
-    title: yup.object().shape({am: yup.string().required("Обязательное поле"), ru: yup.string().required("Обязательное поле")}),
+    title: yup.object().shape({am: yup.string().required(REQUIRED_FIELD_TEXT), ru: yup.string().required(REQUIRED_FIELD_TEXT)}),
     description: yup.object().shape({am: yup.string(), ru: yup.string()}),
-    image: yup.object().shape({id: yup.string(), src: yup.string()}).required("Обязательно добавить картинку"),
+    image: yup.object().shape({id: yup.string(), src: yup.string()}).required(REQUIRED_IMAGE),
     buttonLink: yup.string(),
     buttonText: yup.object().shape({am: yup.string(), ru: yup.string()})
 })
@@ -27,6 +30,8 @@ interface Prop {
     className?: string
 }
 export default function SliderForm({onSubmit, editingSlideData, className}: Prop) {
+
+    const { getLanguage } = useLanguage()
 
     const {
         control,
@@ -59,62 +64,62 @@ export default function SliderForm({onSubmit, editingSlideData, className}: Prop
                 <div className="mb-2">
                     <Input
                         required
-                        label="Загаловок на армянском"
-                        placeholder='Введите заголовок'
+                        label={{am: "Վերնագրի անվանումը ՀԱՅ", ru: "Название Заголовка по АРМ"}}
+                        placeholder={{am: "Վերնագրի անվանումը Հայ", ru: "Название Заголовка по АРМ"}}
                         {...register("title.am")}
-                        error={errors.title?.am?.message}
+                        error={errors.title?.am}
                         className="mb-2"
                     />
                     <Input
                         required
-                        label="Загаловок на русском"
-                        placeholder='Введите заголовок'
+                        label={{am: "Վերնագրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
+                        placeholder={{am: "Վերնագրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
                         {...register("title.ru")}
-                        error={errors.title?.ru?.message}
+                        error={errors.title?.ru}
                     />
                 </div>
                 <div className="mb-2">
                     <TextArea
-                        label="Oписание на армянском"
-                        placeholder='Введите описание'
+                        label={{am: "Նկարագրությունը ՀԱՅ", ru: "Описание на АРМ"}}
+                        placeholder={{am: "Նկարագրությունը ՀԱՅ", ru: "Описание на АРМ"}}
                         {...register("description.am")}
-                        error={errors.description?.am?.message}
+                        error={errors.description?.am}
                     />
                     <TextArea
-                        label="Oписание на русском"
-                        placeholder='Введите описание'
+                        label={{am: "Նկարագրությունը ՌՈՒՍ", ru: "Описание на РУС"}}
+                        placeholder={{am: "Նկարագրությունը ՌՈՒՍ", ru: "Описание на РУС"}}
                         {...register("description.ru")}
-                        error={errors.description?.ru?.message}
+                        error={errors.description?.ru}
                     />
                 </div>
                 <div className="mb-2">
                     <Input
-                        label="Ссылка Кнопки"
-                        placeholder='Введите заголовок'
+                        label={{am: "Կոճակի հղուումը", ru: "Ссылка Кнопки"}}
+                        placeholder={{am: "տեղադրեք հղումը", ru: "Введите Ссылку"}}
                         {...register("buttonLink")}
-                        error={errors.buttonLink?.message}
+                        error={errors.buttonLink}
                         className="mb-2"
                     />
                     <Input
-                        label="Текст Кнопки Ам"
-                        placeholder='Введите Текст Ам'
+                        label={{am: "Կոճակի անվանւմը ՀԱՅ", ru: "Текст кнопки на АРМ"}}
+                        placeholder={{am: "Կոճակի անվանւմը ՀԱՅ", ru: "Текст кнопки на АРМ"}}
                         {...register("buttonText.am")}
-                        error={errors.buttonText?.am?.message}
+                        error={errors.buttonText?.am}
                         className="mb-2"
                     />
                     <Input
-                        label="Текст Кнопки Ру"
-                        placeholder='Введите Текст Ру'
+                        label={{am: "Կոճակի անվանւմը ՌՈՒՍ", ru: "Текст кнопки на РУС"}}
+                        placeholder={{am: "Կոճակի անվանւմը ՌՈՒՍ", ru: "Текст кнопки на РУС"}}
                         {...register("buttonText.ru")}
-                        error={errors.buttonText?.ru?.message}
+                        error={errors.buttonText?.ru}
                     />
                 </div>
                 <div className="mt-4">
                     <Button
+                        title={editingSlideData ? SAVE_BUTTON : ADD_BUTTON}
                         variant="primary"
                         onClick={submit}
                     >
-                        {editingSlideData ? "Сохранить" : "Добавить"}
                     </Button>
 
                 </div>

@@ -23,10 +23,12 @@ import {getCategories} from "@/app/admin/main/categories/halpers/getCategories";
 import {getProduct} from "@/app/admin/main/categories/halpers/getProduct";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 import {ADD_PRODUCT, CANCEL_BUTTON, DELETE_BUTTON, EDIT_PRODUCT, SAVE_BUTTON} from "../../costants";
+import { useLanguage } from "@/app/main/hooks/useLanguage";
 
 export default function ProductForm({id}: { id: string }) {
 
     const router = useRouter()
+    const { getLanguage } = useLanguage()
 
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: categoriesResponse, isLoading: categoriesLoading} = useQuery<CategoryResponseDTO[]>(getCategories);
@@ -92,16 +94,16 @@ export default function ProductForm({id}: { id: string }) {
                 </div>
                 <div className="mb-4 sm:flex gap-3 w-full">
                     <Input
-                        label={{am: "Վերնագիրի անվանումը ՀԱՅ", ru: "Название Заголовка по АРМ"}}
-                        placeholder={{am: "Վերնագիրի անվանումը Հայ", ru: "Название Заголовка по АРМ"}}
+                        label={{am: "Վերնագրի անվանումը ՀԱՅ", ru: "Название Заголовка по АРМ"}}
+                        placeholder={{am: "Վերնագրի անվանումը Հայ", ru: "Название Заголовка по АРМ"}}
                         {...register("title.am")}
                         className='flex-1 mb-2'
                         error={errors?.title?.am}
                         required
                     />
                     <Input
-                        label={{am: "Վերնագիրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
-                        placeholder={{am: "Վերնագիրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
+                        label={{am: "Վերնագրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
+                        placeholder={{am: "Վերնագրի անվանումը ՌՈՒՍ", ru: "Название Заголовка по РУС"}}
                         {...register("title.ru")}
                         className='flex-1'
                         error={errors?.title?.ru}
@@ -147,9 +149,20 @@ export default function ProductForm({id}: { id: string }) {
                 <AttributesForm control={control} name='attributes'/>
             </div>
             </PageLayout>
-            <Alert onCancel={() => setDeleteModalOpen(false)} onClose={() => setDeleteModalOpen(false)} onAccept={onDelete} isOpen={deleteModalOpen}>
-                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный продукт</p>
-                <p className="text-gray-700">После удаления продукт не возможно восстановить!</p>
+            <Alert
+                title={{am: "Ջնջել ապրանքը", ru: "Удалить продукт"}}
+                onCancel={() => setDeleteModalOpen(false)}
+                onClose={() => setDeleteModalOpen(false)}
+                onAccept={onDelete} isOpen={deleteModalOpen}
+            >
+                <p className="text-2xl font-bold">{getLanguage({
+                    am: "Դուք վստահ եք որ ուզում եք ջնջել այս ապրանքը",
+                    ru: "Вы уверены, что хотите удалить эту продукт?"
+                })}</p>
+                <p className="text-gray-700">{getLanguage({
+                    am: "Ջնջելուց հետո հնարավոր չէ վերականգնել տվյալ ապրանքը:",
+                    ru: "После удаления не возможно восстановить данный продукт!"
+                })}</p>
             </Alert>
         </div>
     )

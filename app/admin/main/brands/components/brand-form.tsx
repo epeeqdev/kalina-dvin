@@ -17,6 +17,7 @@ import Alert from "../../products/helpers/alert";
 import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/image-uploader";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import {ADD_BRANDS, CANCEL_BUTTON, DELETE_BUTTON, SAVE_BUTTON} from "../../costants";
+import { useLanguage } from "@/app/main/hooks/useLanguage";
 
 interface Props {
     id?: string
@@ -40,6 +41,7 @@ export const BrandForm = ({id}:Props) => {
     const {mutate: deleteBrandMutate, isLoading: deleteBrandLoading} = useMutation(deleteBrand);
     const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false)
     const {data: brand, isLoading: brandLoading} = useQuery<BrandResponseDTO>(getBrand,[id], {fetchOnMount: !!id});
+    const {getLanguage} = useLanguage();
 
     const loading = editBrandLoading || addBrandLoading || deleteBrandLoading || brandLoading
 
@@ -81,11 +83,20 @@ export const BrandForm = ({id}:Props) => {
 
     return (
         <div>
-            <Alert onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
-                <p className="text-2xl font-bold">Вы уверены, что хотите удалить данный бренд?</p>
-                <p className="text-gray-700">После удаления бренд не возможно восстановить!</p>
+            <Alert title={{am: "Ջնջել բրենդը", ru: "Удалить бренд ?"}} onCancel={onCancel} onClose={onCancel} onAccept={onDelete} isOpen={deleteModalOpen}>
+                <p className="text-2xl font-bold ">
+                    {getLanguage({
+                        am: "Դուք վստահ եք որ ուզում եք ջնջել այս բրենդը",
+                        ru: "Вы уверены, что хотите удалить данный бренд?"
+                    })}</p>
+                <p className="text-gray-700">
+                    {getLanguage({
+                        am: "Ջնջելուց հետո հնարավոր չէ վերականգնել",
+                        ru: "После удаления бренд не возможно восстановить!"
+                    })}
+                </p>
             </Alert>
-            {loading && <LoadingSpinner />}
+            {loading && <LoadingSpinner/>}
             <PageLayout headerButtons={
                 <>
                     {

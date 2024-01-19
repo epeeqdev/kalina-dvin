@@ -2,6 +2,8 @@ import * as yup from "yup";
 
 /** Error messages */
 export const REQUIRED_FIELD_TEXT = {am :'Պարտադիր լրացման դաշտ', ru: "Обязательное поле"};
+export const REQUIRED_IMAGE = {am :'Պարտադիր ավելացրեք նկարը', ru: "Обязательно добавить картинку"};
+export const REQUIRED_EMAIL_FIELD_TEXT = {am :'Նշեք վավեր հասցե', ru: "Укажите корректную эл. почту"};
 
 
 /** Schemas */

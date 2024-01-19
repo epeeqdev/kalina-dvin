@@ -14,6 +14,7 @@ import {ImageUploader} from "@/app/admin/main/components/form-wrapped-controls/i
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import React from "react";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
+import {CATEGORIES_PAGE} from "../../costants";
 
 
 const validationSchema = yup.object().shape({
@@ -52,10 +53,10 @@ export default function CategoriesPageForm() {
                     {isDirty && !isLoading && <Button variant="primary" onClick={onEdit}>Сохранить</Button>}
                     <ToItemPageButton link={`/main/categories`}/>
                 </>
-            } headerTitle={"Страница категорий"}>
+            } headerTitle={CATEGORIES_PAGE}>
                 <div className="gap-4 justify-center px-5">
                         <ImageUploader
-                            label="Обложка"
+                            label={{am: "Պաստառ" ,ru:"Обложка"}}
                             control={control}
                             name='image'
                             className="border-none justify-stretch"

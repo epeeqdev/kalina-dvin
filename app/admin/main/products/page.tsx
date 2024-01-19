@@ -28,9 +28,9 @@ export default function ProductsPage() {
         if(search){
             const regex = new RegExp(search, 'i')
             const results = data?.filter((item) => {
-                    return regex.test(item.brand.name.am) || regex.test(item.brand.name.ru)
-                        || regex.test(item.title.am) || regex.test(item.title.ru)
-                        || regex.test(item.description.am) || regex.test(item.description.ru)
+                    return regex.test(item?.brand?.name?.am) || regex.test(item?.brand?.name?.ru)
+                        || regex.test(item?.title?.am) || regex.test(item?.title?.ru)
+                        || regex.test(item?.description?.am) || regex.test(item?.description?.ru)
                 }
 
             );

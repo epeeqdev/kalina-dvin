@@ -15,20 +15,29 @@ import {editContacts} from "@/app/admin/main/contacts/helpers/edit-contacts";
 import {PageLayout} from "@/app/admin/main/components/page-layout";
 import ToItemPageButton from "@/app/admin/main/components/controls/toItemPageButton";
 import Link from "next/link";
+import {CANCEL_BUTTON, CONTACTS, SAVE_BUTTON} from "../../costants";
+import {REQUIRED_EMAIL_FIELD_TEXT, REQUIRED_FIELD_TEXT} from "../../../../../utils/form";
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
 
 const validationSchema = yup.object().shape({
-    phone: yup.string().matches(phoneRegExp, 'Номер телефона, должно быть в формате 374(XX) XX-XX-XX').max(11).required("Обязательное поле"),
-    email: yup.string().email("Укажите корректную эл. почту").required("Обязательное поле"),
+    phone: yup.string()
+        .matches(phoneRegExp, {
+            message: {
+                am: "Հեռախոսահամարը պետք է լինի 374(XX) XX-XX-XX ձևաչափով",
+                ru: 'Номер телефона, должно быть в формате 374(XX) XX-XX-XX'
+            }})
+        .max(11, {am: "առավելագւյն թվանշանների քանակը 11", ru: "Максимальное количество чисел 11"})
+        .required(REQUIRED_FIELD_TEXT),
+    email: yup.string().email(REQUIRED_EMAIL_FIELD_TEXT).required(REQUIRED_FIELD_TEXT),
     address: yup.object().shape({
-        am: yup.string().required("Обязательное поле"),
-        ru: yup.string().required("Обязательное поле")
+        am: yup.string().required(REQUIRED_FIELD_TEXT),
+        ru: yup.string().required(REQUIRED_FIELD_TEXT)
     }),
     socialLinks: yup.object().shape({
-        instagram: yup.string().url("Укажите корректную ссылку").required("Обязательное поле"),
-        facebook: yup.string().url("Укажите корректную ссылку").required("Обязательное поле")
+        instagram: yup.string().url(REQUIRED_EMAIL_FIELD_TEXT).required(REQUIRED_FIELD_TEXT),
+        facebook: yup.string().url(REQUIRED_EMAIL_FIELD_TEXT).required(REQUIRED_FIELD_TEXT)
     })
 
 })
@@ -82,21 +91,21 @@ export default function ContactsForm() {
 
             <PageLayout headerButtons={
                 <>
-                    <Button onClick={() => router.push("/admin/main")} variant="secondary">Отмена</Button>
-                    {isDirty && !isLoading && <Button variant="primary" onClick={submit}>Сохранить</Button>}
+                    <Button title={CANCEL_BUTTON} onClick={() => router.push("/admin/main")} variant="secondary"></Button>
+                    {isDirty && !isLoading && <Button title={SAVE_BUTTON} variant="primary" onClick={submit}></Button>}
                     <Link href={"/main#footer-part"} target="_blank">
                         <ToItemPageButton/>
                     </Link>
                 </>
-            } headerTitle={"Контактная информация"}
+            } headerTitle={CONTACTS}
             >
                 <div className="px-5">
                     <div className="mb-5">
                         <Input
                             {...register("phone")}
-                            label="Телефон"
-                            placeholder="374(XX)XXXXXX"
-                            error={errors.phone?.message}
+                            label={{am: "Հեռախոս" ,ru: "Телефон"}}
+                            placeholder={{am: "374(XX)XXXXXX" ,ru: "374(XX)XXXXXX"}}
+                            error={errors.phone}
                             required={true}
                             className='w-full mb-3'
                         />
@@ -104,9 +113,9 @@ export default function ContactsForm() {
                     <div className="mb-5">
                         <Input
                             {...register("email")}
-                            label="Эл. почта"
-                            placeholder="email"
-                            error={errors.email?.message}
+                            label={{am: "Էլ․ փոստ" ,ru: "Эл. почта"}}
+                            placeholder={{am: "Էլ․ փոստ" ,ru: "Эл. почта"}}
+                            error={errors.email}
                             required={true}
                             className='w-full mb-3'
                         />
@@ -114,18 +123,18 @@ export default function ContactsForm() {
                     <div className="mb-5">
                         <Input
                             {...register("address.am")}
-                            label="Адрес"
-                            placeholder="Адрес"
-                            error={errors.address?.am?.message}
+                            label={{am: "Հասցե ՀԱՅ" ,ru: "Адрес АРМ"}}
+                            placeholder={{am: "Հասցե ՀԱՅ" ,ru: "Адрес АРМ"}}
+                            error={errors.address?.am}
                             required={true}
                             className='w-full mb-3'
                             type="string"
                         />
                         <Input
                             {...register("address.ru")}
-                            label="Адрес"
-                            placeholder="Адрес"
-                            error={errors.address?.ru?.message}
+                            label={{am: "Հասցե ՌՈՒՍ" ,ru: "Адрес РУС"}}
+                            placeholder={{am: "Հասցե ՌՈՒՍ" ,ru: "Адрес РУС"}}
+                            error={errors.address?.ru}
                             required={true}
                             className='w-full mb-3'
                             type="string"
@@ -134,18 +143,18 @@ export default function ContactsForm() {
                     <div>
                         <Input
                             {...register("socialLinks.facebook")}
-                            label="Ссылка на Facebook"
-                            placeholder="Ссылка"
-                            error={errors.socialLinks?.facebook?.message}
+                            label={{am: "Ֆեյսբուքյան էջի հղում" ,ru: "Ссылка на Facebook"}}
+                            placeholder={{am: "Հասցե" ,ru: "Ссылка"}}
+                            error={errors.socialLinks?.facebook}
                             required={true}
                             className='w-full mb-3'
                             type="string"
                         />
                         <Input
                             {...register("socialLinks.instagram")}
-                            label="Ссылка на Instgram"
-                            placeholder="Ссылка"
-                            error={errors.socialLinks?.instagram?.message}
+                            label={{am: "Ինստագրամյան էջի հղում" ,ru: "Ссылка на Instagram"}}
+                            placeholder={{am: "Հասցե" ,ru: "Ссылка"}}
+                            error={errors.socialLinks?.instagram}
                             required={true}
                             className='w-full mb-3'
                             type="string"
