@@ -24,9 +24,18 @@ export interface Props {
 
 export default function AutocompleteInput({control, name, options, error, label, placeholder, required, multiselect, className}: Props) {
     const {getLanguage} = useLanguage()
-    const changingLngOptions = options?.map(item => {
-        return {value: item.value, label: getLanguage(item.label)}
-    })
+
+    const lng = localStorage.getItem("lng")
+
+        const changingLngOptions = options?.map(item => {
+            return {value: item.value, label: getLanguage(item.label)}
+        })
+    const [data, setData] = useState(changingLngOptions)
+
+    useEffect(() => {
+        setData(changingLngOptions)
+    },[lng , options]);
+
 
     return <Controller control={control} name={name} render={({field}) => {
         return (
@@ -40,7 +49,7 @@ export default function AutocompleteInput({control, name, options, error, label,
                     value={field.value}
                     isMulti={multiselect}
                     placeholder={getLanguage(placeholder)}
-                    options={changingLngOptions}
+                    options={data}
                     className={`mt-1 outline-none border w-full ${!!error && "border-2 border-red-600"}`}
                     onChange={(v) => {field.onChange(v)}}
                     theme={(theme) => ({

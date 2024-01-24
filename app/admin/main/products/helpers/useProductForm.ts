@@ -7,7 +7,7 @@ import {
     IMAGE_SCHEMA,
     OPTION_SCHEMA_REQUIRED,
     REQUIRED_FIELD_TEXT,
-    SchemaImage, SchemaOption,
+    SchemaImage, SchemaOption, SchemaOptionAttribute,
     SchemaText,
     TEXT_SCHEMA_REQUIRED
 } from "@/utils/form";
@@ -18,7 +18,7 @@ export interface ProductForm {
     categories: SchemaOption[],
     brand: SchemaOption,
     images?: SchemaImage[],
-    attributes?: { attribute: SchemaOption, value: SchemaText, id?:string }[],
+    attributes?: { attribute: SchemaOptionAttribute, value: SchemaText, id?:string }[],
 }
 
 const validationSchema = yup.object().shape({
@@ -39,7 +39,7 @@ export const useProductForm = (data?: ProductResponseDTO) => {
         categories: data.categories.map(category => ({label: category.name.ru, value: category._id})),
         brand: {label: data?.brand?.name.ru, value: data?.brand?._id},
         images: data.images,
-        attributes: data?.attributes?.map(attribute => ({attribute: {label: attribute.attribute?.name.ru, value: attribute.attribute._id},id:attribute.attribute._id, value: attribute.value}))
+        attributes: data?.attributes?.map(attribute => ({attribute: {label: {am: attribute.attribute?.name.am, ru: attribute.attribute?.name.ru}, value: attribute.attribute._id},id:attribute.attribute._id, value: attribute.value}))
     } : null;
 
     const {control, ...values} = useForm<ProductForm>({

@@ -42,7 +42,7 @@ export const ProductTemplate = ({item, className}: Props) => {
                 <div className='mt-1 text-[11px] text-grey'>{item.attributes.map((attribute, index) => {
                     return (
                         <div key={attribute?._id}>
-                            <span className="font-bold  ">{attribute.attribute?.name?.ru}
+                            <span className="font-bold  ">{getLanguage({am: attribute.attribute?.name?.am, ru: attribute.attribute?.name?.ru})}
                             </span> : {getLanguage({am: attribute.value.am, ru: attribute.value.ru})}{index !== item.categories.length - 1 && ', '}
                         </div>)
                 })}</div>
