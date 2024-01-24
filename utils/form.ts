@@ -26,6 +26,10 @@ export interface SchemaOption {
    label:string;
    value:string;
 }
+export interface SchemaOptionAttribute {
+    label: {am: string, ru: string };
+    value:string;
+}
 export interface SchemaText {
     am: string ;
     ru: string;

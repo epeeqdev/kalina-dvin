@@ -26,7 +26,7 @@ export default function  ShowAttributes({attributes, removeItem, onAddClick, isO
                         attributes?.map(({id, value, attribute}) => {
                             return <div className={clsx("my-1 py-1 flex capitalize items-center text-dark-grey border-[1px] border-[#e5e7eb] justify-between w-full bg-white whitespace-normal pl-[10px]")} key={id}>
                                 <div>
-                                    <span>{attribute.label}</span>
+                                    <span>{attribute?.label?.am ? getLanguage({am: attribute?.label.am, ru: attribute.label.ru}) : `${attribute?.label}`}</span>
                                     <span className="font-bold m-0 mx-2">{getLanguage({am: "ՀԱՅ -", ru: "АРМ -"})}</span>{value.am}
                                     <span className="font-bold m-0 mx-2">{getLanguage({am: "ՌՈՒՍ -", ru: "РУС -"})}</span>{value.ru}
                                 </div>
